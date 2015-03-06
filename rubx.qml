@@ -6,7 +6,7 @@ import QtQuick.Dialogs 1.2
 ApplicationWindow {
     title: qsTr("Hello World")
     width: 640
-    height: 480
+    height: 520
 
     menuBar: MenuBar {
         Menu {
