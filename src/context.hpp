@@ -1,6 +1,7 @@
 #ifndef CONTEXT_HPP
 #define CONTEXT_HPP
 
+#define GL_GLEXT_PROTOTYPES
 #define GLFW_INCLUDE_GLCOREARB
 #include <GLFW/glfw3.h>
 
