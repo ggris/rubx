@@ -14,23 +14,26 @@ Shader::Shader(const std::string &filename, GLenum shader_type) :
     createShader();
 }
 
-std::string Shader::getShaderSource() const
+void Shader::sourceShader() const
 {
-    std::ifstream source_ifs(m_filename);
+    std::ifstream source_ifs(m_filename, std::ifstream::in);
+
+    LOG_DEBUG << source_ifs.is_open();
+
     std::stringstream source_ss;
     source_ss << source_ifs.rdbuf();
 
-    return source_ss.str();
+    std::string source_s = source_ss.str();
+    const char * shader_source = source_s.c_str();
+
+    glShaderSource(m_shader, 1, &shader_source, 0);
 }
 
 void Shader::createShader() const
-{   
-    std::string src(getShaderSource());
-    const char * shader_source = src.c_str();
+{
+    LOG_TRACE << "Creating shader : " << m_filename;
 
-    LOG_INFO << shader_source;
-
-    glShaderSource(m_shader, 1, &shader_source, 0);
+    sourceShader();
     glCompileShader(m_shader);
 
     GLint status;
@@ -42,15 +45,9 @@ void Shader::createShader() const
         glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &infoLogLength);
         GLchar *strInfoLog = new GLchar[infoLogLength + 1];
         glGetShaderInfoLog(m_shader, infoLogLength, NULL, strInfoLog);
-        const char *strShaderType = NULL;
-        switch(m_shader_type)
-        {
-            case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-            case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
-            case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
-        }
-        LOG_ERROR << "Compile failure in " << strShaderType << " shader :\n"
-            << strInfoLog;
+
+        LOG_ERROR << "Compile failure in " << m_filename << " shader :\n" << strInfoLog;
+
         delete[] strInfoLog;
     }
 }

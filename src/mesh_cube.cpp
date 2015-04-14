@@ -45,27 +45,6 @@ MeshCube::MeshCube()
         4, 6, 7,
     };
 
-    std::string vert_shader_str = "#version 410 \n"
-        "layout(location = 0) in vec4 position; \n"
-        "uniform vec4 camera_position; \n"
-        "uniform mat4 projection_matrix; \n"
-        "smooth out vec4 color;\n"
-        "void main() \n"
-        "{ \n"
-        "       float s = 0.2f;\n"
-        "       vec4 base_position = position * vec4(s, s, s, 1.0f) + camera_position; \n"
-        "        gl_Position = projection_matrix * base_position;\n"
-        "       color = position; \n"
-        "} \n";
-
-    std::string frag_shader_str = "#version 410 \n"
-        "smooth in vec4 color;\n"
-        "out vec4 outColor; \n"
-        "void main() \n"
-        "{ \n"
-        "       outColor = color;\n" 
-        "}";
-
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
     glBindBuffer (GL_ARRAY_BUFFER, points_vbo);
@@ -96,15 +75,12 @@ MeshCube::MeshCube()
 
     glBindVertexArray(0);
 
-    Shader frag("shaders/smooth.frag", GL_FRAGMENT_SHADER);
-
-    GLuint vert_shader = createShader(GL_VERTEX_SHADER, vert_shader_str.c_str());
-    GLuint frag_shader1 = createShader(GL_FRAGMENT_SHADER, frag_shader_str.c_str());
-    GLuint frag_shader = frag.getShader();
+    Shader vert_shader("shaders/pos.vert", GL_VERTEX_SHADER);
+    Shader frag_shader("shaders/smooth.frag", GL_FRAGMENT_SHADER);
 
     std::vector<GLuint> shaders;
-    shaders.push_back(vert_shader);
-    shaders.push_back(frag_shader);
+    shaders.push_back(vert_shader.getShader());
+    shaders.push_back(frag_shader.getShader());
 
     m_program = CreateProgram(shaders);
 

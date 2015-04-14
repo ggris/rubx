@@ -2,7 +2,7 @@
 
 Logger::Logger()
 {
-    setFilter(boost::log::trivial::info);
+    setFilter(boost::log::trivial::trace);
 }
 
 void Logger::setFilter(boost::log::trivial::severity_level level)

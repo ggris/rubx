@@ -17,7 +17,7 @@ class Shader
         const GLenum m_shader_type;
         const GLint m_shader;
 
-        std::string getShaderSource() const;
+        void sourceShader() const;
         void createShader() const;
 };
 
