@@ -1,6 +1,6 @@
 #include <string>
 
-#include "logger.hpp"
+#include "util/logger.hpp"
 #include "mesh_cube.hpp"
 #include <cmath>
 
