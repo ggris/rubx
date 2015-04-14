@@ -4,6 +4,8 @@
 #include "mesh_cube.hpp"
 #include <cmath>
 
+#include "glProgram/shader.hpp"
+
 MeshCube::MeshCube()
 {
     float points[] = {
@@ -54,7 +56,7 @@ MeshCube::MeshCube()
         "       vec4 base_position = position * vec4(s, s, s, 1.0f) + camera_position; \n"
         "        gl_Position = projection_matrix * base_position;\n"
         "       color = position; \n"
-        "}";
+        "} \n";
 
     std::string frag_shader_str = "#version 410 \n"
         "smooth in vec4 color;\n"
@@ -94,8 +96,11 @@ MeshCube::MeshCube()
 
     glBindVertexArray(0);
 
+    Shader frag("shaders/smooth.frag", GL_FRAGMENT_SHADER);
+
     GLuint vert_shader = createShader(GL_VERTEX_SHADER, vert_shader_str.c_str());
-    GLuint frag_shader = createShader(GL_FRAGMENT_SHADER, frag_shader_str.c_str());
+    GLuint frag_shader1 = createShader(GL_FRAGMENT_SHADER, frag_shader_str.c_str());
+    GLuint frag_shader = frag.getShader();
 
     std::vector<GLuint> shaders;
     shaders.push_back(vert_shader);
@@ -103,13 +108,15 @@ MeshCube::MeshCube()
 
     m_program = CreateProgram(shaders);
 
-    std::for_each(shaders.begin(), shaders.end(), glDeleteShader);
+    //std::for_each(shaders.begin(), shaders.end(), glDeleteShader);
 
 
 }
 
 GLuint MeshCube::createShader(GLenum eShaderType, const char *shader_source)
 {
+    LOG_INFO << shader_source;
+
     GLuint shader = glCreateShader(eShaderType);
     glShaderSource(shader, 1, &shader_source, 0);
     glCompileShader(shader);

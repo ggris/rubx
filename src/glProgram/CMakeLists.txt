@@ -12,7 +12,7 @@ add_library(rubx_glProgram ${SRC})
 include_directories(${INC})
 
 target_link_libraries(rubx_glProgram
-    utils
+    util
     glfw
     ${GLFW_LIBRARIES}
     )

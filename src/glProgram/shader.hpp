@@ -9,7 +9,8 @@
 class Shader
 {
     public:
-        Shader(std::string filename, GLenum shader_type);
+        Shader(const std::string &filename, GLenum shader_type);
+        GLint getShader() {return m_shader;}
 
     private:
         const std::string m_filename;

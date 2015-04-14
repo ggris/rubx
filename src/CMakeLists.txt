@@ -11,6 +11,7 @@ target_link_libraries(rubx
     glfw
     ${GLFW_LIBRARIES}
     rubx_util
+    rubx_glProgram
     )
 
 set_target_properties( rubx

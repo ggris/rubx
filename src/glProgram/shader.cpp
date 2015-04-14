@@ -6,7 +6,7 @@
 
 #include "shader.hpp"
 
-Shader::Shader(std::string filename, GLenum shader_type) :
+Shader::Shader(const std::string &filename, GLenum shader_type) :
     m_filename(filename),
     m_shader_type(shader_type),
     m_shader(glCreateShader(m_shader_type))
@@ -24,8 +24,12 @@ std::string Shader::getShaderSource() const
 }
 
 void Shader::createShader() const
-{
-const char * shader_source = getShaderSource().c_str();
+{   
+    std::string src(getShaderSource());
+    const char * shader_source = src.c_str();
+
+    LOG_INFO << shader_source;
+
     glShaderSource(m_shader, 1, &shader_source, 0);
     glCompileShader(m_shader);
 
