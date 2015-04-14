@@ -75,82 +75,17 @@ MeshCube::MeshCube()
 
     glBindVertexArray(0);
 
+    // Creating program
+
     Program program;
 
-    Shader vert_shader("shaders/pos.vert", GL_VERTEX_SHADER);
-    Shader frag_shader("shaders/smooth.frag", GL_FRAGMENT_SHADER);
-
-    std::vector<GLuint> shaders;
-    shaders.push_back(vert_shader.getShader());
-    shaders.push_back(frag_shader.getShader());
-
-    program.push_back(vert_shader);
-    program.push_back(frag_shader);
+    program.emplace_back("pos.vert", GL_VERTEX_SHADER);
+    program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
 
     program.link();
 
-    m_program = program.getProgram(); //CreateProgram(shaders);
+    m_program = program.getProgram();
 
-    //std::for_each(shaders.begin(), shaders.end(), glDeleteShader);
-
-
-}
-
-GLuint MeshCube::createShader(GLenum eShaderType, const char *shader_source)
-{
-    LOG_INFO << shader_source;
-
-    GLuint shader = glCreateShader(eShaderType);
-    glShaderSource(shader, 1, &shader_source, 0);
-    glCompileShader(shader);
-    GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-
-    if (status == GL_FALSE)
-    {
-        GLint infoLogLength;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
-        GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-        glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
-        const char *strShaderType = NULL;
-        switch(eShaderType)
-        {
-            case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-            case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
-            case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
-        }
-        LOG_ERROR << "Compile failure in " << strShaderType << " shader :\n"
-            << strInfoLog;
-        delete[] strInfoLog;
-    }
-
-    return shader;
-}
-
-GLuint MeshCube::CreateProgram(const std::vector<GLuint> &shaderList)
-{
-    GLuint program = glCreateProgram();
-
-    for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
-        glAttachShader(program, shaderList[iLoop]);
-    glLinkProgram(program);
-
-    GLint status;
-    glGetProgramiv (program, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE)
-    {
-        GLint infoLogLength;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
-        GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-        glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
-        LOG_ERROR << "Linker failure :\n" << strInfoLog;
-        delete[] strInfoLog;
-    }
-
-    for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
-        glDetachShader(program, shaderList[iLoop]);
-
-    return program;
 }
 
 void MeshCube::display(float t)

@@ -14,7 +14,6 @@ void Program::link() const
     // Detaching shaders
     for(unsigned int l_i = 0; l_i < size(); l_i++)
         glDetachShader(m_program, at(l_i).getShader());
-
 }
 
 void Program::linkStatus() const
@@ -33,6 +32,14 @@ void Program::linkStatus() const
         delete[] str_info_log;
     }
 
+}
+
+void Program::clearShaders()
+{
+    for(unsigned int l_i = 0; l_i < size(); l_i++)
+        glDeleteShader(at(l_i).getShader());
+
+    clear();
 }
 
 

@@ -6,8 +6,12 @@
 
 #include "shader.hpp"
 
+#ifndef SHADERS_DIRECTORY
+#define SHADERS_DIRECTORY "shaders/"
+#endif
+
 Shader::Shader(const std::string &filename, GLenum shader_type) :
-    m_filename(filename),
+    m_filename(SHADERS_DIRECTORY + filename),
     m_shader_type(shader_type),
     m_shader(glCreateShader(m_shader_type))
 {
@@ -18,7 +22,7 @@ void Shader::sourceShader() const
 {
     std::ifstream source_ifs(m_filename, std::ifstream::in);
 
-    LOG_DEBUG << source_ifs.is_open();
+    LOG_DEBUG << "File " <<  m_filename << " is open : " << source_ifs.is_open();
 
     std::stringstream source_ss;
     source_ss << source_ifs.rdbuf();

@@ -17,6 +17,7 @@ class Program: public std::vector<Shader>
         GLuint getProgram() const {return m_program;}
 
         void link() const;
+        void clearShaders();
 
     private:
         const GLuint m_program;

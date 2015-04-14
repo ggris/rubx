@@ -15,9 +15,6 @@ class MeshCube
     private:
         GLuint m_program;
         GLuint m_vao;
-
-        GLuint createShader(GLenum eShaderType, const char *shader_source);
-        GLuint CreateProgram(const std::vector<GLuint> &shaderList);
 };
 
 #endif
