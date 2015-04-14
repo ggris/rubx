@@ -5,6 +5,8 @@ set(INC
 set(SRC
     shader.hpp
     shader.cpp
+    program.hpp
+    program.cpp
     )
 
 add_library(rubx_glProgram ${SRC})

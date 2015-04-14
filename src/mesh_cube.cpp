@@ -4,7 +4,7 @@
 #include "mesh_cube.hpp"
 #include <cmath>
 
-#include "glProgram/shader.hpp"
+#include "glProgram/program.hpp"
 
 MeshCube::MeshCube()
 {
@@ -75,6 +75,8 @@ MeshCube::MeshCube()
 
     glBindVertexArray(0);
 
+    Program program;
+
     Shader vert_shader("shaders/pos.vert", GL_VERTEX_SHADER);
     Shader frag_shader("shaders/smooth.frag", GL_FRAGMENT_SHADER);
 
@@ -82,7 +84,12 @@ MeshCube::MeshCube()
     shaders.push_back(vert_shader.getShader());
     shaders.push_back(frag_shader.getShader());
 
-    m_program = CreateProgram(shaders);
+    program.push_back(vert_shader);
+    program.push_back(frag_shader);
+
+    program.link();
+
+    m_program = program.getProgram(); //CreateProgram(shaders);
 
     //std::for_each(shaders.begin(), shaders.end(), glDeleteShader);
 

@@ -29,13 +29,7 @@ void Shader::sourceShader() const
     glShaderSource(m_shader, 1, &shader_source, 0);
 }
 
-void Shader::createShader() const
-{
-    LOG_TRACE << "Creating shader : " << m_filename;
-
-    sourceShader();
-    glCompileShader(m_shader);
-
+void Shader::compileStatus() const {
     GLint status;
     glGetShaderiv(m_shader, GL_COMPILE_STATUS, &status);
 
@@ -50,4 +44,15 @@ void Shader::createShader() const
 
         delete[] strInfoLog;
     }
+}
+
+void Shader::createShader() const
+{
+    LOG_TRACE << "Creating shader : " << m_filename;
+
+    sourceShader();
+    glCompileShader(m_shader);
+
+    compileStatus();
+
 }

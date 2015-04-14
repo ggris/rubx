@@ -10,14 +10,15 @@ class Shader
 {
     public:
         Shader(const std::string &filename, GLenum shader_type);
-        GLint getShader() {return m_shader;}
+        GLuint getShader() const {return m_shader;}
 
     private:
         const std::string m_filename;
         const GLenum m_shader_type;
-        const GLint m_shader;
+        const GLuint m_shader;
 
         void sourceShader() const;
+        void compileStatus() const;
         void createShader() const;
 };
 
