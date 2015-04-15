@@ -29,7 +29,7 @@ Context::Context()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_window = glfwCreateWindow(1240, 480, "Rubix", NULL, NULL);
 
@@ -41,6 +41,17 @@ Context::Context()
     }
 
     glfwMakeContextCurrent(m_window);
+
+	#ifdef WIN32
+	//glewExperimental = GL_TRUE;
+	GLenum glewinit = glewInit();
+
+	if (glewinit != GLEW_OK)
+	{
+		std::cout << "Glew not okay! " << glewinit;
+		exit(EXIT_FAILURE);
+	}
+	#endif
 
     glfwSwapInterval(1);
     glfwSetKeyCallback(m_window, key_callback);
