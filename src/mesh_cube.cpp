@@ -1,4 +1,5 @@
 #include <string>
+#include <cstring>
 
 #include "util/logger.hpp"
 #include "mesh_cube.hpp"
