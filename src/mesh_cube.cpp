@@ -1,9 +1,12 @@
 #include <string>
 #include <cstring>
+#include <cmath>
 
 #include "util/logger.hpp"
 #include "mesh_cube.hpp"
-#include <cmath>
+
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "glProgram/program.hpp"
 
@@ -102,19 +105,13 @@ void MeshCube::display(float t)
 
     // Define projection matrix
 
-    float fFrustumScale = 1.0f; float fzNear = 0.1f; float fzFar = 30.0f;
-    float theMatrix[16];
-    memset(theMatrix, 0, sizeof(float) * 16);
-    theMatrix[0] = fFrustumScale;
-    theMatrix[5] = fFrustumScale;
-    theMatrix[10] = (fzFar + fzNear) / (fzNear - fzFar);
-    theMatrix[14] = (2 * fzFar * fzNear) / (fzNear - fzFar);
-    theMatrix[11] = -1.0f;
+    glm::mat4 projection =
+        glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
 
     // Define uniform values
 
     glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
-    glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, theMatrix);
+    glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
 
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
