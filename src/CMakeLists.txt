@@ -11,12 +11,13 @@ set(SRC
     context.hpp
     context.cpp
 
+    camera.hpp
+    camera.cpp
     mesh_cube.hpp
     mesh_cube.cpp
 
     rubix_cube.hpp
     rubix_cube.cpp
-    
     small_cube.hpp
     small_cube.cpp
     )
@@ -30,7 +31,7 @@ target_link_libraries(rubx
     glfw
     ${GLFW_LIBRARIES}
     rubx_glProgram
-    glew32s
+    ${GLEW}
     )
 
 set_target_properties( rubx

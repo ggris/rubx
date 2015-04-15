@@ -18,7 +18,8 @@ class Camera
         float m_rot_z;
         float m_rot_loc_x;
         glm::vec3 m_position;
-
+        
+        glm::mat4 m_projection;
 };
 
 #endif

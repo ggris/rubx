@@ -16,5 +16,5 @@ include_directories(${INC})
 target_link_libraries(rubx_glProgram
     glfw
     ${GLFW_LIBRARIES}
-    glew32s
+    ${GLEW}
     )
