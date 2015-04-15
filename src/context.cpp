@@ -40,10 +40,9 @@ Context::Context()
         exit(EXIT_FAILURE);
     }
 
-    glfwMakeContextCurrent(m_window);
+	glfwMakeContextCurrent(m_window);
 
-	#ifdef WIN32
-	//glewExperimental = GL_TRUE;
+	glewExperimental = GL_TRUE;
 	GLenum glewinit = glewInit();
 
 	if (glewinit != GLEW_OK)
@@ -51,14 +50,14 @@ Context::Context()
 		std::cout << "Glew not okay! " << glewinit;
 		exit(EXIT_FAILURE);
 	}
-	#endif
+	LOG_INFO << "Glew init ok";
 
     glfwSwapInterval(1);
     glfwSetKeyCallback(m_window, key_callback);
 
     LOG_INFO << "glfw OpenGL context ready";
 
-    initGL();
+	initGL();
 }
 
 Context::~Context()
