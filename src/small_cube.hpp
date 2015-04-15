@@ -12,8 +12,8 @@ public :
 
 	void display();	
 	
-	int pos[];
-	int rot[];
+	int pos[3];
+	int rot[3];
 	glm::vec3 fpos;
 	glm::vec3 frot;
 };
