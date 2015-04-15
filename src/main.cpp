@@ -5,8 +5,6 @@
 
 int main (int argc, char *argv[])
 {
-    Logger logger;
-
     Context context;
     context.run();
 

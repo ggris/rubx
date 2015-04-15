@@ -1,4 +1,3 @@
-add_subdirectory(util)
 add_subdirectory(glProgram)
 
 add_executable(rubx
@@ -10,7 +9,6 @@ add_executable(rubx
 target_link_libraries(rubx
     glfw
     ${GLFW_LIBRARIES}
-    rubx_util
     rubx_glProgram
     )
 
