@@ -1,5 +1,9 @@
 #include <string>
+<<<<<<< HEAD
 #include <cmath>
+=======
+#include <cstring>
+>>>>>>> a46c30a1b40f527f0070da5801710e7d5372fa7f
 
 #include "util/logger.hpp"
 #include "mesh_cube.hpp"
