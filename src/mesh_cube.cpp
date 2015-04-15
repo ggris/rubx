@@ -84,6 +84,8 @@ MeshCube::MeshCube()
 
     program.link();
 
+    program.clearShaders();
+
     m_program = program.getProgram();
 
 }
@@ -92,8 +94,13 @@ void MeshCube::display(float t)
 {
     glUseProgram(m_program);
 
+    // Get program uniforms
+
     GLuint offsetUniform = glGetUniformLocation(m_program, "camera_position");
     GLuint perspectiveMatrixUnif = glGetUniformLocation(m_program, "projection_matrix");
+
+    // Define projection matrix
+
     float fFrustumScale = 1.0f; float fzNear = 0.1f; float fzFar = 30.0f;
     float theMatrix[16];
     memset(theMatrix, 0, sizeof(float) * 16);
@@ -102,6 +109,9 @@ void MeshCube::display(float t)
     theMatrix[10] = (fzFar + fzNear) / (fzNear - fzFar);
     theMatrix[14] = (2 * fzFar * fzNear) / (fzNear - fzFar);
     theMatrix[11] = -1.0f;
+
+    // Define uniform values
+
     glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, theMatrix);
 
