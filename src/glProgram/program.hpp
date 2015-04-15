@@ -3,9 +3,7 @@
 
 #include <vector>
 
-#define GL_GLEXT_PROTOTYPES
-#define GLFW_INCLUDE_GLCOREARB
-#include <GLFW/glfw3.h>
+#include "../util/include_gl.hpp"
 
 #include "shader.hpp"
 

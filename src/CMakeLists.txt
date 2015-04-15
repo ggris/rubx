@@ -1,10 +1,18 @@
 add_subdirectory(glProgram)
 
-add_executable(rubx
+set(SRC
+    main.hpp
     main.cpp
+
+    context.hpp
     context.cpp
+
+    mesh_cube.hpp
     mesh_cube.cpp
     )
+
+
+add_executable(rubx ${SRC})
 
 target_link_libraries(rubx
     glfw

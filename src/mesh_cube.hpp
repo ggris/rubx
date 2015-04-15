@@ -5,7 +5,7 @@
 
 class MeshCube;
 
-#include "context.hpp"
+#include "util/include_gl.hpp"
 
 class MeshCube
 {

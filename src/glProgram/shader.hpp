@@ -2,9 +2,8 @@
 #define SHADER_HPP
 
 #include <string>
-#define GL_GLEXT_PROTOTYPES
-#define GLFW_INCLUDE_GLCOREARB
-#include <GLFW/glfw3.h>
+
+#include "../util/include_gl.hpp"
 
 class Shader
 {
