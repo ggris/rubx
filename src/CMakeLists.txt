@@ -1,5 +1,9 @@
 add_subdirectory(glProgram)
 
+set(INC
+    ../
+    )
+
 set(SRC
     main.hpp
     main.cpp
@@ -14,10 +18,13 @@ set(SRC
 
 add_executable(rubx ${SRC})
 
+include_directories(${INC})
+
 target_link_libraries(rubx
     glfw
     ${GLFW_LIBRARIES}
     rubx_glProgram
+    glew32s
     )
 
 set_target_properties( rubx

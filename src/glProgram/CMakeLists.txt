@@ -14,7 +14,7 @@ add_library(rubx_glProgram ${SRC})
 include_directories(${INC})
 
 target_link_libraries(rubx_glProgram
-    util
     glfw
     ${GLFW_LIBRARIES}
+    glew32s
     )
