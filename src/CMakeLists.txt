@@ -13,6 +13,12 @@ set(SRC
 
     mesh_cube.hpp
     mesh_cube.cpp
+
+    rubix_cube.hpp
+    rubix_cube.cpp
+    
+    small_cube.hpp
+    small_cube.cpp
     )
 
 

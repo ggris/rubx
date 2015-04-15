@@ -29,9 +29,9 @@ Context::Context()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = glfwCreateWindow(640, 480, "Rubix", NULL, NULL);
+    m_window = glfwCreateWindow(1240, 480, "Rubix", NULL, NULL);
 
     if (!m_window)
     {
@@ -41,6 +41,17 @@ Context::Context()
     }
 
     glfwMakeContextCurrent(m_window);
+
+	#ifdef WIN32
+	//glewExperimental = GL_TRUE;
+	GLenum glewinit = glewInit();
+
+	if (glewinit != GLEW_OK)
+	{
+		std::cout << "Glew not okay! " << glewinit;
+		exit(EXIT_FAILURE);
+	}
+	#endif
 
     glfwSwapInterval(1);
     glfwSetKeyCallback(m_window, key_callback);
@@ -85,21 +96,4 @@ void Context::update()
     ratio = width / (float) height;
     glViewport(0, 0, width, height);
     m_cube->display(glfwGetTime());
-/*
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
-    glBegin(GL_TRIANGLES);
-    glColor3f(1.f, 0.f, 0.f);
-    glVertex3f(-0.6f, -0.4f, 0.f);
-    glColor3f(0.f, 1.f, 0.f);
-    glVertex3f(0.6f, -0.4f, 0.f);
-    glColor3f(0.f, 0.f, 1.f);
-    glVertex3f(0.f, 0.6f, 0.f);
-    glEnd();
-*/
 }
