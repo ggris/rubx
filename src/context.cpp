@@ -49,9 +49,11 @@ Context::Context() :
 
     glfwSwapInterval(1);
 
+	m_ui = new UI();
 	//Setup events
-    glfwSetKeyCallback(m_window, EventHandler::Key_Callback);
-	glfwSetMouseButtonCallback(m_window, EventHandler::MouseButton_Callback);
+	EventHandler::getInstance().setUI(m_ui);
+    glfwSetKeyCallback(m_window, EventHandler::key_Callback);
+	glfwSetMouseButtonCallback(m_window, EventHandler::mouseButton_Callback);
 
     LOG_INFO << "glfw OpenGL context ready";
 
@@ -81,8 +83,6 @@ void Context::initGL()
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
-    m_ui = new UI();
-
     sc_vector_.push_back(new MeshCube());
 }
 
@@ -99,5 +99,5 @@ void Context::update()
     glViewport(0, 0, width, height);
 
     sc_vector_.display();
-    //m_ui->display();
+    m_ui->display();
 }

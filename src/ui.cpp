@@ -12,20 +12,22 @@
 
 UI::UI()
 {
-	GLfloat points[] = { 
-		0.0f, 0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f };
+	float points[] = { 
+		-1.0f,-1.0f, 
+		 1.0f,-1.0f, 
+		-1.0f, 1.0f, 
+		-1.0f, 1.0f, 
+		 1.0f,-1.0f, 
+		 1.0f, 1.0f };
 
-	GLuint vbo = 0; 
-	glGenBuffers(1, &vbo); 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo); 
+	GLuint vp_vbo, vao; 
+	glGenBuffers(1, &vp_vbo); 
+	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo); 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	GLuint m_vao = 0; glGenVertexArrays(1, &m_vao); 
-	glBindVertexArray(m_vao); glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo); 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glGenVertexArrays(1, &vao); 
+	glBindVertexArray(vao); // note: vertex buffer is already bound 
+	glVertexAttribPointer (0, 2, GL_FLOAT, GL_FALSE, 0, NULL); 
+	glEnableVertexAttribArray (0);
 
 	//Creating program
 	Program program;
@@ -43,13 +45,30 @@ UI::UI()
 
 void UI::display()
 {
-    glUseProgram(m_program);
+	if (test)
+	{
+		glDisable(GL_DEPTH_TEST);
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrthof(0, 1240, 0, 480, -5, 1);
 
-	glBindVertexArray(m_vao); // draw points 0-3 from the currently bound VAO with current in-use shader glDrawArrays (GL_TRIANGLES, 0, 3);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+		glUseProgram(m_program);
 
-    glUseProgram(0);
+		glBindVertexArray(m_vao);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+		glUseProgram(0);
+	}
 }
 
+void UI::receiveKeyPress(int key)
+{
+	if (test)
+		test = false;
+	else
+		test = true;
+}
 
 
