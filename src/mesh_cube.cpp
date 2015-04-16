@@ -24,14 +24,14 @@ MeshCube::MeshCube()
     };
 
     float normals[] = {
-        0.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 1.0f
+        -1.0f, -1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, -1.0f, 0.0f,
+        1.0f, 1.0f, -1.0f, 0.0f,
+        -1.0f, 1.0f, -1.0f, 0.0f,
+        -1.0f, -1.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f,
+        -1.0f, 1.0f, 1.0f, 0.0f
     };
 
     unsigned short index_array[] = {
@@ -84,7 +84,8 @@ MeshCube::MeshCube()
     Program program;
 
     program.emplace_back("pos.vert", GL_VERTEX_SHADER);
-    program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
+    //program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
+    program.emplace_back("ggx.frag", GL_FRAGMENT_SHADER);
 
     program.link();
 
