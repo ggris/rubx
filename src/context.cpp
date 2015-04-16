@@ -3,17 +3,11 @@
 
 #include "context.hpp"
 
+#include "eventHandler.hpp"
+
 void error_callback(int error, const char* description)
 {
     LOG_ERROR << error << " : " << description;
-}
-
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    (void)scancode;
-    (void)mods;
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
 Context::Context()
@@ -53,7 +47,9 @@ Context::Context()
 	LOG_INFO << "Glew init ok";
 
     glfwSwapInterval(1);
-    glfwSetKeyCallback(m_window, key_callback);
+
+    glfwSetKeyCallback(m_window, EventHandler::Key_Callback);
+	glfwSetMouseButtonCallback(m_window, EventHandler::MouseButton_Callback);
 
     LOG_INFO << "glfw OpenGL context ready";
 
@@ -63,6 +59,7 @@ Context::Context()
 Context::~Context()
 {
     delete m_cube;
+
     glfwDestroyWindow(m_window);
     glfwTerminate();
     LOG_INFO << "glfw OpenGL context destroyed";

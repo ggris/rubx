@@ -20,6 +20,9 @@ set(SRC
     rubix_cube.cpp
     small_cube.hpp
     small_cube.cpp
+
+    eventHandler.hpp
+    eventHandler.cpp
     )
 
 
