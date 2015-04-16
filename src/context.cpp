@@ -48,6 +48,7 @@ Context::Context()
 
     glfwSwapInterval(1);
 
+	//Setup events
     glfwSetKeyCallback(m_window, EventHandler::Key_Callback);
 	glfwSetMouseButtonCallback(m_window, EventHandler::MouseButton_Callback);
 
@@ -81,6 +82,7 @@ void Context::initGL()
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     m_cube = new MeshCube();
+	//m_ui = new UI();
 }
 
 void Context::update()
@@ -92,4 +94,5 @@ void Context::update()
     ratio = width / (float) height;
     glViewport(0, 0, width, height);
     m_cube->display(glfwGetTime());
+	m_ui->display();
 }

@@ -23,6 +23,9 @@ set(SRC
 
     eventHandler.hpp
     eventHandler.cpp
+
+    ui.hpp
+    ui.cpp
     )
 
 

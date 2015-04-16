@@ -7,12 +7,11 @@ void EventHandler::Key_Callback(GLFWwindow* window, int key, int scancode, int a
 	(void)scancode;
 	(void)mods;
 
-	//test mods
-	if (mods == GLFW_MOD_SHIFT && key == GLFW_KEY_A)
+	if (key == GLFW_KEY_A)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 
 	//Quit
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }
 

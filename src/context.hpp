@@ -6,6 +6,7 @@
 class Context;
 
 #include "mesh_cube.hpp"
+#include "ui.hpp"
 #include "camera.hpp"
 
 class Context
@@ -19,7 +20,12 @@ class Context
     private:
         GLFWwindow *m_window;
         MeshCube *m_cube;
+		UI *m_ui;
         Camera camera_;
+
+		//a enlever
+		GLuint m_program;
+		//
 
         void initGL();
         void update();
