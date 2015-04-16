@@ -1,12 +1,11 @@
 #version 410
 smooth in vec4 color;
-smooth in vec4 P;
-smooth in vec4 N;
+smooth in vec4 fragPosition;
+smooth in vec4 fragNormal;
 
 uniform vec4 camera_position;
 //uniform mat4 projection_matrix;
 
-out vec4 outColor;
 
 const float M_PI=3.14;
 const vec4 lightPos = vec4 (10.0, 5.0, 7.0,1.0);
@@ -44,11 +43,10 @@ float GGX(vec4 n, vec4 l, vec4 v ,float alpha){
 
 void main()
 {	
-	vec4 n = normalize (N);
-    	vec4 l = normalize (lightPos - P);
-    	vec4 v = normalize (camera_position - P);
+	vec4 normal = normalize (fragNormal);
+    	vec4 light = normalize (lightPos-fragPosition);
+    	vec4 camera = normalize (camera_position);
 	       
-	outColor = vec4(1.0,1.0,0.0,1.0);
-	if(dot(l,n)<0.0) outColor=matAlbedo;
-//GGX(n,l,v,0.5)*matAlbedo;
+	gl_fragColor = GGX(normal,light,camera,0.5)*matAlbedo;
+//
 }

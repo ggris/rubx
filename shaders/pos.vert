@@ -7,8 +7,8 @@ uniform vec4 camera_position;
 uniform mat4 projection_matrix;
 
 smooth out vec4 color;
-smooth out vec4 P;
-smooth out vec4 N;
+smooth out vec4 fragPosition;
+smooth out vec4 fragNormal;
 
 
 void main()
@@ -17,4 +17,6 @@ void main()
     vec4 base_position = position * vec4(s, s, s, 1.0f) + camera_position;
     gl_Position = projection_matrix * base_position;
     color = position;
+    fragPosition=position;
+    fragNormal=normal;
 }
