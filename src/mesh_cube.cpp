@@ -95,8 +95,9 @@ MeshCube::MeshCube()
 
 }
 
-void MeshCube::display(float t)
+void MeshCube::display()
 {
+    float t = glfwGetTime();
     glUseProgram(m_program);
 
     // Get program uniforms

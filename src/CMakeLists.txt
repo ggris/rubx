@@ -11,6 +11,8 @@ set(SRC
     context.hpp
     context.cpp
 
+    scene_graph.hpp
+    scene_graph.cpp
     camera.hpp
     camera.cpp
     mesh_cube.hpp
