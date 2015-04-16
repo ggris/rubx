@@ -10,7 +10,8 @@ void error_callback(int error, const char* description)
     LOG_ERROR << error << " : " << description;
 }
 
-Context::Context()
+Context::Context() :
+    sc_vector_()
 {
     glfwSetErrorCallback(error_callback);
 
@@ -59,8 +60,6 @@ Context::Context()
 
 Context::~Context()
 {
-    delete m_cube;
-
     glfwDestroyWindow(m_window);
     glfwTerminate();
     LOG_INFO << "glfw OpenGL context destroyed";
@@ -81,18 +80,24 @@ void Context::initGL()
 {
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
-    m_cube = new MeshCube();
-	//m_ui = new UI();
+
+    m_ui = new UI();
+
+    sc_vector_.push_back(new MeshCube());
 }
 
 void Context::update()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     float ratio;
     int width, height;
+
     glfwGetFramebufferSize(m_window, &width, &height);
     ratio = width / (float) height;
+
     glViewport(0, 0, width, height);
-    m_cube->display(glfwGetTime());
-	m_ui->display();
+
+    sc_vector_.display();
+    //m_ui->display();
 }

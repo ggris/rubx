@@ -3,15 +3,14 @@
 
 #include <vector>
 
-class MeshCube;
-
+#include "scene_graph.hpp"
 #include "util/include_gl.hpp"
 
-class MeshCube
+class MeshCube : public ScNode
 {
     public:
         MeshCube();
-        void display(float time);
+        void display();
     private:
         GLuint m_program;
         GLuint m_vao;

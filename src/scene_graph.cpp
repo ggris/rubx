@@ -1,0 +1,18 @@
+#include "scene_graph.hpp"
+
+void ScVector::display()
+{
+    for (unsigned int i_l = 0; i_l < size(); i_l++)
+        at(i_l)->display();
+}
+
+
+/*
+Scene::Scene() :
+    context_(),
+    camera_(),
+    mesh_cube_()
+{
+}
+*/
+
