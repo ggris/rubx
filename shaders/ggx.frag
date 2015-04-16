@@ -6,6 +6,8 @@ smooth in vec4 fragNormal;
 uniform vec4 camera_position;
 //uniform mat4 projection_matrix;
 
+out vec4 fragColor;
+
 
 const float M_PI=3.14;
 const vec4 lightPos = vec4 (10.0, 5.0, 7.0,1.0);
@@ -46,7 +48,7 @@ void main()
 	vec4 normal = normalize (fragNormal);
     	vec4 light = normalize (lightPos-fragPosition);
     	vec4 camera = normalize (camera_position);
-	       
-	gl_fragColor = GGX(normal,light,camera,0.5)*matAlbedo;
+
+	fragColor = GGX(normal,light,camera,0.5)*color;
 //
 }
