@@ -21,4 +21,4 @@ include_directories(lib/glm)
 add_subdirectory(src)
 
 file(REMOVE_RECURSE "${CMAKE_BINARY_DIR}/bin")
-file(INSTALL "shaders" DESTINATION "${CMAKE_BINARY_DIR}/bin")
+file(INSTALL "data" DESTINATION "${CMAKE_BINARY_DIR}/bin")

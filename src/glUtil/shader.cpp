@@ -7,7 +7,7 @@
 #include "shader.hpp"
 
 #ifndef SHADERS_DIRECTORY
-#define SHADERS_DIRECTORY "shaders/"
+#define SHADERS_DIRECTORY "data/shaders/"
 #endif
 
 Shader::Shader(const std::string &filename, GLenum shader_type) :
