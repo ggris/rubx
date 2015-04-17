@@ -97,12 +97,8 @@ void Context::update()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    float ratio;
     int width, height;
-
     glfwGetFramebufferSize(window_, &width, &height);
-    ratio = width / (float) height;
-
     glViewport(0, 0, width, height);
 
     sc_vector_.display();

@@ -12,12 +12,14 @@ set(SRC
     sc_ui.cpp
     sc_3d.hpp
     sc_3d.cpp
+    sc_mesh.hpp
+    sc_mesh.cpp
 
     camera.hpp
     camera.cpp
 
-    mesh_cube.hpp
-    mesh_cube.cpp
+    mesh_generator.hpp
+    mesh_generator.cpp
 
     rubix_cube.hpp
     rubix_cube.cpp
