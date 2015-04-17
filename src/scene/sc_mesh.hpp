@@ -4,13 +4,14 @@
 #include <vector>
 
 #include "include_gl.hpp"
-#include "scene_graph.hpp"
+#include "sc_3d_node.hpp"
 #include "camera.hpp"
+#include "texture.hpp"
 
-class ScMesh : public ScNode
+class ScMesh : public Sc3dNode
 {
     public:
-        ScMesh(Camera * camera,
+        ScMesh(Sc3dNode * parent,
                 const std::vector<float> &points,
                 const std::vector<float> &normals,
                 const std::vector<float> &tex_coord,
@@ -20,7 +21,7 @@ class ScMesh : public ScNode
     private:
         GLuint program_;
         GLuint vao_;
-        Camera * camera_;
+        GLuint texture_;
 
 };
 

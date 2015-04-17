@@ -2,6 +2,7 @@
 #define SC_3D_HPP
 
 #include "include_gl.hpp"
+#include "glm/glm.hpp"
 
 #include "scene_graph.hpp"
 
@@ -12,7 +13,6 @@ class Sc3d : public ScVector
     public:
         Sc3d(GLFWwindow * window);
 
-        Camera * getCameraPointer();
         void display();
 
     private:

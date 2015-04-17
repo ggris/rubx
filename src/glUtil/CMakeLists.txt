@@ -8,8 +8,8 @@ set(SRC
     program.hpp
     program.cpp
 
-    #    texture.hpp
-    #texture.cpp
+    texture.hpp
+    texture.cpp
     )
 
 add_library(rubx_glUtil ${SRC})
