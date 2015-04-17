@@ -2,7 +2,7 @@
 #define EVENTHANDLER_HPP
 
 #include "util/include_gl.hpp"
-#include "ui.hpp"
+#include "sc_ui.hpp"
 
 class EventHandler;
 

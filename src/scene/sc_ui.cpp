@@ -3,7 +3,7 @@
 #include <cmath>
 
 #include "logger.hpp"
-#include "ui.hpp"
+#include "sc_ui.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

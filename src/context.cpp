@@ -1,9 +1,10 @@
 #include "logger.hpp"
-#include "mesh_cube.hpp"
+#include "event_handler.hpp"
+
+#include "sc_ui.hpp"
+#include "sc_3d.hpp"
 
 #include "context.hpp"
-
-#include "event_handler.hpp"
 
 void error_callback(int error, const char* description)
 {
@@ -88,7 +89,7 @@ void Context::initScene()
     UI * ui = new UI();
 	EventHandler::getInstance().setUI(ui);
 
-    sc_vector_.push_back(new MeshCube());
+    sc_vector_.push_back(new Sc3d(window_));
     sc_vector_.push_back(ui);
 }
 

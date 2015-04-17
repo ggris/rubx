@@ -3,17 +3,21 @@
 
 #include <vector>
 
-#include "scene_graph.hpp"
 #include "include_gl.hpp"
+#include "scene_graph.hpp"
+#include "camera.hpp"
 
 class MeshCube : public ScNode
 {
     public:
-        MeshCube();
+        MeshCube(Camera * camera);
         void display();
+
     private:
-        GLuint m_program;
-        GLuint m_vao;
+        GLuint program_;
+        GLuint vao_;
+        Camera * camera_;
+
 };
 
 #endif

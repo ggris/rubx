@@ -10,7 +10,8 @@
 
 #include "program.hpp"
 
-MeshCube::MeshCube()
+MeshCube::MeshCube(Camera * camera) :
+    camera_(camera)
 {
     float points[] = {
         0.0f, 0.0f, 0.0f, 1.0f,
@@ -64,8 +65,8 @@ MeshCube::MeshCube()
     glBindBuffer (GL_ELEMENT_ARRAY_BUFFER, index_buffer_object);
     glBufferData (GL_ELEMENT_ARRAY_BUFFER, 48 * sizeof (unsigned short), index_array, GL_STATIC_DRAW);
 
-    glGenVertexArrays (1, &m_vao);
-    glBindVertexArray (m_vao);
+    glGenVertexArrays (1, &vao_);
+    glBindVertexArray (vao_);
     glEnableVertexAttribArray (0);
     glEnableVertexAttribArray (1);
 
@@ -91,31 +92,31 @@ MeshCube::MeshCube()
 
     program.clearShaders();
 
-    m_program = program.getProgram();
+    program_ = program.getProgram();
 
 }
 
 void MeshCube::display()
 {
     float t = glfwGetTime();
-    glUseProgram(m_program);
+    glUseProgram(program_);
 
     // Get program uniforms
 
-    GLuint offsetUniform = glGetUniformLocation(m_program, "camera_position");
-    GLuint perspectiveMatrixUnif = glGetUniformLocation(m_program, "projection_matrix");
+    GLuint offsetUniform = glGetUniformLocation(program_, "camera_position");
+    GLuint perspectiveMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
 
     // Define projection matrix
 
-    glm::mat4 projection =
-        glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
+    glm::mat4 projection = camera_->get_mat_camera();
+   //     glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
 
     // Define uniform values
 
     glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
 
-    glBindVertexArray(m_vao);
+    glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
 
     glUseProgram(0);

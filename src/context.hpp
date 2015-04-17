@@ -5,8 +5,6 @@
 
 #include "scene_graph.hpp"
 
-#include "ui.hpp"
-
 class Context
 {
     public:

@@ -43,6 +43,8 @@ void Camera::setPerspective(float fov, float ratio, float z_near, float z_far)
 void Camera::set_ratio(float ratio)
 {
     ratio_ = ratio;
+    update_mat_project();
+    update_mat_camera();
 }
 
 const glm::mat4& Camera::get_mat_camera() const

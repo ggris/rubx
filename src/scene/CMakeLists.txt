@@ -8,6 +8,11 @@ set(SRC
     scene_graph.hpp
     scene_graph.cpp
 
+    sc_ui.hpp
+    sc_ui.cpp
+    sc_3d.hpp
+    sc_3d.cpp
+
     camera.hpp
     camera.cpp
 
@@ -18,9 +23,6 @@ set(SRC
     rubix_cube.cpp
     small_cube.hpp
     small_cube.cpp
-
-    ui.hpp
-    ui.cpp
     )
 
 add_library(rubx_scene ${SRC})
