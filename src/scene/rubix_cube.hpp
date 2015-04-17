@@ -7,7 +7,7 @@
 #include "include_gl.hpp"
 #include <glm/gtc/matrix_integer.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/string_cast.hpp>
+#include "glm/ext.hpp"
 #include <glm/gtx/transform.hpp>
 
 class RubixCube : public ScNode
@@ -23,7 +23,7 @@ public :
         //direct = +1 ou -1
         //crown = +1 ou -1
     void display(); //TODO
-    
+    std::string test_string();
 private :
     
     std::vector <SmallCube> cubes_;
