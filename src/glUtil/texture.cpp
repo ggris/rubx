@@ -1,11 +1,12 @@
 #include "texture.hpp"
 #include <stdio.h>
+#include <iostream>
 
 using namespace std;
 
 Texture::Texture(const string &filename):
     filename_(filename),
-    texture_(createTexture()
+    texture_(createTexture())
 {
     loadTexture();
 }
@@ -13,6 +14,7 @@ Texture::Texture(const string &filename):
 GLuint Texture::createTexture()
 {
     GLuint res;
+
     glGenTextures(1, &res);
     return res;
 }
@@ -25,7 +27,7 @@ void Texture::loadTexture()
     unsigned int imageSize;
     unsigned char * data;
 
-    FILE * file = fopen(filename_,"rb");
+    FILE * file = fopen(filename_.c_str(),"rb");
     if(!file){
         cout<<"ERROR : Texture::loadTexture() : could not open file"<<endl;
         return;
@@ -51,11 +53,14 @@ void Texture::loadTexture()
     fread(data,1,imageSize,file);
     fclose(file);
 
+    //binding texture in openGL
 
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTexture(GL_TEXTURE_2D, texture_);
+
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    //glGenerateMipmap(GL_TEXTURE_2D);
 }

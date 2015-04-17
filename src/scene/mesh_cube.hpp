@@ -6,6 +6,7 @@
 #include "include_gl.hpp"
 #include "scene_graph.hpp"
 #include "camera.hpp"
+#include "texture.hpp"
 
 class MeshCube : public ScNode
 {
@@ -16,6 +17,7 @@ class MeshCube : public ScNode
     private:
         GLuint program_;
         GLuint vao_;
+        GLuint texture_;
         Camera * camera_;
 
 };
