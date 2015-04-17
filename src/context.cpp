@@ -26,16 +26,16 @@ Context::Context() :
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = glfwCreateWindow(1240, 480, "Rubix", NULL, NULL);
+    window_ = glfwCreateWindow(1240, 480, "Rubix", NULL, NULL);
 
-    if (!m_window)
+    if (!window_)
     {
         glfwTerminate();
         LOG_FATAL << "Failed to create glfw window";
         exit(EXIT_FAILURE);
     }
 
-	glfwMakeContextCurrent(m_window);
+	glfwMakeContextCurrent(window_);
 
 	glewExperimental = GL_TRUE;
 	GLenum glewinit = glewInit();
@@ -49,30 +49,29 @@ Context::Context() :
 
     glfwSwapInterval(1);
 
-	m_ui = new UI();
 	//Setup events
-	EventHandler::getInstance().setUI(m_ui);
-    glfwSetKeyCallback(m_window, EventHandler::key_Callback);
-	glfwSetMouseButtonCallback(m_window, EventHandler::mouseButton_Callback);
+    glfwSetKeyCallback(window_, EventHandler::key_Callback);
+	glfwSetMouseButtonCallback(window_, EventHandler::mouseButton_Callback);
 
     LOG_INFO << "glfw OpenGL context ready";
 
 	initGL();
+    initScene();
 }
 
 Context::~Context()
 {
-    glfwDestroyWindow(m_window);
+    glfwDestroyWindow(window_);
     glfwTerminate();
     LOG_INFO << "glfw OpenGL context destroyed";
 }
 
 void Context::run()
 {
-    while (!glfwWindowShouldClose(m_window))
+    while (!glfwWindowShouldClose(window_))
     {
         update();
-        glfwSwapBuffers(m_window);
+        glfwSwapBuffers(window_);
         glfwPollEvents();
     }
 
@@ -82,8 +81,15 @@ void Context::initGL()
 {
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
+}
+
+void Context::initScene()
+{
+    UI * ui = new UI();
+	EventHandler::getInstance().setUI(ui);
 
     sc_vector_.push_back(new MeshCube());
+    sc_vector_.push_back(ui);
 }
 
 void Context::update()
@@ -93,11 +99,10 @@ void Context::update()
     float ratio;
     int width, height;
 
-    glfwGetFramebufferSize(m_window, &width, &height);
+    glfwGetFramebufferSize(window_, &width, &height);
     ratio = width / (float) height;
 
     glViewport(0, 0, width, height);
 
     sc_vector_.display();
-    m_ui->display();
 }
