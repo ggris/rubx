@@ -17,43 +17,6 @@ ScMesh::ScMesh(Sc3dNode * parent,
         const std::vector<unsigned short> &index) :
     Sc3dNode(parent)
 {
-<<<<<<< HEAD:src/scene/mesh_cube.cpp
-    float points[] = {
-        0.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 1.0f
-    };
-
-    float normals[] = {
-        -1.0f, -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, -1.0f, 0.0f,
-        1.0f, 1.0f, -1.0f, 0.0f,
-        -1.0f, 1.0f, -1.0f, 0.0f,
-        -1.0f, -1.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f, 0.0f
-    };
-
-    unsigned short index_array[] = {
-        0, 3, 2,
-        0, 2, 1,
-        0, 1, 5,
-        0, 5, 4,
-        1, 2, 6,
-        1, 6, 5,
-        2, 3, 7,
-        2, 7, 6,
-        3, 0, 4,
-        3, 4, 7,
-        4, 5, 6,
-        4, 6, 7,
-    };
 
     float UVcoords[] = {
         0.0f, 0.0f,
@@ -67,8 +30,6 @@ ScMesh::ScMesh(Sc3dNode * parent,
 
     };
 
-=======
->>>>>>> f0e5cc7eb17a83e965b97f27173a45cf00a46836:src/scene/sc_mesh.cpp
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
     glBindBuffer (GL_ARRAY_BUFFER, points_vbo);
@@ -114,13 +75,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
     Program program;
 
     program.emplace_back("pos.vert", GL_VERTEX_SHADER);
-<<<<<<< HEAD:src/scene/mesh_cube.cpp
-    //program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
-    //program.emplace_back("ggx.frag", GL_FRAGMENT_SHADER);
     program.emplace_back("texture.frag", GL_FRAGMENT_SHADER);
-=======
-    program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
->>>>>>> f0e5cc7eb17a83e965b97f27173a45cf00a46836:src/scene/sc_mesh.cpp
 
     program.link();
 
