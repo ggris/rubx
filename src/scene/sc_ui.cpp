@@ -13,12 +13,12 @@
 UI::UI()
 {
 	float points[] = { 
-		 1.0f, 1.0f, 
-		 0.0f, 1.0f, 
-		 0.0f, 0.0f, 
-		 0.0f, 0.0f, 
-		 1.0f, 0.0f, 
-		 1.0f, 1.0f };
+		  0.0f,   0.0f, 
+		  100.0f, 0.0f, 
+		  100.0f, 200.0f,
+	      100.0f, 200.0f,
+	      0.0f,   200.0f,
+	      0.0f,   0.0f};
 
 	GLuint vp_vbo, vao; 
 	glGenBuffers(1, &vp_vbo); 
@@ -47,22 +47,15 @@ void UI::display()
 {
 	if (test)
 	{
-		GLuint projectionMatrixUnif = glGetUniformLocation(m_program, "u_projection");
-		glm::mat4 projMat = glm::ortho(0.f, 1240.f, 0.f, 480.f, -1.f, 1.f);
-
-		glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projMat));
-
-		glDisable(GL_DEPTH_TEST);
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		glOrthof(0, 1240, 0, 480, -5, 1);
-
 		glUseProgram(m_program);
+
+		GLuint projectionMatrixUnif = glGetUniformLocation(m_program, "u_projection");
+		glm::mat4 ortho = glm::ortho(0.0f, 1240.0f, 0.0f, 480.0f, -1.0f, 1.0f);
+
+		glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(ortho));
 
 		glBindVertexArray(m_vao);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
-
 
 		glUseProgram(0);
 	}
