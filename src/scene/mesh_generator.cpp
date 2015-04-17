@@ -39,7 +39,19 @@ ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
         4, 6, 7,
     };
 
-    return new ScMesh(parent, points, normals, points, index);
+    std::vector<float> tex_coord = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f
+
+    };
+
+    return new ScMesh(parent, points, normals, tex_coord, index);
 
 }
 
@@ -126,6 +138,71 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
         20, 22, 21
 
     };
+
+    std::vector<float> tex_coord = { //whole texture repeated over every face
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f
+    };
+
+//    std::vector<float> tex_coord = { //.33 x .33 square for each face
+//
+//        0.0f, 0.0f,
+//        0.33f, 0.0f,
+//        0.33f, 0.33f,
+//        0.0f, 0.33f,
+//
+//        0.33f, 0.0f,
+//        0.67f, 0.0f,
+//        0.67f, 0.33f,
+//        0.33f, 0.33f,
+//
+//        0.67f, 0.0f,
+//        1.0f, 0.0f,
+//        1.0f, 0.33f,
+//        0.67f, 0.33f,
+//
+//        0.0f, 0.33f,
+//        0.33f, 0.33f,
+//        0.33f, 0.67f,
+//        0.0f, 0.67f,
+//
+//        0.33f, 0.33f,
+//        0.67f, 0.33f,
+//        0.67f,0.67f,
+//        0.33f, 0.67f,
+//
+//        0.67f, 0.33f,
+//        1.0f, 0.33f,
+//        1.0f, 0.67f,
+//        0.67f, 0.67f,
+//    };
 
     return new ScMesh(parent, points, normals, points, index);
 

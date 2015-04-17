@@ -20,18 +20,6 @@ ScMesh::ScMesh(Sc3dNode * parent,
 
     transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
 
-    float UVcoords[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-
-    };
-
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
     glBindBuffer (GL_ARRAY_BUFFER, points_vbo);
@@ -50,7 +38,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
     GLuint UVcoords_buffer_object;
     glGenBuffers (1,&UVcoords_buffer_object);
     glBindBuffer (GL_ARRAY_BUFFER,UVcoords_buffer_object);
-    glBufferData (GL_ARRAY_BUFFER,16 * sizeof (float),UVcoords, GL_STATIC_DRAW);
+    glBufferData (GL_ARRAY_BUFFER,16 * sizeof (float),tex_coord.data(), GL_STATIC_DRAW);
 
     glGenVertexArrays (1, &vao_);
     glBindVertexArray (vao_);
