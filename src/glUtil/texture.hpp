@@ -14,6 +14,9 @@ class Texture
     private:
         const std::string filename_;
         const GLuint texture_;
+		GLuint createTexture();
+		void loadTexture();
+	
 };
 
 #endif // TEXTURE_H
