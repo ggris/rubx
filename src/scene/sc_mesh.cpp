@@ -51,8 +51,7 @@ ScMesh::ScMesh(Camera * camera,
     Program program;
 
     program.emplace_back("pos.vert", GL_VERTEX_SHADER);
-    //program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
-    program.emplace_back("ggx.frag", GL_FRAGMENT_SHADER);
+    program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
 
     program.link();
 

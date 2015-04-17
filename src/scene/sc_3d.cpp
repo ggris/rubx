@@ -6,7 +6,7 @@ Sc3d::Sc3d(GLFWwindow * window) :
     window_(window),
     camera_(80.0f, 1.0f, 0.1f, 10.0f)
 {
-    push_back(MeshGenerator::testCube(this));
+    push_back(MeshGenerator::rubixSmallCube(this));
 }
 
 Camera * Sc3d::getCameraPointer()

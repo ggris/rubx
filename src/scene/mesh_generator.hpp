@@ -8,6 +8,7 @@ class MeshGenerator
 {
     public:
         static ScMesh * testCube(Sc3d * sc3d);
+        static ScMesh * rubixSmallCube(Sc3d * sc3d);
 
 };
 
