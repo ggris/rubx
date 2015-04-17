@@ -12,6 +12,8 @@ set(SRC
     sc_ui.cpp
     sc_3d.hpp
     sc_3d.cpp
+    sc_3d_node.hpp
+    sc_3d_node.cpp
     sc_mesh.hpp
     sc_mesh.cpp
 

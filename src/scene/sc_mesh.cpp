@@ -4,17 +4,18 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "glm/ext.hpp"
 #include "logger.hpp"
 #include "program.hpp"
 
 #include "sc_mesh.hpp"
 
-ScMesh::ScMesh(Camera * camera,
+ScMesh::ScMesh(Sc3dNode * parent,
         const std::vector<float> &points,
         const std::vector<float> &normals,
         const std::vector<float> &tex_coord,
         const std::vector<unsigned short> &index) :
-    camera_(camera)
+    Sc3dNode(parent)
 {
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
@@ -73,7 +74,7 @@ void ScMesh::display()
 
     // Define projection matrix
 
-    glm::mat4 projection = camera_->get_mat_camera();
+    glm::mat4 projection = getTransformation();
 
     // Define uniform values
 

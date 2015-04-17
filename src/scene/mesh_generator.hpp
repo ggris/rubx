@@ -2,13 +2,13 @@
 #define MESH_GENERATOR_HPP
 
 #include "sc_mesh.hpp"
-#include "sc_3d.hpp"
+#include "sc_3d_node.hpp"
 
 class MeshGenerator
 {
     public:
-        static ScMesh * testCube(Sc3d * sc3d);
-        static ScMesh * rubixSmallCube(Sc3d * sc3d);
+        static ScMesh * testCube(Sc3dNode * parent);
+        static ScMesh * rubixSmallCube(Sc3dNode * parent);
 
 };
 

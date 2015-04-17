@@ -2,8 +2,9 @@
 #define CAMERA_HPP
 
 #include <glm/glm.hpp>
+#include "sc_3d_node.hpp"
 
-class Camera
+class Camera : public Sc3dNode
 {
     public:
         Camera();
@@ -12,7 +13,9 @@ class Camera
         void setPerspective(float fov, float ratio, float z_near, float z_far);
         void set_ratio(float ratio);
 
-        const glm::mat4& get_mat_camera() const;
+        const glm::mat4 & getTransformation() const;
+
+        void display();
 
     private:
         float fov_;

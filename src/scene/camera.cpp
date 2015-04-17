@@ -1,9 +1,11 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "logger.hpp"
 #include "camera.hpp"
 
 Camera::Camera() :
+    Sc3dNode(),
     fov_(45.0f),
     ratio_(1.0f),
     z_near_(0.1f),
@@ -12,12 +14,12 @@ Camera::Camera() :
     rot_loc_x_(0.0f),
     position_(0.0f),            // Zero vector
     mat_project_(glm::perspective(fov_, ratio_, z_near_, z_far_)),
-    mat_rotate_(1.0f),          // Identity
-    mat_camera_(mat_project_)
+    mat_rotate_(1.0f)           // Identity
 {
 }
 
 Camera::Camera(float fov, float ratio, float z_near, float z_far) :
+    Sc3dNode(),
     fov_(fov),
     ratio_(ratio),
     z_near_(z_near),
@@ -26,8 +28,7 @@ Camera::Camera(float fov, float ratio, float z_near, float z_far) :
     rot_loc_x_(0.0f),
     position_(0.0f),            // Zero vector
     mat_project_(glm::perspective(fov_, ratio_, z_near_, z_far_)),
-    mat_rotate_(1.0f),          // Identity
-    mat_camera_(mat_project_)
+    mat_rotate_(1.0f)           // Identity
 {
 }
 
@@ -47,11 +48,6 @@ void Camera::set_ratio(float ratio)
     update_mat_camera();
 }
 
-const glm::mat4& Camera::get_mat_camera() const
-{
-    return mat_camera_;
-}
-
 void Camera::update_mat_project()
 {
     mat_project_ = glm::perspective(fov_, ratio_, z_near_, z_far_);
@@ -65,7 +61,11 @@ void Camera::update_mat_rotate()
 
 void Camera::update_mat_camera()
 {
-    mat_camera_ = mat_project_ * mat_rotate_;
+    transformation_ = mat_project_ * mat_rotate_;
+}
+
+void Camera::display()
+{
 }
 
 

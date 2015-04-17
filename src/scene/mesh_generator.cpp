@@ -1,6 +1,6 @@
 #include "mesh_generator.hpp"
 
-ScMesh * MeshGenerator::testCube(Sc3d * sc3d)
+ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
 {
     std::vector<float> points = {
         0.0f, 0.0f, 0.0f, 1.0f,
@@ -39,11 +39,11 @@ ScMesh * MeshGenerator::testCube(Sc3d * sc3d)
         4, 6, 7,
     };
 
-    return new ScMesh(sc3d->getCameraPointer(), points, normals, points, index);
+    return new ScMesh(parent, points, normals, points, index);
 
 }
 
-ScMesh * MeshGenerator::rubixSmallCube(Sc3d * sc3d)
+ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 {
     std::vector<float> points = {
         0.0f, 0.0f, 0.0f, 1.0f,
@@ -127,6 +127,6 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3d * sc3d)
 
     };
 
-    return new ScMesh(sc3d->getCameraPointer(), points, normals, points, index);
+    return new ScMesh(parent, points, normals, points, index);
 
 }
