@@ -78,6 +78,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
 
     program.emplace_back("pos.vert", GL_VERTEX_SHADER);
     program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
+    //program.emplace_back("texture.frag", GL_FRAGMENT_SHADER);
 
     program.link();
 
@@ -113,10 +114,7 @@ void ScMesh::display()
     //glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
     glUniform4f(offsetUniform, 0, 0, -2, 0);
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture_);
-    // Set our "myTextureSampler" sampler to user Texture Unit 0
-    glUniform1i(textureSamplerUniform, 0);
+    Texture::bindTextureToSampler(texture_,textureSamplerUniform);
 
     glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
