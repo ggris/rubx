@@ -8,6 +8,7 @@ class UI;
 #include "scene_graph.hpp"
 #include "include_gl.hpp"
 
+enum UI_state { UI_START, UI_SCORE, UI_GAME };
 class UI : public ScNode
 {
     public:
@@ -19,7 +20,7 @@ class UI : public ScNode
     private:
         GLuint m_program;
         GLuint m_vao;
-		bool test = false;
+		UI_state ui_state = UI_START;
 };
 
 #endif

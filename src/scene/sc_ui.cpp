@@ -13,19 +13,19 @@
 UI::UI()
 {
 	float points[] = { 
-		  0.0f,   0.0f, 
-		  100.0f, 0.0f, 
-		  100.0f, 200.0f,
-	      100.0f, 200.0f,
-	      0.0f,   200.0f,
-	      0.0f,   0.0f};
+			-1.0f,-1.0f,
+			 1.0f,-1.0f,
+			-1.0f, 1.0f,
+			-1.0f, 1.0f,
+			 1.0f,-1.0f,
+			 1.0f, 1.0f };
 
-	GLuint vp_vbo, vao; 
+	GLuint vp_vbo; 
 	glGenBuffers(1, &vp_vbo); 
 	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo); 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-	glGenVertexArrays(1, &vao); 
-	glBindVertexArray(vao); // note: vertex buffer is already bound 
+	glGenVertexArrays(1, &m_vao);
+	glBindVertexArray(m_vao);
 	glVertexAttribPointer (0, 2, GL_FLOAT, GL_FALSE, 0, NULL); 
 	glEnableVertexAttribArray (0);
 
@@ -45,28 +45,48 @@ UI::UI()
 
 void UI::display()
 {
-	if (test)
+	glUseProgram(m_program);
+
+	//temp colour to test ui flow
+	GLuint u_colour = glGetUniformLocation(m_program, "colour");
+
+	switch (ui_state)
 	{
-		glUseProgram(m_program);
-
-		GLuint projectionMatrixUnif = glGetUniformLocation(m_program, "u_projection");
-		glm::mat4 ortho = glm::ortho(0.0f, 1240.0f, 0.0f, 480.0f, -1.0f, 1.0f);
-
-		glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(ortho));
-
-		glBindVertexArray(m_vao);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		glUseProgram(0);
+		case UI_START:
+			glUniform4f(u_colour, 0.5f, 0.5f, 0.5f, 1.0f);
+			glBindVertexArray(m_vao);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+			break;
+		case UI_SCORE:
+			glUniform4f(u_colour, 1.0f, 1.0f, 1.0f, 1.0f);
+			glBindVertexArray(m_vao);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+			break;
+		case UI_GAME:
+			break;
 	}
+
+	glUseProgram(0);
 }
 
 void UI::receiveKeyPress(int key)
 {
-	if (test)
-		test = false;
-	else
-		test = true;
+	if (key == GLFW_KEY_S)
+	{
+		switch (ui_state)
+		{
+		case UI_START:
+			ui_state = UI_SCORE;
+			break;
+		case UI_SCORE:
+			ui_state = UI_START;
+			break;
+		}
+	}
+	else if (key == GLFW_KEY_P && ui_state == UI_START)
+		ui_state = UI_GAME;
+	else if (key == GLFW_KEY_Q && ui_state == UI_GAME)
+		ui_state = UI_START;
 }
 
 

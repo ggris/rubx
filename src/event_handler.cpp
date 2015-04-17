@@ -8,8 +8,8 @@ void EventHandler::key_Callback(GLFWwindow* window, int key, int scancode, int a
 	(void)scancode;
 	(void)mods;
 
-	if (key == GLFW_KEY_A && action == GLFW_PRESS)
-		m_ui->receiveKeyPress(GLFW_KEY_A);
+	if (action == GLFW_PRESS)
+		m_ui->receiveKeyPress(key);
 
 	//Quit
 	else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
