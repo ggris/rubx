@@ -14,18 +14,6 @@ class ScVector : public std::vector<ScNode*>, public ScNode
     public:
         void display();
 };
-/*
-class Scene
-{
-    public:
-        Scene();
-
-    private:
-        Context context_;
-        Camera camera_;
-        MeshCube mesh_cube_;
-};
-*/
 
 #endif
 

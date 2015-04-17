@@ -18,6 +18,8 @@ ScMesh::ScMesh(Sc3dNode * parent,
     Sc3dNode(parent)
 {
 
+    transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
+
     float UVcoords[] = {
         0.0f, 0.0f,
         1.0f, 0.0f,
@@ -75,7 +77,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
     Program program;
 
     program.emplace_back("pos.vert", GL_VERTEX_SHADER);
-    program.emplace_back("texture.frag", GL_FRAGMENT_SHADER);
+    program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
 
     program.link();
 
@@ -108,7 +110,8 @@ void ScMesh::display()
 
     // Define uniform values
 
-    glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
+    //glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
+    glUniform4f(offsetUniform, 0, 0, -2, 0);
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_);

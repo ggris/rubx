@@ -16,6 +16,7 @@ class ScMesh : public Sc3dNode
                 const std::vector<float> &normals,
                 const std::vector<float> &tex_coord,
                 const std::vector<unsigned short> &index);
+
         void display();
 
     private:

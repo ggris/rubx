@@ -7,12 +7,3 @@ void ScVector::display()
 }
 
 
-/*
-Scene::Scene() :
-    context_(),
-    camera_(),
-    mesh_cube_()
-{
-}
-*/
-
