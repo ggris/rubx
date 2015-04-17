@@ -87,7 +87,8 @@ void Context::initGL()
 void Context::initScene()
 {
     UI * ui = new UI();
-	EventHandler::getInstance().setUI(ui);
+	EventHandler::setUI(ui);
+	EventHandler::setWindow(window_);
 
     sc_vector_.push_back(new Sc3d(window_));
     sc_vector_.push_back(ui);
@@ -97,12 +98,8 @@ void Context::update()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    float ratio;
     int width, height;
-
     glfwGetFramebufferSize(window_, &width, &height);
-    ratio = width / (float) height;
-
     glViewport(0, 0, width, height);
 
     sc_vector_.display();

@@ -3,19 +3,24 @@
 
 #include <vector>
 #include <glm/glm.hpp>
-
-class smallCube {
+#include <glm/gtc/matrix_integer.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+class SmallCube
+{
 
 public :
-	smallCube();
-	smallCube (int x,int y,int z,int rx,int ry,int rz);
-
-	void display();	
+    //contructors
+	SmallCube();
 	
-	int pos[3];
-	int rot[3];
-	glm::vec3 fpos;
-	glm::vec3 frot;
+    SmallCube (int x, int y, int z);
+    
+    
+	void display();
+    void rotate (glm::imat4 rotation);
+
+    glm::imat4 transform_;
+private :
+	
 };
 
 #endif

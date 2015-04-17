@@ -6,13 +6,13 @@
 #include "scene_graph.hpp"
 
 #include "camera.hpp"
-#include "mesh_cube.hpp"
 
 class Sc3d : public ScVector
 {
     public:
         Sc3d(GLFWwindow * window);
 
+        Camera * getCameraPointer();
         void display();
 
     private:

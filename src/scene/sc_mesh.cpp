@@ -2,17 +2,21 @@
 #include <cstring>
 #include <cmath>
 
-#include "logger.hpp"
-#include "mesh_cube.hpp"
-
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+#include "logger.hpp"
 #include "program.hpp"
 
-MeshCube::MeshCube(Camera * camera) :
+#include "sc_mesh.hpp"
+
+ScMesh::ScMesh(Camera * camera,
+        const std::vector<float> &points,
+        const std::vector<float> &normals,
+        const std::vector<float> &tex_coord,
+        const std::vector<unsigned short> &index) :
     camera_(camera)
 {
+<<<<<<< HEAD:src/scene/mesh_cube.cpp
     float points[] = {
         0.0f, 0.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 0.0f, 1.0f,
@@ -62,20 +66,22 @@ MeshCube::MeshCube(Camera * camera) :
 
     };
 
+=======
+>>>>>>> f0e5cc7eb17a83e965b97f27173a45cf00a46836:src/scene/sc_mesh.cpp
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
     glBindBuffer (GL_ARRAY_BUFFER, points_vbo);
-    glBufferData (GL_ARRAY_BUFFER, 32 * sizeof (float), points, GL_STATIC_DRAW);
+    glBufferData (GL_ARRAY_BUFFER, points.size() * sizeof (float), points.data(), GL_STATIC_DRAW);
 
     GLuint normals_vbo;
     glGenBuffers (1, &normals_vbo);
     glBindBuffer (GL_ARRAY_BUFFER, normals_vbo);
-    glBufferData (GL_ARRAY_BUFFER, 32 * sizeof (float), normals, GL_STATIC_DRAW);
+    glBufferData (GL_ARRAY_BUFFER, normals.size() * sizeof (float), normals.data(), GL_STATIC_DRAW);
 
     GLuint index_buffer_object;
     glGenBuffers (1, &index_buffer_object);
     glBindBuffer (GL_ELEMENT_ARRAY_BUFFER, index_buffer_object);
-    glBufferData (GL_ELEMENT_ARRAY_BUFFER, 48 * sizeof (unsigned short), index_array, GL_STATIC_DRAW);
+    glBufferData (GL_ELEMENT_ARRAY_BUFFER, index.size() * sizeof (unsigned short), index.data(), GL_STATIC_DRAW);
 
     GLuint UVcoords_buffer_object;
     glGenBuffers (1,&UVcoords_buffer_object);
@@ -107,9 +113,13 @@ MeshCube::MeshCube(Camera * camera) :
     Program program;
 
     program.emplace_back("pos.vert", GL_VERTEX_SHADER);
+<<<<<<< HEAD:src/scene/mesh_cube.cpp
     //program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
     //program.emplace_back("ggx.frag", GL_FRAGMENT_SHADER);
     program.emplace_back("texture.frag", GL_FRAGMENT_SHADER);
+=======
+    program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
+>>>>>>> f0e5cc7eb17a83e965b97f27173a45cf00a46836:src/scene/sc_mesh.cpp
 
     program.link();
 
@@ -125,7 +135,7 @@ MeshCube::MeshCube(Camera * camera) :
 
 }
 
-void MeshCube::display()
+void ScMesh::display()
 {
     float t = glfwGetTime();
     glUseProgram(program_);
@@ -139,7 +149,6 @@ void MeshCube::display()
     // Define projection matrix
 
     glm::mat4 projection = camera_->get_mat_camera();
-   //     glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
 
     // Define uniform values
 
@@ -156,7 +165,6 @@ void MeshCube::display()
 
     glUseProgram(0);
 }
-
 
 
 

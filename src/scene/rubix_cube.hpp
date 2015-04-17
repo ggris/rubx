@@ -3,16 +3,32 @@
 
 #include <vector>
 #include "small_cube.hpp"
+#include "scene_graph.hpp"
+#include "include_gl.hpp"
+#include <glm/gtc/matrix_integer.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <glm/gtx/transform.hpp>
 
-
-class rubixCube {
-
+class RubixCube : public ScNode
+{
 public :
-	rubixCube();
-	bool isWon();
-	void rotate (int axis, int dir); //axis=0 : x ; axis=1 : y ; axis=2 : z ; dir : sens
-
-	std::vector <smallCube> cubes;
+    static float timer_duration_;
+    
+public :
+	RubixCube();
+    bool isWon();
+    void rotate (int axis, int crown, int direct);
+        //axis = 0 pour x, 1 pour y, 2 pour z
+        //direct = +1 ou -1
+        //crown = +1 ou -1
+    void display(); //TODO
+    
+private :
+    
+    std::vector <SmallCube> cubes_;
+    
+    
 };
 
 #endif
