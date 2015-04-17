@@ -2,13 +2,13 @@
 #include <cstring>
 #include <cmath>
 
-#include "util/logger.hpp"
+#include "logger.hpp"
 #include "mesh_cube.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "glProgram/program.hpp"
+#include "program.hpp"
 
 MeshCube::MeshCube()
 {

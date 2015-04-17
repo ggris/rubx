@@ -1,10 +1,9 @@
 #ifndef CONTEXT_HPP
 #define CONTEXT_HPP
 
-#include "util/include_gl.hpp"
+#include "include_gl.hpp"
 
-#include "scene_graph.hpp"
-#include "mesh_cube.hpp"
+#include "scene/scene_graph.hpp"
 
 #include "ui.hpp"
 #include "camera.hpp"

@@ -5,7 +5,7 @@
 
 class UI;
 
-#include "util/include_gl.hpp"
+#include "include_gl.hpp"
 
 class UI
 {

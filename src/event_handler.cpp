@@ -1,4 +1,4 @@
-#include "eventHandler.hpp"
+#include "event_handler.hpp"
 
 bool EventHandler::buttonPressed = false;
 UI* EventHandler::m_ui;

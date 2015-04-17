@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "scene_graph.hpp"
-#include "util/include_gl.hpp"
+#include "include_gl.hpp"
 
 class MeshCube : public ScNode
 {

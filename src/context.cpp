@@ -1,9 +1,9 @@
-#include "util/logger.hpp"
+#include "logger.hpp"
 #include "mesh_cube.hpp"
 
 #include "context.hpp"
 
-#include "eventHandler.hpp"
+#include "event_handler.hpp"
 
 void error_callback(int error, const char* description)
 {
