@@ -1,35 +1,39 @@
+add_subdirectory(glUtil)
+add_subdirectory(scene)
+
 set(INC
-    ../
-    ../util/
-    ../glUtil/
+    util/
+    glUtil/
+    scene/
     )
 
 set(SRC
-    scene_graph.hpp
-    scene_graph.cpp
+    main.hpp
+    main.cpp
 
-    camera.hpp
-    camera.cpp
+    context.hpp
+    context.cpp
+    event_handler.hpp
+    event_handler.cpp
 
-    mesh_cube.hpp
-    mesh_cube.cpp
-
-    rubix_cube.hpp
-    rubix_cube.cpp
-    small_cube.hpp
-    small_cube.cpp
-
-    ui.hpp
-    ui.cpp
     )
 
-add_library(rubx_scene ${SRC})
+
+add_executable(rubx ${SRC})
 
 include_directories(${INC})
 
-target_link_libraries(rubx_scene
+target_link_libraries(rubx
     glfw
     ${GLFW_LIBRARIES}
     ${GLEW}
     rubx_glUtil
+    rubx_scene
+    )
+
+set_target_properties( rubx
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )
