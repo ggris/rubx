@@ -20,13 +20,14 @@ void EventHandler::mouseButton_Callback(GLFWwindow* window, int button, int acti
 {
 	//Left mouse button click
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
 		buttonPressed = true;
+
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+	}
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 		buttonPressed = false;
-
-	//test get cursor pos
-	double xpos, ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
 }
 
 void EventHandler::setUI(UI* ui)
