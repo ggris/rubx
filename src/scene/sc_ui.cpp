@@ -13,11 +13,11 @@
 UI::UI()
 {
 	float points[] = { 
-		-1.0f,-1.0f, 
-		 1.0f,-1.0f, 
-		-1.0f, 1.0f, 
-		-1.0f, 1.0f, 
-		 1.0f,-1.0f, 
+		 1.0f, 1.0f, 
+		 0.0f, 1.0f, 
+		 0.0f, 0.0f, 
+		 0.0f, 0.0f, 
+		 1.0f, 0.0f, 
 		 1.0f, 1.0f };
 
 	GLuint vp_vbo, vao; 
@@ -47,6 +47,11 @@ void UI::display()
 {
 	if (test)
 	{
+		GLuint projectionMatrixUnif = glGetUniformLocation(m_program, "u_projection");
+		glm::mat4 projMat = glm::ortho(0.f, 1240.f, 0.f, 480.f, -1.f, 1.f);
+
+		glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projMat));
+
 		glDisable(GL_DEPTH_TEST);
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
