@@ -1,8 +1,24 @@
 #include "small_cube.hpp"
 
-smallCube::smallCube (int x,int y,int z,int rx,int ry,int rz) 
+
+SmallCube::SmallCube (int x,int y,int z)
 
 {
-	pos[0]=x; pos[1]=y; pos[2]=z;
-	rot[0]=rx; rot[1]=ry; rot[2]=rz;
+    transform_=
+    {
+        1,  0,  0,  0,
+        0,  1,  0,  0,
+        0,  0,  1,  0,
+        x,  y,  z,  1
+    };
+}
+
+void SmallCube::display()
+{
+    
+}
+
+void SmallCube::rotate(glm::imat4 rotation)
+{
+    transform_= rotation*transform_;
 }

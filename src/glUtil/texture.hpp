@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "util/include_gl.hpp"
+#include "../util/include_gl.hpp"
 
 class Texture
 {
@@ -16,7 +16,7 @@ class Texture
         const GLuint texture_;
 		GLuint createTexture();
 		void loadTexture();
-	
+
 };
 
 #endif // TEXTURE_H

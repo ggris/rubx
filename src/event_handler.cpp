@@ -2,18 +2,18 @@
 
 bool EventHandler::buttonPressed = false;
 UI* EventHandler::m_ui;
+GLFWwindow* EventHandler::m_window;
 
 void EventHandler::key_Callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	(void)scancode;
 	(void)mods;
 
-	if (action == GLFW_PRESS)
-		m_ui->receiveKeyPress(key);
-
 	//Quit
-	else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
+	else if (action == GLFW_PRESS)
+		m_ui->receiveKeyPress(key);
 }
 
 void EventHandler::mouseButton_Callback(GLFWwindow* window, int button, int action, int mods)
@@ -30,7 +30,5 @@ void EventHandler::mouseButton_Callback(GLFWwindow* window, int button, int acti
 		buttonPressed = false;
 }
 
-void EventHandler::setUI(UI* ui)
-{
-	m_ui = ui;
-}
+void EventHandler::setUI(UI* ui) { m_ui = ui; }
+void EventHandler::setWindow(GLFWwindow* window) { m_window = window; }
