@@ -38,7 +38,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
     GLuint UVcoords_buffer_object;
     glGenBuffers (1,&UVcoords_buffer_object);
     glBindBuffer (GL_ARRAY_BUFFER,UVcoords_buffer_object);
-    glBufferData (GL_ARRAY_BUFFER,16 * sizeof (float),tex_coord.data(), GL_STATIC_DRAW);
+    glBufferData (GL_ARRAY_BUFFER,tex_coord.size() * sizeof (float),tex_coord.data(), GL_STATIC_DRAW);
 
     glGenVertexArrays (1, &vao_);
     glBindVertexArray (vao_);
@@ -77,7 +77,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
     //Creating texture
 
 
-    Texture texture("data/img/fiftyShades.bmp");
+    Texture texture("data/img/corners.bmp");
     texture_=texture.getTexture();
 
 }
