@@ -1,11 +1,11 @@
 # Rubx
 
-OpenGL3 Rubik's cube game development project
+OpenGL4 Rubik's cube game development project
 
 ### Installation
 
-The project is built using cmake. The shader folder is copied into the bin/ folder when running cmake.
-The shader folder MUST be next to the executable. Otherwise, the shaders can't be loaded.
+The project is built using cmake. The *data* folder is copied into the bin/ folder when running cmake.
+The *data* folder MUST be next to the executable. Otherwise, the shaders and textures can't be loaded.
 
 ##### Dependencies
 
