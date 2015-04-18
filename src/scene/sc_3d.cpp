@@ -22,3 +22,8 @@ void Sc3d::display()
 
     ScVector::display();
 }
+
+Camera Sc3d::getCamera()
+{
+	return camera_;
+}

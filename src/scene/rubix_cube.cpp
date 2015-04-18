@@ -16,7 +16,6 @@ RubixCube::RubixCube(Sc3dNode * parent) :
     cubes_.push_back(new SmallCube(this,  1, -1,  1));
     cubes_.push_back(new SmallCube(this,  1,  1, -1));
     cubes_.push_back(new SmallCube(this,  1,  1,  1));
-
 }
 
 
@@ -86,5 +85,8 @@ std::string RubixCube::test_string(){
 
 }
 
-
+std::vector <SmallCube *> RubixCube::getCubes() const
+{
+	return cubes_;
+}
 

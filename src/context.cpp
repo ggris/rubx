@@ -87,11 +87,15 @@ void Context::initGL()
 void Context::initScene()
 {
     UI * ui = new UI();
+
+	Sc3d* sc3d = new Sc3d(window_);
+
+	sc_vector_.push_back(sc3d);
+    sc_vector_.push_back(ui);
+
 	EventHandler::setUI(ui);
 	EventHandler::setWindow(window_);
-
-    sc_vector_.push_back(new Sc3d(window_));
-    sc_vector_.push_back(ui);
+	EventHandler::setObjectStack(sc3d);
 }
 
 void Context::update()
