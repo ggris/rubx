@@ -15,7 +15,8 @@ ScMesh::ScMesh(Sc3dNode * parent,
         const std::vector<float> &normals,
         const std::vector<float> &tex_coord,
         const std::vector<unsigned short> &index,
-		unsigned int id) :
+		unsigned int id,
+		std::string filename) :
     Sc3dNode(parent)
 {
 
@@ -93,7 +94,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
     //Creating texture
 
 
-    Texture texture("data/img/corners.bmp");
+    Texture texture(filename);
     texture_=texture.getTexture();
 
 }
@@ -140,7 +141,7 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 	// Define projection matrix
 
 	glm::mat4 projection = getTransformation();
-	
+
 	// Define uniform values
 
 	glUniform4f(u_colour, colour.x/255.0f, colour.y/255.0f, colour.z/255.0f, 1.0f);

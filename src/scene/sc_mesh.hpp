@@ -2,6 +2,7 @@
 #define SC_MESH_HPP
 
 #include <vector>
+#include <string>
 
 #include "include_gl.hpp"
 #include "sc_3d_node.hpp"
@@ -16,7 +17,8 @@ class ScMesh : public Sc3dNode
                 const std::vector<float> &normals,
                 const std::vector<float> &tex_coord,
                 const std::vector<unsigned short> &index,
-				unsigned int id);
+				unsigned int id,
+				std::string filename="data/img/corners.bmp");
 
         void display();
 		void displayWithPickingColour(glm::vec3 colour);
