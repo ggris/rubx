@@ -106,5 +106,12 @@ void Context::update()
     glfwGetFramebufferSize(window_, &width, &height);
     glViewport(0, 0, width, height);
 
-    sc_vector_.display();
+	if (EventHandler::buttonPressed)
+	{
+		EventHandler::colorBasedObjectDetection();
+	}
+
+	sc_vector_.display();
+
+	
 }

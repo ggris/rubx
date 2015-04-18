@@ -68,7 +68,6 @@ void Camera::display()
 {
 }
 
-
 glm::mat4 Camera::getProjectionMat() const
 {
 	return mat_project_;

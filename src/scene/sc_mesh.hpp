@@ -16,22 +16,20 @@ class ScMesh : public Sc3dNode
                 const std::vector<float> &normals,
                 const std::vector<float> &tex_coord,
                 const std::vector<unsigned short> &index,
-				glm::vec3 boundingBoxMax,
-				glm::vec3 boundingBoxMin);
+				unsigned int id);
 
         void display();
+		void displayWithPickingColour(glm::vec3 colour);
 
-		glm::vec3 getBoundingBoxMax() const;
-		glm::vec3 getBoundingBoxMin() const;
+		unsigned int getId() const;
 
     private:
         GLuint program_;
+		GLuint pickingProgram_;
         GLuint vao_;
         GLuint texture_;
 
-		glm::vec3 boundingBox_min_;
-		glm::vec3 boundingBox_max_;
-
+		unsigned int id_;
 };
 
 #endif

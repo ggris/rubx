@@ -1,5 +1,7 @@
 #include "mesh_generator.hpp"
 
+unsigned int MeshGenerator::uniqueObjectId = 0;
+
 ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
 {
     std::vector<float> points = {
@@ -54,7 +56,9 @@ ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
 	glm::vec3 bb_max = { 1.0f, 1.0f, 1.0f };
 	glm::vec3 bb_min = { 0.0f, 0.0f, 0.0f };
 
-    return new ScMesh(parent, points, normals, tex_coord, index, bb_max, bb_min);
+	uniqueObjectId++;
+
+	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId);
 
 }
 
@@ -210,6 +214,8 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 	glm::vec3 bb_max = { 1.0f, 1.0f, 1.0f };
 	glm::vec3 bb_min = { 0.0f, 0.0f, 0.0f };
 
-    return new ScMesh(parent, points, normals, tex_coord, index, bb_max, bb_min);
+	uniqueObjectId++;
+
+	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId);
 
 }
