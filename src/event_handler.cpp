@@ -37,7 +37,7 @@ void EventHandler::setUI(UI* ui) { m_ui = ui; }
 void EventHandler::setWindow(GLFWwindow* window) { m_window = window; }
 void EventHandler::setObjectStack(Sc3d* sc3d) { m_objectStack = sc3d; }
 
-//http://www.antongerdelan.net/opengl/raycasting.html
+//http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 void EventHandler::detectObjectUnderClick()
 {
 	double mouse_xpos, mouse_ypos;
@@ -46,15 +46,16 @@ void EventHandler::detectObjectUnderClick()
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);
 
+	mouse_ypos = height - mouse_ypos;
+
 	//Normalise mouse coordinates
-	float x = ((2.0f * mouse_xpos) / width) * 2.0f;
-	float y = ((2.0f * mouse_ypos) / height) * 2.0f;
-	float z = 1.0f;
-	glm::vec3 ray = glm::vec3(x, y, z);
+	float x = (((float)mouse_xpos / (float)width) -0.5f) * 2.0f;
+	float y = (((float)mouse_ypos / (float)height)-0.5f) * 2.0f;
+	glm::vec2 mouse_ndc = glm::vec2(x, y);
 
 	//Ray homogeneous clip coords
-	glm::vec4 ray_start_ndc = glm::vec4(ray.x, ray.y, -1.0, 1.0);
-	glm::vec4 ray_end_ndc = glm::vec4(ray.x, ray.y,  0.0, 1.0);
+	glm::vec4 ray_start_ndc = glm::vec4(mouse_ndc.x, mouse_ndc.y, -1.0, 1.0);
+	glm::vec4 ray_end_ndc = glm::vec4(mouse_ndc.x, mouse_ndc.y, 0.0, 1.0);
 
 	//Camera coordinates
 	Camera camera = m_objectStack->getCamera();
