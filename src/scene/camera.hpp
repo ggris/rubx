@@ -15,8 +15,8 @@ class Camera : public Sc3dNode
 
         const glm::mat4 & getTransformation() const;
 
-		glm::mat4 Camera::getProjectionMat() const;
-		glm::mat4 Camera::getViewMat() const;
+		glm::mat4 getProjectionMat() const;
+		glm::mat4 getViewMat() const;
 
         void display();
 

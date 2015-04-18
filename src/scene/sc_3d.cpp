@@ -9,7 +9,6 @@ Sc3d::Sc3d(GLFWwindow * window) :
 {
 //    push_back(MeshGenerator::rubixSmallCube(&camera_));
     RubixCube * rubii =  new RubixCube(&camera_);
-    rubii->rotate(1, 1, 1);
     push_back(rubii);
 }
 

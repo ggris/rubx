@@ -32,6 +32,9 @@ bool RubixCube::isWon()
 
 void RubixCube::display(){
 
+    if (glfwGetTime()>5.0f && isWon())  //this is a test, launch a rotation at 5 sec
+        rotate(1,1,1);
+    
     for(unsigned int i=0;i<cubes_.size();i++){
         cubes_[i]->display();
     }
