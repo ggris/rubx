@@ -47,30 +47,42 @@ void EventHandler::detectObjectUnderClick()
 	glfwGetFramebufferSize(m_window, &width, &height);
 
 	//Normalise mouse coordinates
-	float x = (2.0f * mouse_xpos) / width - 1.0f;
-	float y = 1.0f - (2.0f * mouse_ypos) / height;
+	float x = ((2.0f * mouse_xpos) / width) * 2.0f;
+	float y = ((2.0f * mouse_ypos) / height) * 2.0f;
 	float z = 1.0f;
 	glm::vec3 ray = glm::vec3(x, y, z);
 
 	//Ray homogeneous clip coords
-	glm::vec4 ray_clip = glm::vec4(ray.x, ray.y, 1.0, 1.0);
+	glm::vec4 ray_start_ndc = glm::vec4(ray.x, ray.y, -1.0, 1.0);
+	glm::vec4 ray_end_ndc = glm::vec4(ray.x, ray.y,  0.0, 1.0);
 
 	//Camera coordinates
 	Camera camera = m_objectStack->getCamera();
-	glm::mat4 projection = camera.getProjectionMat();
+	glm::mat4 inversedProjectionMatrix = glm::inverse(camera.getProjectionMat());
+	glm::mat4 inversedViewMatrix = glm::inverse(camera.getViewMat());
 
-	glm::vec4 ray_eye = glm::inverse(projection) * ray_clip;
-	ray_eye = glm::vec4(ray_eye.x,ray_eye.y, -1.0, 0.0);
+	//World start vec
+	glm::vec4 ray_start_camera = inversedProjectionMatrix * ray_start_ndc;
+	ray_start_camera /= ray_start_camera.w;
 
-	glm::vec3 ray_origin(ray_eye);
+	glm::vec4 ray_start_world = inversedViewMatrix * ray_start_camera;
+	ray_start_world /= ray_start_world.w;
 
-	//World coordinates
-	glm::mat4 view = camera.getViewMat();
+	//World end vec
+	glm::vec4 ray_end_camera = inversedProjectionMatrix * ray_end_ndc;
+	ray_end_camera /= ray_end_camera.w;
 
-	glm::vec3 ray_world(glm::inverse(view) * ray_eye);
-	ray_world = glm::normalize(ray_world);
+	glm::vec4 ray_end_world = inversedViewMatrix * ray_end_camera;
+	ray_end_world /= ray_end_world.w;
 
-	std::printf(testRayCollisionsWithObjectStack(ray_origin, ray_world) ? "true" : "false");
+	//Final vectors
+	glm::vec3 ray_direction(ray_end_world - ray_start_world);
+	glm::normalize(ray_direction);
+
+	glm::vec3 ray_origin(ray_start_world);
+	glm::normalize(ray_origin);
+
+	std::printf(testRayCollisionsWithObjectStack(ray_origin, ray_direction) ? "true" : "false");
 	std::printf("\n\n");
 }
 
@@ -81,20 +93,26 @@ bool EventHandler::testRayCollisionsWithObjectStack(glm::vec3 ray_origin, glm::v
 	
 	bool collided = false;
 
-	float collisionDistance = 0.0f;
+	float collisionDistance = 10000.0f;
 
 	int test = 0;
-	for (int i = 0; i < smallCubes.size(); i++)
+	for (unsigned int i = 0; i < smallCubes.size(); i++)
 	{
-		bool temp = testRayCollisionsWithMesh(ray_origin, ray_direction, smallCubes[i]->getMesh(), collisionDistance);
-		if (temp == true && collided == false)
+		float tempCollisionDistance = 1000.0f;
+		bool temp = testRayCollisionsWithMesh(ray_origin, ray_direction, smallCubes[i]->getMesh(), tempCollisionDistance);
+		if (temp == true && collided == false && tempCollisionDistance < collisionDistance)
 		{
 			collided = true;
+			collisionDistance = tempCollisionDistance;
 			test = i;
 		}
 	}
 
 	std::printf("%d\n", test);
+	std::printf("%f\n", collisionDistance);
+
+	if (collided)
+		rubixCube->rotate(0,1,1);
 
 	return collided;
 }
@@ -102,8 +120,6 @@ bool EventHandler::testRayCollisionsWithObjectStack(glm::vec3 ray_origin, glm::v
 //http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 bool EventHandler::testRayCollisionsWithMesh(glm::vec3 ray_origin, glm::vec3 ray_direction, ScMesh* mesh, float& intersection_distance)
 {
-	bool collided = true;
-
 	glm::vec3 bb_max = mesh->getBoundingBoxMax();
 	glm::vec3 bb_min = mesh->getBoundingBoxMin();
 	glm::mat4 transf = mesh->getTransformation();
@@ -119,83 +135,101 @@ bool EventHandler::testRayCollisionsWithMesh(glm::vec3 ray_origin, glm::vec3 ray
 	float e = glm::dot(xaxis, delta);
 	float f = glm::dot(ray_direction, xaxis);
 
-	if (f < 0.00001)
-		f = 1.0f;
-
-	float t1 = (e + bb_min.x) / f;
-	float t2 = (e + bb_max.x) / f;
-
-	if (t1 > t2) // if wrong order
+	if (fabs(f) > 0.001f)
 	{
-		float w = t1;
-		float t1 = t2;
-		float t2 = w;
+
+		float t1 = (e + bb_min.x) / f;
+		float t2 = (e + bb_max.x) / f;
+
+		if (t1 > t2) // if wrong order
+		{
+			float w = t1;
+			float t1 = t2;
+			float t2 = w;
+		}
+
+		if (t2 < tMax)
+			tMax = t2;
+
+		if (t1 > tMin)
+			tMin = t1;
+
+		if (tMax < tMin)
+			return false;
 	}
-
-	if (t2 < tMax)
-		tMax = t2;
-
-	if (t1 > tMin)
-		tMin = t1;
-
-	if (tMax < tMin)
-		collided = false;
+	else
+	{
+		if (-e + bb_min.x > 0.0f || -e + bb_max.x < 0.0f)
+			return false;
+	}
 
 	//Y axis
 	glm::vec3 yaxis(transf[1].x, transf[1].y, transf[1].z);
 	e = glm::dot(yaxis, delta);
 	f = glm::dot(ray_direction, yaxis);
 
-	if (f < 0.00001)
-		f = 1.0f;
-
-	t1 = (e + bb_min.y) / f;
-	t2 = (e + bb_max.y) / f;
-
-	if (t1 > t2) // if wrong order
+	if (fabs(f) > 0.001f)
 	{
-		float w = t1;
-		float t1 = t2;
-		float t2 = w;
+
+		float t1 = (e + bb_min.x) / f;
+		float t2 = (e + bb_max.x) / f;
+
+		if (t1 > t2) // if wrong order
+		{
+			float w = t1;
+			float t1 = t2;
+			float t2 = w;
+		}
+
+		if (t2 < tMax)
+			tMax = t2;
+
+		if (t1 > tMin)
+			tMin = t1;
+
+		if (tMax < tMin)
+			return false;
+	}
+	else
+	{
+		if (-e + bb_min.x > 0.0f || -e + bb_max.x < 0.0f)
+			return false;
 	}
 
-	if (t2 < tMax)
-		tMax = t2;
-
-	if (t1 > tMin)
-		tMin = t1;
-
-	if (tMax < tMin)
-		collided = false;
-
-	//Y axis
-	glm::vec3 zaxis(transf[1].x, transf[1].y, transf[1].z);
+	//Z axis
+	glm::vec3 zaxis(transf[2].x, transf[2].y, transf[2].z);
 	e = glm::dot(zaxis, delta);
 	f = glm::dot(ray_direction, zaxis);
 
-	if (f < 0.00001)
-		f = 1.0f;
-
-	t1 = (e + bb_min.y) / f;
-	t2 = (e + bb_max.y) / f;
-
-	if (t1 > t2) // if wrong order
+	if (fabs(f) > 0.001f)
 	{
-		float w = t1;
-		float t1 = t2;
-		float t2 = w;
+
+		float t1 = (e + bb_min.x) / f;
+		float t2 = (e + bb_max.x) / f;
+
+		if (t1 > t2) // if wrong order
+		{
+			float w = t1;
+			float t1 = t2;
+			float t2 = w;
+		}
+
+		if (t2 < tMax)
+			tMax = t2;
+
+		if (t1 > tMin)
+			tMin = t1;
+
+		if (tMax < tMin)
+			return false;
 	}
-
-	if (t2 < tMax)
-		tMax = t2;
-
-	if (t1 > tMin)
-		tMin = t1;
-
-	if (tMax < tMin)
-		collided = false;
+	else
+	{
+		if (-e + bb_min.x > 0.0f || -e + bb_max.x < 0.0f)
+			return false;
+	}
 
 	intersection_distance = tMin;
 
-	return collided;
+	return true;
 }
