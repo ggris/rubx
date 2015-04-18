@@ -2,9 +2,10 @@
 smooth in vec4 color;
 smooth in vec4 fragPosition;
 smooth in vec4 fragNormal;
+smooth in vec2 fragUV;
 
 uniform vec4 camera_position;
-//uniform mat4 projection_matrix;
+uniform sampler2D texture_Sampler;
 
 out vec4 fragColor;
 
@@ -52,5 +53,5 @@ void main()
     vec4 light2 = normalize (lightPos2-fragPosition);
     vec4 camera = normalize (camera_position-fragPosition);
 
-	fragColor = (GGX(fragNormal,light1,camera,0.99)+GGX(fragNormal,light2,camera,0.99))*color;
+	fragColor = (GGX(fragNormal,light1,camera,0.8)+GGX(fragNormal,light2,camera,0.8))*vec4(texture(texture_Sampler,fragUV).rgb,1.0);
 }
