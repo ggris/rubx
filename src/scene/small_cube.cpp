@@ -29,3 +29,8 @@ void SmallCube::rotate(glm::imat4 rotation)
     LOG_DEBUG << glm::to_string(transform_);
     LOG_DEBUG << glm::to_string(transformation_);
 }
+
+ScMesh * SmallCube::getMesh() const
+{
+	return mesh_;
+}

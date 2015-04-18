@@ -15,6 +15,8 @@ class Sc3d : public ScVector
 
         void display();
 
+		Camera getCamera();
+
     private:
         GLFWwindow * window_;
         Camera camera_;

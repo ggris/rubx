@@ -25,6 +25,8 @@ class RubixCube : public Sc3dNode
 
         void display();
 
+		std::vector <SmallCube *> getCubes() const;
+
     private :
 
         std::vector <SmallCube *> cubes_;

@@ -69,3 +69,12 @@ void Camera::display()
 }
 
 
+glm::mat4 Camera::getProjectionMat() const
+{
+	return mat_project_;
+}
+
+glm::mat4 Camera::getViewMat() const
+{
+	return mat_camera_;
+}

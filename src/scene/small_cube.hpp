@@ -20,6 +20,8 @@ class SmallCube : public Sc3dNode
 
         glm::imat4 transform_;
 
+		ScMesh * getMesh() const;
+
     private:
         ScMesh * mesh_;
 
