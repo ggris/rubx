@@ -15,15 +15,13 @@ ScMesh::ScMesh(Sc3dNode * parent,
         const std::vector<float> &normals,
         const std::vector<float> &tex_coord,
         const std::vector<unsigned short> &index,
-		glm::vec3 boundingBoxMax,
-		glm::vec3 boundingBoxMin) :
+		unsigned int id) :
     Sc3dNode(parent)
 {
 
     transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
 
-	boundingBox_max_= boundingBoxMax;
-	boundingBox_min_ = boundingBoxMin;
+	id_ = id;
 
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
@@ -65,7 +63,7 @@ ScMesh::ScMesh(Sc3dNode * parent,
 
     glBindVertexArray(0);
 
-    // Creating program
+    // Creating programs
 
     Program program;
 
@@ -79,6 +77,18 @@ ScMesh::ScMesh(Sc3dNode * parent,
     program.clearShaders();
 
     program_ = program.getProgram();
+
+	//picking program
+	Program pickingProgram;
+
+	pickingProgram.emplace_back("picking.vert", GL_VERTEX_SHADER);
+	pickingProgram.emplace_back("picking.frag", GL_FRAGMENT_SHADER);
+
+	pickingProgram.link();
+
+	pickingProgram.clearShaders();
+
+	pickingProgram_ = pickingProgram.getProgram();
 
     //Creating texture
 
@@ -113,19 +123,41 @@ void ScMesh::display()
     glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
 
-
     glUseProgram(0);
 }
 
-glm::vec3 ScMesh::getBoundingBoxMax() const
+void ScMesh::displayWithPickingColour(glm::vec3 colour)
 {
-	return boundingBox_max_;
+
+	glUseProgram(pickingProgram_);
+
+	// Get program uniforms
+
+	GLuint u_colour = glGetUniformLocation(pickingProgram_, "colour");
+	GLuint offsetUniform = glGetUniformLocation(pickingProgram_, "camera_position");
+	GLuint perspectiveMatrixUnif = glGetUniformLocation(pickingProgram_, "projection_matrix");
+
+	// Define projection matrix
+
+	glm::mat4 projection = getTransformation();
+	
+	// Define uniform values
+
+	glUniform4f(u_colour, colour.x/255.0f, colour.y/255.0f, colour.z/255.0f, 1.0f);
+	glUniform4f(offsetUniform, 0, 0, -2, 1.0);
+	glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+
+	glBindVertexArray(vao_);
+	glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
+
+	glUseProgram(0);
 }
 
-glm::vec3 ScMesh::getBoundingBoxMin() const
+unsigned int ScMesh::getId() const
 {
-	return boundingBox_min_;
+	return id_;
 }
+
 
 
 
