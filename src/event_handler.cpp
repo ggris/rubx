@@ -53,7 +53,7 @@ void EventHandler::detectObjectUnderClick()
 	glm::vec3 ray = glm::vec3(x, y, z);
 
 	//Ray homogeneous clip coords
-	glm::vec4 ray_clip = glm::vec4(ray.x, ray.y, -1.0, 1.0);
+	glm::vec4 ray_clip = glm::vec4(ray.x, ray.y, 1.0, 1.0);
 
 	//Camera coordinates
 	Camera camera = m_objectStack->getCamera();
@@ -194,6 +194,8 @@ bool EventHandler::testRayCollisionsWithMesh(glm::vec3 ray_origin, glm::vec3 ray
 
 	if (tMax < tMin)
 		collided = false;
+
+	intersection_distance = tMin;
 
 	return collided;
 }
