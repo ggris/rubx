@@ -145,7 +145,7 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 	// Define uniform values
 
 	glUniform4f(u_colour, colour.x/255.0f, colour.y/255.0f, colour.z/255.0f, 1.0f);
-	glUniform4f(offsetUniform, 0, 0, -2, 1.0);
+	glUniform4f(offsetUniform, 0, 0, -2, 0.0);
 	glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
 
 	glBindVertexArray(vao_);
