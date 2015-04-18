@@ -204,6 +204,6 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 //        0.67f, 0.67f,
 //    };
 
-    return new ScMesh(parent, points, normals, points, index);
+    return new ScMesh(parent, points, normals, tex_coord, index);
 
 }
