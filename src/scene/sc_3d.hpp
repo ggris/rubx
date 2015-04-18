@@ -6,7 +6,9 @@
 
 #include "scene_graph.hpp"
 
-#include "camera.hpp"
+//#include "camera.hpp"
+
+class Camera;
 
 class Sc3d : public ScVector
 {
@@ -19,7 +21,7 @@ class Sc3d : public ScVector
 
     private:
         GLFWwindow * window_;
-        Camera camera_;
+        Camera * camera_;
 };
 
 #endif //SC3D_HPP

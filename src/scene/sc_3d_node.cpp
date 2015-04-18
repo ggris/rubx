@@ -3,12 +3,14 @@
 
 Sc3dNode::Sc3dNode() :
     parent_(nullptr),
+    scene_(nullptr),
     transformation_(1.0f)
 {
 }
 
 Sc3dNode::Sc3dNode(Sc3dNode * parent) :
     parent_(parent),
+    scene_(parent->scene_),
     transformation_(1.0f)
 {
 }

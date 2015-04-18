@@ -2,6 +2,7 @@
 #define SC_3D_NODE_HPP
 
 #include "scene_graph.hpp"
+#include "sc_3d.hpp"
 #include "glm/glm.hpp"
 
 class Sc3dNode : public ScNode
@@ -17,6 +18,7 @@ class Sc3dNode : public ScNode
 
     protected:
         Sc3dNode * parent_;
+        Sc3d * scene_;
         glm::mat4 transformation_;
 };
 
