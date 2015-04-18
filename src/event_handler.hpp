@@ -28,8 +28,8 @@ class EventHandler
 		void operator=(EventHandler const&) = delete;
 
 		static void detectObjectUnderClick();
-		static bool testRayCollisionsWithObjectStack(glm::vec3 ray);
-		static bool testRayCollisionsWithMesh(glm::vec3 ray, ScMesh* mesh);
+		static bool testRayCollisionsWithObjectStack(glm::vec3 ray_origin, glm::vec3 ray_direction);
+		static bool testRayCollisionsWithMesh(glm::vec3 ray_origin, glm::vec3 ray_direction, ScMesh* mesh, float& intersection_distance);
 
 		static UI* m_ui;
 		static GLFWwindow* m_window;

@@ -28,9 +28,6 @@ set(SRC
     small_cube.hpp
     small_cube.cpp
 
-	ray.hpp
-	ray.cpp
-
     )
 
 add_library(rubx_scene ${SRC})

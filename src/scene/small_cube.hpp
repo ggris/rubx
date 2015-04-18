@@ -12,6 +12,9 @@
 class SmallCube : public Sc3dNode
 {
     public :
+        static float ANIMATION_LENGTH;
+    
+    public :
         SmallCube(Sc3dNode * parent, int x, int y, int z);
 
 
@@ -19,11 +22,16 @@ class SmallCube : public Sc3dNode
         void rotate (glm::imat4 rotation);
 
         glm::imat4 transform_;
-
-		ScMesh * getMesh() const;
+    
+        ScMesh * getMesh() const;
 
     private:
+    
         ScMesh * mesh_;
+        float animation_start_;
+        bool is_animate_;
+        glm::imat4 last_transform_;
+    
 
 };
 

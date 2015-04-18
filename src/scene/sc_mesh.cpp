@@ -14,11 +14,16 @@ ScMesh::ScMesh(Sc3dNode * parent,
         const std::vector<float> &points,
         const std::vector<float> &normals,
         const std::vector<float> &tex_coord,
-        const std::vector<unsigned short> &index) :
+        const std::vector<unsigned short> &index,
+		glm::vec3 boundingBoxMax,
+		glm::vec3 boundingBoxMin) :
     Sc3dNode(parent)
 {
 
     transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
+
+	boundingBox_max_= boundingBoxMax;
+	boundingBox_min_ = boundingBoxMin;
 
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
@@ -112,7 +117,15 @@ void ScMesh::display()
     glUseProgram(0);
 }
 
+glm::vec3 ScMesh::getBoundingBoxMax() const
+{
+	return boundingBox_max_;
+}
 
+glm::vec3 ScMesh::getBoundingBoxMin() const
+{
+	return boundingBox_min_;
+}
 
 
 
