@@ -15,6 +15,13 @@ Sc3dNode::Sc3dNode(Sc3dNode * parent) :
 {
 }
 
+Sc3dNode::Sc3dNode(Sc3dNode * parent, Sc3d* scene) :
+    parent_(parent),
+    scene_(scene),
+    transformation_(1.0f)
+{
+}
+
 glm::mat4 Sc3dNode::getTransformation() const
 {
     if (parent_ == nullptr)

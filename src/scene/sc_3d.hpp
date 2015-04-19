@@ -27,7 +27,7 @@ class Sc3d : public ScVector
     private:
         GLFWwindow * window_;
         Camera * camera_;
-        std::vector<Lamp *> lamps;
+        std::vector<Lamp *> lamps_;
 };
 
 #endif //SC3D_HPP

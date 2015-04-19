@@ -8,6 +8,7 @@ class Camera : public Sc3dNode
 {
     public:
         Camera();
+        ~Camera(){}
         Camera(float fov, float ratio, float z_near, float z_far);
 
         void setPerspective(float fov, float ratio, float z_near, float z_far);

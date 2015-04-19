@@ -32,6 +32,8 @@ class ScMesh : public Sc3dNode
         GLuint texture_;
 
 		unsigned int id_;
+
+		void setLamps();
 };
 
 #endif

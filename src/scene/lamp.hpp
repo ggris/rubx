@@ -12,7 +12,8 @@ class Lamp : public Sc3dNode
         Lamp();
         Lamp(glm::vec4 light,glm::vec4 color=glm::vec4(1.0,1.0,1.0,1.0));
         Lamp(glm::vec3 light,sourceType source,glm::vec4 color=glm::vec4(1.0,1.0,1.0,1.0));
-        glm::vec4 getLight_() const { return light_; }
+        glm::vec4 getLight() const { return light_; }
+        glm::vec4 getColor() const { return color_; }
         void display();
     private:
         const glm::vec4 light_;

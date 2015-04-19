@@ -1,12 +1,14 @@
 #include <string>
 #include <cstring>
 #include <cmath>
+#include <sstream>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "glm/ext.hpp"
 #include "logger.hpp"
 #include "program.hpp"
+#include "lamp.hpp"
 
 #include "sc_mesh.hpp"
 
@@ -121,10 +123,41 @@ void ScMesh::display()
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
     Texture::bindTextureToSampler(texture_,textureSamplerUniform);
 
+    //set Lamps
+    setLamps();
+
     glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
 
     glUseProgram(0);
+}
+
+void ScMesh::setLamps()
+{
+
+    std::vector<Lamp*> lamps = getScene().getLamps();
+    //set number of lamps
+    GLuint nblamps = glGetUniformLocation(program_, "numLamps");
+    glUniform1i(nblamps,lamps.size());
+
+    //set lamp array
+    for (unsigned int i=0;i<lamps.size();i++){
+
+        std::ostringstream sslight,sscolor;
+        sslight << "allLamps[" << i << "].light";
+        sscolor << "allLamps[" << i << "].color";
+        std::string lightUnifName = sslight.str();
+        std::string colorUnifName = sscolor.str();
+
+        GLuint lightUniform = glGetUniformLocation(program_,lightUnifName.c_str());
+        GLuint colorUniform = glGetUniformLocation(program_,colorUnifName.c_str());
+
+        glUniform4f(lightUniform,lamps[i]->getLight().x,lamps[i]->getLight().y,lamps[i]->getLight().z,lamps[i]->getLight().w);
+        glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
+
+    }
+
+
 }
 
 void ScMesh::displayWithPickingColour(glm::vec3 colour)
