@@ -31,6 +31,12 @@ set(SRC
     small_cube.hpp
     small_cube.cpp
 
+	sc_2d_panel.hpp
+	sc_2d_panel.cpp
+
+	sc_text.hpp
+	sc_text.cpp
+
     )
 
 add_library(rubx_scene ${SRC})

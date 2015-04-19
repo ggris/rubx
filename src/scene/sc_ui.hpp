@@ -3,8 +3,6 @@
 
 #include <vector>
 
-class UI;
-
 #include "scene_graph.hpp"
 #include "include_gl.hpp"
 
