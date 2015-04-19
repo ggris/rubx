@@ -219,3 +219,33 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId);
 
 }
+
+ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent)
+{
+    std::vector<float> points = {
+        0.0f, 0.0f, -1.0f,
+        5.0f, 0.0f, -1.0f,
+        5.0f, 5.0f, -1.0f,
+        0.0f, 5.0f, -1.0f
+    };
+    std::vector<float> normals = {
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f
+    };
+    std::vector<unsigned short> index = {
+        0, 3, 2,
+        0, 2, 1
+    };
+    std::vector<float> tex_coord = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+    };
+    uniqueObjectId++;
+
+	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId,"data/img/fiftyShades.bmp");
+}
+

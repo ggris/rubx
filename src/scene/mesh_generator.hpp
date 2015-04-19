@@ -9,6 +9,7 @@ class MeshGenerator
     public:
         static ScMesh * testCube(Sc3dNode * parent);
         static ScMesh * rubixSmallCube(Sc3dNode * parent);
+        static ScMesh * tableSurface(Sc3dNode * parent);
 
 	private:
 		static unsigned int uniqueObjectId;
