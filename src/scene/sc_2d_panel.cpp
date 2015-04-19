@@ -8,7 +8,7 @@
 
 Sc2dPanel::Sc2dPanel(){}
 
-Sc2dPanel::Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFile)
+Sc2dPanel::Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFile, std::vector<float> tex_coord)
 {
 	position_ = position;
 	scale_ = scale;
@@ -20,14 +20,6 @@ Sc2dPanel::Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFil
 			-1.0f, 1.0f,
 			 1.0f,-1.0f,
 			 1.0f, 1.0f };
-
-	GLfloat tex_coord[] = { 
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 1.0f,
-		0.0f, 1.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f };
 
 	std::vector<unsigned short> index = {
 		0, 3, 2,
@@ -46,7 +38,7 @@ Sc2dPanel::Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFil
 	GLuint UVcoords_buffer_object;
 	glGenBuffers(1, &UVcoords_buffer_object);
 	glBindBuffer(GL_ARRAY_BUFFER, UVcoords_buffer_object);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tex_coord), tex_coord, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, tex_coord.size() * sizeof(float), tex_coord.data(), GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &vao_);
 	glBindVertexArray(vao_);

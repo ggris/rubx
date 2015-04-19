@@ -8,7 +8,7 @@ class Sc2dPanel : ScNode
 {
     public:
 		Sc2dPanel();
-		Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFile);
+		Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFile, std::vector<float> tex_coord);
         void display();
     private:
 		glm::vec2 position_;

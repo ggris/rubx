@@ -9,8 +9,18 @@
 
 UI::UI() 
 {
-	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/corners.bmp");
-	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f ,1.0f), "data/img/fiftyShades.bmp");
+
+	//Coords in 3/4 ratio
+	std::vector<float> tex_coord = {
+		0.0f, + (1.0f / 4.0f),
+		1.0f, (1.0f / 4.0f),
+		0.0f, 1.0f,
+		0.0f, 1.0f,
+		1.0f, (1.0f / 4.0f),
+		1.0f, 1.0f };
+
+	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/scoreBackground.bmp", tex_coord);
+	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/mainMenuBackground.bmp", tex_coord);
 }
 
 void UI::display()
