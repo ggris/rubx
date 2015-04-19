@@ -225,7 +225,7 @@ ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent)
     std::vector<float> points = {
         0.0f, -0.6f, 0.0f,
         5.0f, -0.6f, 0.0f,
-        5.0f, -0.06, -5.0f,
+        5.0f, -0.06f, -5.0f,
         0.0f, -0.6f, -5.0f
     };
     std::vector<float> normals = {
