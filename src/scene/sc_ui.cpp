@@ -1,7 +1,7 @@
 #include <string>
 #include <cstring>
 #include <cmath>
-
+#include <sstream>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "sc_ui.hpp"
@@ -9,7 +9,6 @@
 
 UI::UI() 
 {
-
 	//Coords in 3/4 ratio
 	std::vector<float> tex_3on4_coord = {
 		0.0f, (1.0f / 4.0f),
@@ -23,6 +22,7 @@ UI::UI()
 	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/mainMenuBackground.bmp", tex_3on4_coord);
 
 	nameTextBox = ScText(glm::vec2(-0.5f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f/4.0f)), "", 10, 1.35f);
+	timer = ScText(glm::vec2(-0.5f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f / 4.0f)), "", 10, 1.35f);
 }
 
 void UI::display()
@@ -37,6 +37,16 @@ void UI::display()
 		scorePanel.display();
 		break;
 	case UI_GAME:
+		int time = glfwGetTime();
+		if ((time - lastTime) >= 1)
+		{
+			lastTime = time;
+			std::ostringstream strs;
+			strs << lastTime;
+			std::string str = strs.str();
+			timer.updateText(str);
+		}
+		timer.display();
 		break;
 	}
 }

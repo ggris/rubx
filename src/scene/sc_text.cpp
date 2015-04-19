@@ -59,8 +59,8 @@ void ScText::generatePanel(char character)
 	std::vector<float> tex_coord = {
 		atlasColL, atlasRowB,  //bas gauche
 		atlasColR, atlasRowB,  //bas droit
-		atlasColL, atlasRowT,
-		atlasColL, atlasRowT,
+		atlasColL, atlasRowT, //Haut gauche
+		atlasColL, atlasRowT, //Haut gauche
 		atlasColR, atlasRowB, //bas droit
 		atlasColR, atlasRowT }; //haut droit
 
