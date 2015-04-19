@@ -223,10 +223,10 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent)
 {
     std::vector<float> points = {
-        0.0f, 0.0f, -1.0f,
-        5.0f, 0.0f, -1.0f,
-        5.0f, 5.0f, -1.0f,
-        0.0f, 5.0f, -1.0f
+        0.0f, -0.6f, 0.0f,
+        5.0f, -0.6f, 0.0f,
+        5.0f, -0.06, -5.0f,
+        0.0f, -0.6f, -5.0f
     };
     std::vector<float> normals = {
         0.0f, 0.0f, 1.0f,
@@ -235,8 +235,8 @@ ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent)
         0.0f, 0.0f, 1.0f
     };
     std::vector<unsigned short> index = {
-        0, 3, 2,
-        0, 2, 1
+        0, 1, 2,
+        0, 2, 3
     };
     std::vector<float> tex_coord = {
         0.0f, 0.0f,
