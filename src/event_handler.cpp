@@ -16,7 +16,7 @@ void EventHandler::key_Callback(GLFWwindow* window, int key, int scancode, int a
 	//Quit
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
-	else if (action == GLFW_PRESS)
+	else if (action == GLFW_PRESS || (key== GLFW_KEY_BACKSPACE && action == GLFW_REPEAT))
 		m_ui->receiveKeyPress(key);
 }
 

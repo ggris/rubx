@@ -5,13 +5,38 @@
 #include "include_gl.hpp"
 #include <string>
 
+#include "sc_2d_panel.hpp"
+
 class ScText
 {
     public:
+		ScText();
+		ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, int maxLength, float charOffSet);
+
+		void updateText(std::string text);
+		std::string getText() const;
+
         void display();
 
     private:
-		std::string text;
+
+
+		std::string text_;
+		Sc2dPanel panel_;
+		int maxLength_;
+
+		glm::vec2 initialCharacterPos_;
+		glm::vec2 currentCharacterPos_;
+		glm::vec2 size_;
+
+		void updatePanel();
+
+		int noCol;
+		int noRow;
+		int startCharacter;
+		int lastTextSize;
+
+		float charOffSet_;
 };
 
 #endif
