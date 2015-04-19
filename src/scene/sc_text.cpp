@@ -9,14 +9,13 @@
 
 ScText::ScText(){}
 
-ScText::ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, int maxLength, float charOffSet)
+ScText::ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, int maxLength)
 {
 	noCol = 8;
 	noRow = 8;
 	startCharacter = 32;
 	lastTextSize = 0;
 
-	charOffSet_ = charOffSet;
 	text_ = text;
 	maxLength_ = maxLength;
 

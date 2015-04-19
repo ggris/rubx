@@ -108,7 +108,6 @@ void ScMesh::display()
 
     // Get program uniforms
 
-    GLuint offsetUniform = glGetUniformLocation(program_, "camera_position");
     GLuint perspectiveMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
     GLuint textureSamplerUniform = glGetUniformLocation(program_,"texture_Sampler");
 
@@ -119,7 +118,6 @@ void ScMesh::display()
     // Define uniform values
 
     //glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
-    glUniform4f(offsetUniform, 0, 0, -2, 0.0);
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
     Texture::bindTextureToSampler(texture_,textureSamplerUniform);
 

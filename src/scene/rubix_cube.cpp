@@ -16,6 +16,8 @@ RubixCube::RubixCube(Sc3dNode * parent) :
     cubes_.push_back(new SmallCube(this,  1, -1,  1));
     cubes_.push_back(new SmallCube(this,  1,  1, -1));
     cubes_.push_back(new SmallCube(this,  1,  1,  1));
+
+    transformation_ = glm::translate(glm::vec3(0.0f, 0.0f, -5.0f));
 }
 
 
@@ -34,7 +36,7 @@ void RubixCube::display(){
 
     if (glfwGetTime()>5.0f && isWon())  //this is a test, launch a rotation at 5 sec
         rotate(1,1,1);
-    
+
     for(unsigned int i=0;i<cubes_.size();i++){
         cubes_[i]->display();
     }
@@ -90,6 +92,6 @@ std::string RubixCube::test_string(){
 
 std::vector <SmallCube *> RubixCube::getCubes() const
 {
-	return cubes_;
+    return cubes_;
 }
 
