@@ -2,6 +2,7 @@
 #define SC_2D_PANEL_HPP
 
 #include "sc_3d_node.hpp"
+#include <string>
 
 class Sc2dPanel : ScNode
 {
