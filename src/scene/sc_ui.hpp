@@ -22,8 +22,15 @@ class UI : public ScNode
 		Sc2dPanel scorePanel;
 		Sc2dPanel menuPanel;
 		ScText nameTextBox;
-		ScText timer;
+
+		ScText timerLabel;
+
+		ScText fpsLabel;
 		int lastTime;
+
+		void calculateFps();
+		int fps;
+		int frameCount;
 };
 
 #endif
