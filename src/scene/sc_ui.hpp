@@ -5,8 +5,9 @@
 
 #include "scene_graph.hpp"
 #include "include_gl.hpp"
+#include "sc_2d_panel.hpp"
 
-enum UI_state { UI_START, UI_SCORE, UI_GAME };
+enum UI_state { UI_MENU, UI_SCORE, UI_GAME };
 class UI : public ScNode
 {
     public:
@@ -16,9 +17,10 @@ class UI : public ScNode
 		void receiveKeyPress(int key);
 
     private:
-        GLuint m_program;
-        GLuint m_vao;
-		UI_state ui_state = UI_START;
+		UI_state ui_state = UI_MENU;
+		Sc2dPanel scorePanel;
+		Sc2dPanel menuPanel;
+
 };
 
 #endif
