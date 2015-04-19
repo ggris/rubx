@@ -15,11 +15,11 @@ smooth out vec2 fragUV;
 
 void main()
 {
-    float s = 0.2f;
-    vec4 base_position = position * vec4(s, s, s, 1.0f) + camera_position;
+    float s = 0.4f;
+    vec4 base_position = position *vec4(s, s, s, 1.0f) + camera_position;
     gl_Position = projection_matrix * base_position;
     color = (normal + vec4(1.0f)) / 2.0f;
-    fragPosition=position;
+    fragPosition=projection_matrix * base_position;
     fragNormal=normal;
     fragUV=UV;
 }
