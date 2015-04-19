@@ -7,16 +7,14 @@
 
 #include "program.hpp"
 
-ScText::ScText()
-{
-	text_ = "";
-}
+ScText::ScText(){}
 
 ScText::ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, int maxLength, float charOffSet)
 {
 	noCol = 8;
 	noRow = 8;
 	startCharacter = 32;
+	lastTextSize = 0;
 
 	charOffSet_ = charOffSet;
 	text_ = text;
@@ -27,64 +25,104 @@ ScText::ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, i
 
 	size_ = size;
 
-	for (unsigned int i = 0; i < text_.size(); i++)
-	{
-		generatePanel(text_[i]);
-		currentCharacterPos_.x += 0.2f;
-	}
+	//temporary coords
+	std::vector<float> tex_coords = {
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 1.0f };
+
+	panel_ = Sc2dPanel(bottomLeftPosition, size, "data/img/timesNewRomanFont.bmp", tex_coords);
+
+	updatePanel();
 
 }
-
 
 void ScText::display()
 {
-	for (unsigned int i = panels_.size(); i > 0; i--)
-		panels_[i-1].display();
+	panel_.display(); 
 }
 
-void ScText::generatePanel(char character)
+void ScText::updatePanel()
 {
-	int charIndex = character - startCharacter;
-	int charRow = charIndex / noRow;
-	int charCol = charIndex % noRow;
+	std::vector<float> tex_coord;
+	std::vector<float> points;
 
-	float cellReduction = 0.35f; //35%
+	for (unsigned int i = text_.size(); i > 0; i--)
+	{
 
-	float atlasColL = ((float)charCol) / noCol;
-	float atlasRowT = 1.0f - ((float)charRow / noRow);
+		char character = text_[i-1];
 
-	float atlasColR = atlasColL + (1.0f/noCol)*(1.0f-cellReduction);
-	float atlasRowB = atlasRowT - (1.0f / noRow)*(1.0f-cellReduction);
+		int charIndex = character - startCharacter;
+		int charRow = charIndex / noRow;
+		int charCol = charIndex % noRow;
 
-	std::vector<float> tex_coord = {
-		atlasColL, atlasRowB,  //bas gauche
-		atlasColR, atlasRowB,  //bas droit
-		atlasColL, atlasRowT, //Haut gauche
-		atlasColL, atlasRowT, //Haut gauche
-		atlasColR, atlasRowB, //bas droit
-		atlasColR, atlasRowT }; //haut droit
+		float cellReduction = 0.18f; //19%
 
-	Sc2dPanel panel = Sc2dPanel(currentCharacterPos_, size_, "data/img/timesNewRomanFont.bmp", tex_coord);
+		float atlasColL = ((float)charCol) / noCol;
+		float atlasRowT = 1.0f - ((float)charRow / noRow);
 
-	panels_.push_back(panel);
+		float atlasColR = atlasColL + (1.0f / noCol)*(1.0f - cellReduction);
+		float atlasRowB = atlasRowT - (1.0f / noRow)*(1.0f - cellReduction);
+
+		tex_coord.push_back(atlasColL); //bas gauche
+		tex_coord.push_back(atlasRowB);
+
+		tex_coord.push_back(atlasColR); //bas droit
+		tex_coord.push_back(atlasRowB);
+
+		tex_coord.push_back(atlasColL); //Haut gauche
+		tex_coord.push_back(atlasRowT);
+
+		tex_coord.push_back(atlasColL); //Haut gauche
+		tex_coord.push_back(atlasRowT);
+
+		tex_coord.push_back(atlasColR); //bas droit
+		tex_coord.push_back(atlasRowB);
+
+		tex_coord.push_back(atlasColR); //haut droit
+		tex_coord.push_back(atlasRowT);
+
+		if (lastTextSize != text_.size())
+		{
+			points.push_back(-1.0f+i);
+			points.push_back(-1.0f);
+
+			points.push_back(1.0f+i);
+			points.push_back(-1.0f);
+
+			points.push_back(-1.0f+i);
+			points.push_back(1.0f);
+
+			points.push_back(-1.0f+i);
+			points.push_back(1.0f);
+
+			points.push_back(1.0f+i);
+			points.push_back(-1.0f);
+
+			points.push_back(1.0f+i);
+			points.push_back(1.0f);
+		}
+		else
+		{
+			points = panel_.getPoints();
+		}
+	}
+	panel_.update(points, tex_coord);
 }
 
 void ScText::updateText(std::string text)
 {
+	lastTextSize = text_.size();
+
 	if (text.size() > maxLength_)
 		text_ = text.substr(0, maxLength_);
 	else
 		text_ = text;
 
-	currentCharacterPos_ = initialCharacterPos_;
-
-	panels_.clear();
-
-	for (unsigned int i = 0; i < text_.size(); i++)
-	{
-		generatePanel(text_[i]);
-		currentCharacterPos_.x += charOffSet_;
-	}
+	updatePanel();
 }
 
 std::string ScText::getText() const

@@ -22,18 +22,19 @@ class ScText
 
 
 		std::string text_;
-		std::vector<Sc2dPanel> panels_;
+		Sc2dPanel panel_;
 		int maxLength_;
 
 		glm::vec2 initialCharacterPos_;
 		glm::vec2 currentCharacterPos_;
 		glm::vec2 size_;
 
-		void generatePanel(char character);
+		void updatePanel();
 
 		int noCol;
 		int noRow;
 		int startCharacter;
+		int lastTextSize;
 
 		float charOffSet_;
 };

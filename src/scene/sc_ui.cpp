@@ -21,7 +21,7 @@ UI::UI()
 	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/scoreBackground.bmp", tex_3on4_coord);
 	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/mainMenuBackground.bmp", tex_3on4_coord);
 
-	nameTextBox = ScText(glm::vec2(-0.5f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f/4.0f)), "", 10, 1.35f);
+	nameTextBox = ScText(glm::vec2(-5.0f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f/4.0f)), "", 10, 1.35f);
 	timer = ScText(glm::vec2(-0.5f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f / 4.0f)), "", 10, 1.35f);
 }
 
