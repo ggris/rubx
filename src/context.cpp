@@ -27,7 +27,7 @@ Context::Context() :
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window_ = glfwCreateWindow(1240, 480, "Rubix", NULL, NULL);
+    window_ = glfwCreateWindow(1024, 768, "Rubix", NULL, NULL);
 
     if (!window_)
     {

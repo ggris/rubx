@@ -1,10 +1,17 @@
-#version 410 
-in vec2 vp; 
-out vec2 st; 
+#version 410  
+uniform vec2 panel_scale; 
+uniform vec2 panel_position; 
+
+layout(location = 0) in vec2 vp;
+layout(location = 1) in vec2 UV;
+
+smooth out vec2 fragUV;
+
 void main () 
 { 
-	st = (vp + 1.0) * 0.5; 
-	gl_Position = vec4 (vp.x, vp.y, 0.0, 1.0); 
-	gl_Position.xy *= 1.0; 
+	vec2 position = panel_position + vp;
+	gl_Position = vec4 (position * panel_scale, 0.0, 1.0);
+	
+	fragUV=UV;	
 }
 
