@@ -78,6 +78,8 @@ void UI::receiveKeyPress(int key)
 		case UI_SCORE:
 			ui_state = UI_MENU;
 			break;
+        case UI_GAME:
+            break;
 		}
 	}
 	else if (key == GLFW_KEY_P && ui_state == UI_MENU)

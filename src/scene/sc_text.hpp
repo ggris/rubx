@@ -23,7 +23,7 @@ class ScText
 
 		std::string text_;
 		Sc2dPanel panel_;
-		int maxLength_;
+		unsigned int maxLength_;
 
 		glm::vec2 initialCharacterPos_;
 		glm::vec2 currentCharacterPos_;
@@ -34,7 +34,7 @@ class ScText
 		int noCol;
 		int noRow;
 		int startCharacter;
-		int lastTextSize;
+		unsigned int lastTextSize;
 };
 
 #endif

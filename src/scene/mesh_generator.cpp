@@ -53,8 +53,8 @@ ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
 
     };
 
-	glm::vec3 bb_max = { 1.0f, 1.0f, 1.0f };
-	glm::vec3 bb_min = { 0.0f, 0.0f, 0.0f };
+//	glm::vec3 bb_max = { 1.0f, 1.0f, 1.0f };
+//	glm::vec3 bb_min = { 0.0f, 0.0f, 0.0f };
 
 	uniqueObjectId++;
 
@@ -211,8 +211,8 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 //        0.67f, 0.67f,
 //    };
 
-	glm::vec3 bb_max = { 1.0f, 1.0f, 1.0f };
-	glm::vec3 bb_min = { 0.0f, 0.0f, 0.0f };
+//	glm::vec3 bb_max = { 1.0f, 1.0f, 1.0f };
+//	glm::vec3 bb_min = { 0.0f, 0.0f, 0.0f };
 
 	uniqueObjectId++;
 

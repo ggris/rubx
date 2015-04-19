@@ -1,8 +1,10 @@
 #ifndef SC_2D_PANEL_HPP
 #define SC_2D_PANEL_HPP
 
-#include "sc_3d_node.hpp"
 #include <string>
+#include "glm/glm.hpp"
+#include "include_gl.hpp"
+#include "scene_graph.hpp"
 
 class Sc2dPanel : ScNode
 {

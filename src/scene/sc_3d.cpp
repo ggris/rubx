@@ -1,8 +1,11 @@
-#include "sc_mesh.hpp"
+#include <iostream>
+
 #include "mesh_generator.hpp"
 #include "rubix_cube.hpp"
+
 #include "lamp.hpp"
-#include <iostream>
+#include "camera.hpp"
+#include "sc_3d.hpp"
 
 Sc3d::Sc3d(GLFWwindow * window) :
     window_(window)
@@ -12,9 +15,8 @@ Sc3d::Sc3d(GLFWwindow * window) :
     addLamp(glm::vec4(1.1,1.1,1.1,0.0));
     addLamp(glm::vec4(0.1,3.1,1.1,1.0));
     addLamp(glm::vec4(1.0,-1.0,0.,0.0));
-    //    push_back(MeshGenerator::rubixSmallCube(camera_));
-    RubixCube * rubii =  new RubixCube(camera_);
-    push_back(rubii);
+
+    push_back(new RubixCube(camera_));
     push_back(MeshGenerator::tableSurface(camera_));
 }
 

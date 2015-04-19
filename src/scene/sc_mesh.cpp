@@ -9,6 +9,8 @@
 #include "logger.hpp"
 #include "program.hpp"
 #include "lamp.hpp"
+#include "camera.hpp"
+#include "sc_3d.hpp"
 
 #include "sc_mesh.hpp"
 
@@ -103,7 +105,6 @@ ScMesh::ScMesh(Sc3dNode * parent,
 
 void ScMesh::display()
 {
-    float t = glfwGetTime();
     glUseProgram(program_);
 
     // Get program uniforms
@@ -133,7 +134,7 @@ void ScMesh::display()
 void ScMesh::setLamps()
 {
 
-    std::vector<Lamp*> lamps = getScene().getLamps();
+    std::vector<Lamp*> lamps = getScene()->getLamps();
     //set number of lamps
     GLuint nblamps = glGetUniformLocation(program_, "numLamps");
     glUniform1i(nblamps,lamps.size());

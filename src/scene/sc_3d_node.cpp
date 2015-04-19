@@ -1,5 +1,6 @@
 #include "logger.hpp"
 #include "sc_3d_node.hpp"
+#include "sc_3d.hpp"
 
 Sc3dNode::Sc3dNode() :
     parent_(nullptr),
