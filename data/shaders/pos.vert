@@ -16,7 +16,7 @@ void main()
 {
     gl_Position = projection_matrix * position;
     color = (normal + vec4(1.0f)) / 2.0f;
-    fragPosition=position;
+    fragPosition=projection_matrix * base_position;
     fragNormal=normal;
     fragUV=UV;
 }

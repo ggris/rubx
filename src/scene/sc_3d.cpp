@@ -1,4 +1,3 @@
-#include "sc_3d.hpp"
 #include "sc_mesh.hpp"
 #include "mesh_generator.hpp"
 #include "rubix_cube.hpp"

@@ -11,7 +11,7 @@ class ScText
 {
     public:
 		ScText();
-		ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, int maxLength, float charOffSet);
+		ScText(glm::vec2 bottomLeftPosition, glm::vec2 size, std::string text, int maxLength);
 
 		void updateText(std::string text);
 		std::string getText() const;
@@ -35,8 +35,6 @@ class ScText
 		int noRow;
 		int startCharacter;
 		int lastTextSize;
-
-		float charOffSet_;
 };
 
 #endif

@@ -18,11 +18,14 @@ UI::UI()
 		1.0f, (1.0f / 4.0f),
 		1.0f, 1.0f };
 
+	frameCount = 60;
+
 	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/scoreBackground.bmp", tex_3on4_coord);
 	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/mainMenuBackground.bmp", tex_3on4_coord);
 
-	nameTextBox = ScText(glm::vec2(-5.0f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f/4.0f)), "", 10, 1.35f);
-	timer = ScText(glm::vec2(-0.5f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f / 4.0f)), "", 10, 1.35f);
+	nameTextBox = ScText(glm::vec2(-5.0f, -2.0f), glm::vec2(0.1f, 0.1f*(3.0f/4.0f)), "", 10);
+	timerLabel = ScText(glm::vec2(0.0f, -12.0f), glm::vec2(0.1f, 0.1f*(3.0f / 4.0f)), "", 10);
+	fpsLabel = ScText(glm::vec2(-24.0f, -32.0f), glm::vec2(0.04f, 0.04f*(3.0f / 4.0f)), "", 10);
 }
 
 void UI::display()
@@ -38,15 +41,27 @@ void UI::display()
 		break;
 	case UI_GAME:
 		int time = glfwGetTime();
-		if ((time - lastTime) >= 1)
+		if ((time - lastTime) >= 1) //each second
 		{
 			lastTime = time;
-			std::ostringstream strs;
-			strs << lastTime;
-			std::string str = strs.str();
-			timer.updateText(str);
+
+			//timer
+			std::ostringstream timerStream;
+			timerStream << lastTime;
+			std::string str = timerStream.str();
+			timerLabel.updateText(str);
+
+			//fps count
+			calculateFps();
+			std::ostringstream fpsStream;
+			fpsStream << fps;
+			str = fpsStream.str();
+			str += " FPS";
+			fpsLabel.updateText(str);
 		}
-		timer.display();
+		frameCount++;
+		timerLabel.display();
+		fpsLabel.display();
 		break;
 	}
 }
@@ -83,4 +98,9 @@ void UI::receiveKeyPress(int key)
 	}
 }
 
+void UI::calculateFps()
+{
+	fps = frameCount;
+	frameCount = 0;
+}
 
