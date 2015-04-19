@@ -13,7 +13,7 @@ Sc3d::Sc3d(GLFWwindow * window) :
     addLamp(glm::vec4(1.1,1.1,1.1,0.0));
     addLamp(glm::vec4(0.1,1.1,1.1,1.0));
     addLamp(glm::vec4(1.1,0.1,1.1,0.0));
-//    push_back(MeshGenerator::rubixSmallCube(&camera_));
+    //    push_back(MeshGenerator::rubixSmallCube(&camera_));
     RubixCube * rubii =  new RubixCube(camera_);
     push_back(rubii);
 }
@@ -30,7 +30,7 @@ void Sc3d::display()
 
 Camera Sc3d::getCamera()
 {
-	return *camera_;
+    return *camera_;
 }
 
 std::vector <Lamp *> Sc3d::getLamps()
@@ -41,7 +41,7 @@ std::vector <Lamp *> Sc3d::getLamps()
 void Sc3d::addLamp(Lamp * lamp)
 {
     if(lamps_.size()<=20){ // Dirty hack to accomodate GLSL fixed-length arrays
-    lamps_.push_back(lamp);
+        lamps_.push_back(lamp);
     }
     else {
         std::cout<<"Sc3d : too many lamps, lamp not added"<<std::endl;
