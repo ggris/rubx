@@ -2,10 +2,10 @@
 
 layout(location = 0) in vec4 position;
 
-uniform vec4 camera_position;
 uniform mat4 projection_matrix;
+uniform mat4 transformation_matrix;
 
 void main()
 {
-    gl_Position = projection_matrix * position;
+    gl_Position = projection_matrix *transformation_matrix* position;
 }

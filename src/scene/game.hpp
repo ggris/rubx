@@ -26,6 +26,7 @@ class Game
 
 		void setCube(RubixCube * cube);
 		std::string getTime();
+		std::string getScore();
 
 		void update();
 

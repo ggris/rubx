@@ -1,27 +1,21 @@
+#include <glm/gtx/transform.hpp>
 #include "lamp.hpp"
 
 Lamp::Lamp():
-    light_(1.0,1.0,1.0,0.0),
+    Camera(),
     color_(1.0,1.0,1.0,1.0)
 {
 }
 
-Lamp::Lamp(glm::vec4 light,glm::vec4 color):
-    light_(light),
+Lamp::Lamp(glm::vec3 position, float rot_y, float rot_loc_x, glm::vec4 color):
+    Camera(),
     color_(color)
 {
+    transformation_=glm::translate(position)*glm::rotate(rot_y,glm::vec3(0.0,1.0,0.0))*glm::rotate(rot_loc_x,glm::vec3(1.0,0.0,0.0));
 }
 
-Lamp::Lamp(glm::vec3 light, sourceType source, glm::vec4 color):
-    light_(setLight(light,source)),
-    color_(color)
+
+void Lamp::display()
 {
+
 }
-
-glm::vec4 Lamp::setLight(glm::vec3 light, sourceType source){
-    if (source==DIRECTIONAL) return glm::vec4(light,0.0);
-    return glm::vec4(light,1.0);
-}
-
-
-void Lamp::display(){}

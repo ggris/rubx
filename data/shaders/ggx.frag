@@ -9,7 +9,7 @@ uniform vec4 camera_position;
 uniform sampler2D texture_Sampler;
 uniform int numLamps; //actual number of lights used
 struct Lamp{
-    vec4 light;
+    mat4 transformation;
     vec4 color;
 };
 uniform Lamp allLamps[MAX_NB_LAMPS];
@@ -51,21 +51,16 @@ float GGX(vec4 n, vec4 l, vec4 v ,float alpha){
 
     float res=D_GGX(h,n,alpha)*Fresnel(l,h,alpha)*G_GGX(l,v,h,n,alpha);
     res/=4.0*dot(n,l)*dot(n,v);
-    if (res*dot(n,l)>0)return 3*res*dot(n,l);
+    if (res*dot(n,l)>0)return 5.0*res*dot(n,l);
     return 0.0;
 }
 
 vec4 applyLamp(Lamp lamp, vec4 surfaceColor, vec4 normal, vec4 position, vec4 toCamera){
-    vec4 toLamp;
+    vec4 toLamp = lamp.transformation[3]-position;
     float attenuation=1.0;
-    if(lamp.light.w==0.0){ //directional light
-        toLamp=normalize(lamp.light);
-    }
-    else { //punctual light
-        toLamp = normalize(lamp.light-position);
-        float dist= length(lamp.light-position);
-        attenuation = 1.0/(1.0+0.01*pow(dist,2)); //quadratic attenuation
-    }
+    float dist= length(toLamp);
+    toLamp = normalize(toLamp);
+    attenuation = 1.0/(1.0+0.01*pow(dist,2));
     //if (GGX(normal,toLamp,toCamera,0.7)<0.0) return vec4(1.0,1.0,0.0,1.0);
     return attenuation*GGX(normal,toLamp,toCamera,0.5)*surfaceColor*lamp.color;
 

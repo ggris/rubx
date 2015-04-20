@@ -106,17 +106,21 @@ void ScMesh::display()
 
     // Get program uniforms
 
-    GLuint perspectiveMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
+    GLuint projectionMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
+    GLuint transformationMatrixUnif = glGetUniformLocation(program_,"transformation_matrix");
     GLuint textureSamplerUniform = glGetUniformLocation(program_,"texture_Sampler");
 
-    // Define projection matrix
+    // Get camera projection matrix
 
-    glm::mat4 projection = getTransformation();
+    glm::mat4 projection = getScene()->getCamera().getProjectionMat();
+
+    // Get transformation matrix
+
+    glm::mat4 transformation = glm::inverse(getScene()->getCamera().getTransformation())*getTransformation();
 
     // Define uniform values
-
-    //glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
-    glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
     texture_->bindToSampler(textureSamplerUniform);
 
     //set Lamps
@@ -139,16 +143,16 @@ void ScMesh::setLamps()
     //set lamp array
     for (unsigned int i=0;i<lamps.size();i++){
 
-        std::ostringstream sslight,sscolor;
-        sslight << "allLamps[" << i << "].light";
+        std::ostringstream sstransformation,sscolor;
+        sstransformation << "allLamps[" << i << "].transformation";
         sscolor << "allLamps[" << i << "].color";
-        std::string lightUnifName = sslight.str();
+        std::string transformationUnifName = sstransformation.str();
         std::string colorUnifName = sscolor.str();
 
-        GLuint lightUniform = glGetUniformLocation(program_,lightUnifName.c_str());
+        GLuint transformUniform = glGetUniformLocation(program_,transformationUnifName.c_str());
         GLuint colorUniform = glGetUniformLocation(program_,colorUnifName.c_str());
 
-        glUniform4f(lightUniform,lamps[i]->getLight().x,lamps[i]->getLight().y,lamps[i]->getLight().z,lamps[i]->getLight().w);
+        glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(lamps[i]->getTransformation()));
         glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
 
     }
@@ -163,16 +167,23 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 	// Get program uniforms
 
 	GLuint u_colour = glGetUniformLocation(pickingProgram_, "colour");
-	GLuint perspectiveMatrixUnif = glGetUniformLocation(pickingProgram_, "projection_matrix");
+	GLuint projectionMatrixUnif = glGetUniformLocation(pickingProgram_, "projection_matrix");
+	GLuint transformationMatrixUnif = glGetUniformLocation(pickingProgram_, "transformation_matrix");
 
-	// Define projection matrix
+	// Get camera projection matrix
 
-	glm::mat4 projection = getTransformation();
+    glm::mat4 projection = getScene()->getCamera().getProjectionMat();
+
+    // Get transformation matrix
+
+    glm::mat4 transformation = glm::inverse(getScene()->getCamera().getTransformation())*getTransformation();
+
 
 	// Define uniform values
 
 	glUniform4f(u_colour, colour.x/255.0f, colour.y/255.0f, colour.z/255.0f, 1.0f);
-	glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
 
 	glBindVertexArray(vao_);
 	glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
