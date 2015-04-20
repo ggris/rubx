@@ -1,8 +1,9 @@
 #include "mesh_generator.hpp"
+#include "sc_3d.hpp"
 
 unsigned int MeshGenerator::uniqueObjectId = 0;
 
-ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
+ScMesh * MeshGenerator::testCube(Sc3dNode * parent, Sc3d * scene)
 {
     std::vector<float> points = {
         0.0f, 0.0f, 0.0f, 1.0f,
@@ -58,11 +59,11 @@ ScMesh * MeshGenerator::testCube(Sc3dNode * parent)
 
 	uniqueObjectId++;
 
-	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId);
+	return new ScMesh(parent, scene, points, normals, tex_coord, index, uniqueObjectId,scene->getTexture("testCube"));
 
 }
 
-ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
+ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent,Sc3d * scene)
 {
     std::vector<float> points = {
         0.0f, 0.0f, 0.0f, 1.0f,
@@ -216,23 +217,23 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent)
 
 	uniqueObjectId++;
 
-	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId);
+	return new ScMesh(parent, scene,points, normals, tex_coord, index, uniqueObjectId, scene->getTexture("rubixSmallCube"));
 
 }
 
-ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent)
+ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent,Sc3d * scene)
 {
     std::vector<float> points = {
         0.0f, -0.6f, 0.0f,
         5.0f, -0.6f, 0.0f,
-        5.0f, -0.06f, -5.0f,
+        5.0f, -0.6f, -5.0f,
         0.0f, -0.6f, -5.0f
     };
     std::vector<float> normals = {
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f
     };
     std::vector<unsigned short> index = {
         0, 1, 2,
@@ -246,6 +247,6 @@ ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent)
     };
     uniqueObjectId++;
 
-	return new ScMesh(parent, points, normals, tex_coord, index, uniqueObjectId,"data/img/fiftyShades.bmp");
+	return new ScMesh(parent,scene,points, normals, tex_coord, index, uniqueObjectId,scene->getTexture("tableSurface"));
 }
 

@@ -9,6 +9,7 @@ class Sc3d;
 class Sc3dNode : public ScNode
 {
     public:
+        enum RenderLayer {ALL, LIGHTING, ZBUFFER, SELECT};
         Sc3dNode();
         Sc3dNode(Sc3dNode * parent);
         Sc3dNode(Sc3dNode * parent, Sc3d* scene);
@@ -19,6 +20,7 @@ class Sc3dNode : public ScNode
         Sc3d * getScene(){return scene_;}
 
         glm::mat4 getTransformation() const;
+
 
     protected:
         Sc3dNode * parent_;

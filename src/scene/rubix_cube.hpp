@@ -14,7 +14,7 @@
 class RubixCube : public Sc3dNode
 {
     public :
-        RubixCube(Sc3dNode * parent);
+        RubixCube(Sc3dNode * parent,Sc3d * scene);
         bool isWon();
         void rotate (int axis, int crown, int direct);
         //axis = 0 pour x, 1 pour y, 2 pour z

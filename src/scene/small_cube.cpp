@@ -7,7 +7,7 @@ float SmallCube::ANIMATION_LENGTH=5.0f;
 
 SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
     Sc3dNode(parent),
-    mesh_(MeshGenerator::rubixSmallCube(this))
+    mesh_(MeshGenerator::rubixSmallCube(this,this->scene_))
 {
     transform_=
     {
@@ -16,6 +16,7 @@ SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
         0,  0,  1,  0,
         x,  y,  z,  1
     };
+    
     transformation_ = transform_;
     is_animate_=false;
 }

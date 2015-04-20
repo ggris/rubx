@@ -5,8 +5,8 @@
 
 using namespace std;
 
-RubixCube::RubixCube(Sc3dNode * parent) :
-    Sc3dNode(parent)
+RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
+    Sc3dNode(parent,scene)
 {
     cubes_.push_back(new SmallCube(this, -1, -1, -1));
     cubes_.push_back(new SmallCube(this, -1, -1,  1));

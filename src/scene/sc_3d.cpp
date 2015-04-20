@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 
 #include "mesh_generator.hpp"
 #include "rubix_cube.hpp"
@@ -9,15 +10,16 @@
 
 Sc3d::Sc3d(GLFWwindow * window) :
     window_(window)
-{
+{   Texture * texture = new Texture("data/img/corners.bmp");
+    textures_.insert({"default",texture});
     camera_= new Camera(80.0f, 1.0f, 0.1f, 10.0f);
     camera_->setScene(this);
     addLamp(glm::vec4(1.1,1.1,1.1,0.0));
     addLamp(glm::vec4(0.1,3.1,1.1,1.0));
     addLamp(glm::vec4(1.0,-1.0,0.,0.0));
 
-    push_back(new RubixCube(camera_));
-    push_back(MeshGenerator::tableSurface(camera_));
+    push_back(new RubixCube(camera_,this));
+    push_back(MeshGenerator::tableSurface(camera_,this));
 }
 
 void Sc3d::display()
@@ -58,4 +60,13 @@ void Sc3d::addLamp(glm::vec4 light)
 void Sc3d::addLamp(glm::vec4 light, glm::vec4 color)
 {
     addLamp(new Lamp(light,color));
+}
+
+Texture * Sc3d::getTexture(std::string objectID){
+    try{
+        return textures_.at(objectID);
+    }
+    catch(std::out_of_range e){ //if ID unknow, return default texture
+        return textures_.at("default");
+    }
 }
