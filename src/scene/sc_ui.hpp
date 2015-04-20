@@ -8,6 +8,7 @@
 #include "sc_2d_panel.hpp"
 #include "sc_text.hpp"
 #include "game.hpp"
+#include "scoreLoader.hpp"
 
 enum UI_state { UI_MENU, UI_SCORE, UI_GAME, UI_ABOUT };
 class UI : public ScNode
@@ -41,6 +42,8 @@ class UI : public ScNode
 		ScText timerLabel;
 		ScText fpsLabel;
 		ScText victoryLabel;
+
+		ScoreLoader scoreLoader_;
 
 		double lastTime;
 

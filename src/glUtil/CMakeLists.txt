@@ -12,6 +12,9 @@ set(SRC
     texture.cpp
     vao.hpp
     vao.cpp
+
+    scoreLoader.hpp
+    scoreLoader.cpp
     )
 
 add_library(rubx_glUtil ${SRC})

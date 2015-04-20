@@ -27,6 +27,9 @@ UI::UI()
 		1.0f, 0.0f,
 		1.0f, 1.0f };
 
+	//Score
+	scoreLoader_ = ScoreLoader();
+
 	//Backgrounds
 	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/scoreBackground.bmp", tex_3on4_coord);
 	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/mainMenuBackground.bmp", tex_3on4_coord);
