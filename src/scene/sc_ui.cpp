@@ -72,7 +72,7 @@ void UI::display()
 		break;
 	case UI_ABOUT:
 		selector.display();
-		scorePanel.display();
+		aboutPanel.display();
 		break;
 	case UI_GAME:
 		int time = glfwGetTime();
