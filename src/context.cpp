@@ -3,6 +3,7 @@
 
 #include "sc_ui.hpp"
 #include "sc_3d.hpp"
+#include "game.hpp"
 
 #include "context.hpp"
 
@@ -86,7 +87,10 @@ void Context::initGL()
 
 void Context::initScene()
 {
+	Game * game = new Game();
     UI * ui = new UI();
+
+	ui->setGame(game);
 
 	Sc3d* sc3d = new Sc3d(window_);
 

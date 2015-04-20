@@ -37,6 +37,8 @@ set(SRC
 	sc_text.hpp
 	sc_text.cpp
 
+	game.hpp
+	game.cpp
     )
 
 add_library(rubx_scene ${SRC})
