@@ -43,10 +43,10 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	difficulty_ = difficulty;
 	time = 0.0;
 	initialTime = 0.0;
-	timerRandomMoves = 20;
+	timerRandomMoves = 5;
 	score = 0;
 
-	cube_->shuffle(200, 0.1f);
+	cube_->shuffle(50, 0.1f);
 }
 
 void Game::endGame()

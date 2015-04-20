@@ -101,7 +101,11 @@ void UI::receiveKeyPress(int key, int keyAction)
 		
 		break;
 	case UI_GAME:
-
+		if (key == GLFW_KEY_ESCAPE && keyAction == GLFW_PRESS)
+		{
+			game_->endGame();
+			ui_state = UI_MENU;
+		}
 		break;
 	}
 }
