@@ -147,8 +147,8 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, float speed){
     scalarProducts[4] = glm::dot(direction, -y);
     scalarProducts[5] = glm::dot(direction, -z);
     
-    int imax;
-    float pmax;
+    int imax = 0;
+    float pmax = 0.0f;
     for (int i=0; i<6; i++){
         if (scalarProducts[i]>pmax){
             pmax=scalarProducts[i];
