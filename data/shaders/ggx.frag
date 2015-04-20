@@ -51,7 +51,7 @@ float GGX(vec4 n, vec4 l, vec4 v ,float alpha){
 
     float res=D_GGX(h,n,alpha)*Fresnel(l,h,alpha)*G_GGX(l,v,h,n,alpha);
     res/=4.0*dot(n,l)*dot(n,v);
-    if (res*dot(n,l)>0)return 5.0*res*dot(n,l);
+    if (res*dot(n,l)>0)return 10.0*res*dot(n,l);
     return 0.0;
 }
 
@@ -62,7 +62,7 @@ vec4 applyLamp(Lamp lamp, vec4 surfaceColor, vec4 normal, vec4 position, vec4 to
     toLamp = normalize(toLamp);
     attenuation = 1.0/(1.0+0.01*pow(dist,2));
     //if (GGX(normal,toLamp,toCamera,0.7)<0.0) return vec4(1.0,1.0,0.0,1.0);
-    return attenuation*GGX(normal,toLamp,toCamera,0.3)*surfaceColor*lamp.color;
+    return attenuation*GGX(normal,toLamp,toCamera,0.8)*surfaceColor*lamp.color;
 
     //return vec4(1.0,1.0,0.0,1.0);
 }
