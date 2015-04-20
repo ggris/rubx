@@ -19,8 +19,7 @@ class SmallCube : public Sc3dNode
 
 
         void display();
-        void rotate (glm::imat4 rotation);
-
+        void rotate(int axis, int direct, float speed);
         glm::imat4 transform_;
     
         ScMesh * getMesh() const;
@@ -28,11 +27,17 @@ class SmallCube : public Sc3dNode
     private:
     
         ScMesh * mesh_;
+    
+        //animation
         float animation_start_;
+        float animation_length_;
         bool is_animate_;
-        glm::imat4 last_transform_;
+        glm::mat4 last_transform_;
     
 
+        //rotation
+        int axis_rotation_;
+        int direct_rotation_;
 };
 
 #endif

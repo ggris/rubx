@@ -39,7 +39,7 @@ bool RubixCube::isWon()
 void RubixCube::display(){
     
     if (is_shuffling_){
-        if((glfwGetTime() - shuffle_start_)/animation_length_ > shuffle_number_){
+        if((glfwGetTime() - shuffle_start_)/animation_length_ > 2 *  shuffle_number_){
             shuffle_number_ ++;
             LOG_DEBUG << "Shuffle n° : " << shuffle_number_ << " / " << shuffle_length_;
             randomRotate(animation_length_);
@@ -48,6 +48,7 @@ void RubixCube::display(){
             is_shuffling_=false;
         }
     }
+    
     
     for(unsigned int i=0;i<cubes_.size();i++){
         cubes_[i]->display();
@@ -61,43 +62,13 @@ void microShuffle(){
 void RubixCube::rotate (int axis, int crown, int direct, float speed)
 {
     SmallCube::ANIMATION_LENGTH = speed;
-    glm::imat4 rotation;
-
-    switch (axis){
-        case 0:
-            rotation={
-                1,  0,  0,  0,
-                0,  0,  direct,  0,
-                0,  -direct, 0,  0,
-                0,  0,  0,  1
-            };
-            break;
-        case 1:
-            rotation={
-                0,  0, -direct,  0,
-                0,  1,  0,  0,
-                direct,  0,  0,  0,
-                0,  0,  0,  1
-            };
-            break;
-        case 2:
-            rotation={
-                0,  direct,  0,  0,
-                -direct, 0,  0,  0,
-                0,  0,  1,  0,
-                0,  0,  0,  1
-            };
-            break;
-        default:
-            break;
-    }
     for (unsigned int i=0; i<cubes_.size();i++)
     {
         if (cubes_[i]->transform_[3][axis]==crown)
         {
-            cubes_[i]->rotate(rotation);
+            cubes_[i]->rotate(axis, direct, speed);
+            
         }
-
     }
 }
 
@@ -117,8 +88,6 @@ void RubixCube::randomRotate(float speed){
     int d = (rand() % 2)*2 - 1;
     rotate(a,c,d,speed);
 }
-
-
 
 void RubixCube::shuffle(int number, float speed){
     is_shuffling_=true;

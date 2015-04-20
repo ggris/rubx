@@ -36,12 +36,17 @@ class RubixCube : public Sc3dNode
 
         std::vector <SmallCube *> cubes_;
     
+        //shuffle
         bool is_shuffling_;
         int shuffle_number_;
         int shuffle_length_;
         float shuffle_start_;
-        float animation_length_;
+    
 
+        //animation
+        float animation_length_;
+    
+        
 };
 
 #endif
