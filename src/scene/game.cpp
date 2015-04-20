@@ -45,6 +45,8 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	initialTime = 0.0;
 	timerRandomMoves = 20;
 	score = 0;
+
+	cube_->shuffle(200, 0.1f);
 }
 
 void Game::endGame()
@@ -59,13 +61,8 @@ void Game::endGame()
 
 void Game::update()
 {
-	if (timerRandomMoves == 20)
-	{
-		//TODO Mettre temps + nb moves ((difficulty+1)*10 par exemple)
-		//cube_->randomMove();
-		timerRandomMoves--;
-	}
-	else if (timerRandomMoves > 0)
+
+	if (timerRandomMoves > 0)
 	{
 		timerRandomMoves--;
 

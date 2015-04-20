@@ -75,6 +75,7 @@ void UI::receiveKeyPress(int key, int keyAction)
 	case UI_MENU:
 		if (key == GLFW_KEY_ENTER && keyAction == GLFW_PRESS)
 		{
+			game_->newGame("",GAME_EASY);
 			ui_state = UI_GAME;
 		}
 		else if (key == GLFW_KEY_DOWN)

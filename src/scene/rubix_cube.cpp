@@ -21,7 +21,6 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
     
     transformation_ = glm::translate(glm::vec3(0.0f, 0.0f, -5.0f));
     srand (time(NULL));
-    shuffle(20, 0.2f); //for test : on shuffle dès création du cube
     
 }
 
