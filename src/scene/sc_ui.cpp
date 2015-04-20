@@ -45,25 +45,32 @@ void UI::display()
 		{
 			lastTime = time;
 
-			
-
 			//fps count
-			calculateFps();
-			std::string str;
-			std::ostringstream fpsStream;
-			fpsStream << fps;
-			str = fpsStream.str();
-			str += " FPS";
-			fpsLabel.updateText(str);
+			if (showFps)
+			{
+				calculateFps();
+				std::string str;
+				std::ostringstream fpsStream;
+				fpsStream << fps;
+				str = fpsStream.str();
+				str += " FPS";
+				fpsLabel.updateText(str);
+			}
 
 			game_->update();
 
 			//timer
 			timerLabel.updateText(game_->getTime());
 		}
-		frameCount++;
+		
 		timerLabel.display();
-		fpsLabel.display();
+
+		if (showFps)
+		{
+			frameCount++;
+			fpsLabel.display();
+		}
+
 		break;
 	}
 }
@@ -73,39 +80,13 @@ void UI::receiveKeyPress(int key, int keyAction)
 	switch (ui_state)
 	{
 	case UI_MENU:
-		if (key == GLFW_KEY_ENTER && keyAction == GLFW_PRESS)
-		{
-			game_->newGame("",GAME_EASY);
-			ui_state = UI_GAME;
-		}
-		else if (key == GLFW_KEY_DOWN)
-		{
-
-		}
-		else if (key == GLFW_KEY_UP)
-		{
-
-		}
-		//User name textbox
-		else if (key > GLFW_KEY_SPACE && key < GLFW_KEY_Z && keyAction == GLFW_PRESS)
-		{
-			char cKey = static_cast<char>(key);
-			nameTextBox.updateText(nameTextBox.getText() + cKey);
-		}
-		else if (key == GLFW_KEY_BACKSPACE && keyAction == GLFW_PRESS || keyAction == GLFW_REPEAT)
-		{
-			nameTextBox.updateText(nameTextBox.getText().substr(0, nameTextBox.getText().size() - 1));
-		}
+		mainMenuKeyPress(key, keyAction);
 		break;
 	case UI_SCORE:
-		
+		scoreKeyPress(key, keyAction);
 		break;
 	case UI_GAME:
-		if (key == GLFW_KEY_ESCAPE && keyAction == GLFW_PRESS)
-		{
-			game_->endGame();
-			ui_state = UI_MENU;
-		}
+		gameKeyPress(key, keyAction);
 		break;
 	}
 }
@@ -141,4 +122,57 @@ void UI::receiveRightMouseDrag(glm::vec2 direction)
 Game* UI::getGame()
 {
 	return game_;
+}
+
+void UI::mainMenuKeyPress(int key, int keyAction)
+{
+	if (key == GLFW_KEY_ENTER && keyAction == GLFW_PRESS)
+	{
+		game_->newGame(nameTextBox.getText(), GAME_EASY);
+		showFps = false;
+		ui_state = UI_GAME;
+	}
+	else if (key == GLFW_KEY_DOWN && keyAction != GLFW_RELEASE)
+	{
+
+	}
+	else if (key == GLFW_KEY_UP && keyAction != GLFW_RELEASE)
+	{
+
+	}
+	//User name textbox
+	else if (key > GLFW_KEY_SPACE && key < GLFW_KEY_Z && keyAction == GLFW_PRESS)
+	{
+		char cKey = static_cast<char>(key);
+		nameTextBox.updateText(nameTextBox.getText() + cKey);
+	}
+	else if (key == GLFW_KEY_BACKSPACE && keyAction == GLFW_PRESS || keyAction == GLFW_REPEAT)
+	{
+		nameTextBox.updateText(nameTextBox.getText().substr(0, nameTextBox.getText().size() - 1));
+	}
+}
+
+void UI::scoreKeyPress(int key, int keyAction)
+{
+	if (key == GLFW_KEY_ENTER && keyAction == GLFW_PRESS)
+	{
+		ui_state = UI_MENU;
+	}
+}
+
+void UI::gameKeyPress(int key, int keyAction)
+{
+	if (key == GLFW_KEY_ESCAPE && keyAction == GLFW_PRESS)
+	{
+		game_->endGame();
+		if (game_->getIsWon())
+			ui_state = UI_SCORE;
+		else
+			ui_state = UI_MENU;
+	}
+	else if (key == GLFW_KEY_F && keyAction == GLFW_PRESS)
+	{
+		fps = 0;
+		showFps = !showFps;
+	}
 }
