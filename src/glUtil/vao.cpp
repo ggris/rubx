@@ -1,11 +1,10 @@
 #include <sstream>
 #include <string>
-
-#include "logger.hpp"
+#include <fstream>
 
 #include "vao.hpp"
 
-VAO:VAO(const std::vector<float> &points,
+VAO::VAO(const std::vector<float> &points,
             const std::vector<float> &normals,
             const std::vector<float> &uv,
             const std::vector<unsigned short> &index):
@@ -13,13 +12,13 @@ VAO:VAO(const std::vector<float> &points,
 {
 }
 
-    VAO::VAO(const std::string & filename)
-vao_genVAO(filename)
+    VAO::VAO(const std::string & filename) :
+vao_(genVAO(filename))
 {
 }
 
 
-void VAO::BindAndDraw()
+void VAO::bindAndDraw() const
 {
     glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
@@ -54,7 +53,7 @@ GLuint VAO::genVAO(const std::vector<float> &points,
     GLuint uv_vbo;
     glGenBuffers(1,&uv_vbo);
     glBindBuffer(GL_ARRAY_BUFFER,uv_vbo);
-    glBufferData(GL_ARRAY_BUFFER,tex_coord.size() * sizeof (float),tex_coord.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, uv.size() * sizeof (float), uv.data(), GL_STATIC_DRAW);
     glVertexAttribPointer (2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
     GLuint index_buffer_object;

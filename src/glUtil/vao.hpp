@@ -4,9 +4,9 @@
 #include <vector>
 #include <string>
 
-#include "include_gl.hpp"
+#include "../util/include_gl.hpp"
 
-class VAO :
+class VAO
 {
     public:
         VAO(const std::vector<float> &points,
