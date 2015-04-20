@@ -77,7 +77,7 @@ void UI::display()
 		aboutPanel.display();
 		break;
 	case UI_GAME:
-		int time = glfwGetTime();
+		double time = glfwGetTime();
 		if ((time - lastTime) >= 1) //each second
 		{
 			lastTime = time;

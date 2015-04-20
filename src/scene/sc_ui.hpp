@@ -42,7 +42,7 @@ class UI : public ScNode
 		ScText fpsLabel;
 		ScText victoryLabel;
 
-		int lastTime;
+		double lastTime;
 
 		void calculateFps();
 		int fps;

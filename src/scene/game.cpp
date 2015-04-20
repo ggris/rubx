@@ -51,7 +51,19 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	timerRandomMoves = 5;
 	score = 0;
 	gameIsWon = false;
-	cube_->shuffle((difficulty + 1) * 10, (float)timerRandomMoves/(((float)difficulty+1.0f)*10.0f));
+
+	switch (difficulty)
+	{
+	case GAME_EASY:
+		cube_->shuffle(1, 4.0f);
+		break;
+	case GAME_NORMAL:
+		cube_->shuffle(20, 0.1f);
+		break;
+	case GAME_HARD:
+		cube_->shuffle(50, 0.05f);
+		break;
+	}
 }
 
 void Game::endGame()
