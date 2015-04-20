@@ -1,6 +1,8 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <unordered_map>
+#include <cassert>
 
 #include "../util/logger.hpp"
 #include "vao.hpp"
@@ -68,18 +70,19 @@ GLuint VAO::genVAO(const std::vector<float> &points,
 
 GLuint VAO::genVAO(const std::string & filename)
 {
+    LOG_TRACE << "reading : " << filename;
+    std::vector<float> obj_points;
     std::vector<float> obj_normals;
     std::vector<float> obj_uv;
+
+    std::unordered_map<std::string, int> verts;
+
     std::vector<float> points;
     std::vector<float> normals;
     std::vector<float> uv;
     std::vector<unsigned short> index;
 
-    LOG_DEBUG << "Reading VAO";
-
     std::ifstream infile(filename.c_str());
-
-    LOG_DEBUG << "yp : " << infile.is_open();
     std::string line;
     while (std::getline(infile, line))
     {
@@ -89,27 +92,22 @@ GLuint VAO::genVAO(const std::string & filename)
 
         if (token == "v")
         {
-            LOG_DEBUG << "v : " << infile.is_open();
             float x, y, z;
             iss >> x >> y >> z;
-            points.push_back(x);
-            points.push_back(y);
-            points.push_back(z);
-            points.push_back(1.0f);
+            obj_points.push_back(x);
+            obj_points.push_back(y);
+            obj_points.push_back(z);
         }
         else if (token == "vn")
         {
-            LOG_DEBUG << "vn : " << infile.is_open();
             float x, y, z;
             iss >> x >> y >> z;
             obj_normals.push_back(x);
             obj_normals.push_back(y);
             obj_normals.push_back(z);
-            obj_normals.push_back(0.0f);
         }
         else if (token == "vt")
         {
-            LOG_DEBUG << "vt : " << infile.is_open();
             float u, v;
             iss >> u >> v;
             obj_uv.push_back(u);
@@ -117,29 +115,55 @@ GLuint VAO::genVAO(const std::string & filename)
         }
         else if (token == "f")
         {
-            LOG_DEBUG << "f : " << infile.is_open();
-            int i, j, k;
-            char c;
-            for (int i_l = 0; i_l < 3; i_l++)
+            std::string vert;
+            std::getline(iss, vert, ' ');
+            for (unsigned int i_l = 0; i_l < 3; i_l++)
             {
-                iss >> i >> c >> j >> c >> k;
-                index.push_back(--i);
-                if (normals.size() < (i+1)*3)
-                    normals.resize((i+1)*3);
-                k--;
-                j--;
-                normals[i*3] = obj_normals[k*3];
-                normals[i*3+1] = obj_normals[k*3+1];
-                normals[i*3+2] = obj_normals[k*3+2];
-                if (uv.size() < (i+1)*2)
-                    uv.resize((i+1)*2);
-                uv[i*2] = obj_uv[j*2];
-                uv[i*2+1] = obj_uv[j*2+1];
+                std::getline(iss, vert, ' ');
+                auto itt = verts.find(vert);
+                if ( itt == verts.end() )
+                {
+                    unsigned int n = verts.size();
+                    verts.insert({vert, n});
+                    index.push_back(n);
+
+                    char c;
+                    unsigned int v, vt, vn;
+                    std::istringstream issv(vert);
+                    issv >> v >> c >> vt >> c >> vn;
+
+                    assert( obj_points.size() >= 3 * v );
+                    assert( obj_uv.size() >= 2 * vt );
+                    assert( obj_normals.size() >= 3 * vn );
+
+                    v--;
+                    vt--;
+                    vn--;
+                    points.push_back( obj_points[v * 3] );
+                    points.push_back( obj_points[v * 3 + 1] );
+                    points.push_back( obj_points[v * 3 + 2] );
+                    points.push_back( 1.0f );
+                    uv.push_back( obj_uv[vt * 2] );
+                    uv.push_back( obj_uv[vt * 2 + 1] );
+                    normals.push_back( obj_normals[vn * 3] );
+                    normals.push_back( obj_normals[vn * 3 + 1] );
+                    normals.push_back( obj_normals[vn * 3 + 2] );
+                    normals.push_back( 0.0f );
+
+                    assert( ( n + 1 ) * 4 == points.size() );
+                    assert( points.size() == normals.size() );
+                    assert( points.size() == uv.size() * 2 );
+
+                }
+                else
+                {
+                    index.push_back(itt->second);
+                }
             }
         }
     }
 
-    LOG_DEBUG << "File read, ok !";
+    LOG_TRACE << filename << " ==> done";
 
     length_ = index.size();
     return genVAO(points, normals, uv, index);

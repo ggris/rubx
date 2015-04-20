@@ -14,6 +14,9 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     message("VS C++")
 endif()
 
+# Uncomment to disable assert.
+#add_definitions(-DNDEBUG)
+
 add_subdirectory(lib/glfw-3.1.1)
 include_directories(lib/glfw-3.1.1/include)
 include_directories(lib/glm)
