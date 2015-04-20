@@ -20,6 +20,9 @@ RubixCube::RubixCube(Sc3dNode * parent) :
     cubes_.push_back(new SmallCube(this,  1,  1,  1));
     
     transformation_ = glm::translate(glm::vec3(0.0f, 0.0f, -5.0f));
+    srand (time(NULL));
+    shuffle(20, 0.2f); //for test : on shuffle dès création du cube
+    
 }
 
 
@@ -35,15 +38,11 @@ bool RubixCube::isWon()
 
 void RubixCube::display(){
     
-    if (glfwGetTime()>5.0f && isWon())  //this is a test, launch a rotation at 5 sec
-        randomRotate();
-    
-    
-    
     if (is_shuffling_){
-        if((glfwGetTime() - shuffle_start_)/0.2f > shuffle_number_){
+        if((glfwGetTime() - shuffle_start_)/animation_length_ > shuffle_number_){
             shuffle_number_ ++;
-            randomRotate();
+            LOG_DEBUG << "Shuffle n° : " << shuffle_number_ << " / " << shuffle_length_;
+            randomRotate(animation_length_);
         }
         if(shuffle_number_>=shuffle_length_){
             is_shuffling_=false;
@@ -53,6 +52,10 @@ void RubixCube::display(){
     for(unsigned int i=0;i<cubes_.size();i++){
         cubes_[i]->display();
     }
+}
+
+void microShuffle(){
+    
 }
 
 void RubixCube::rotate (int axis, int crown, int direct, float speed)
@@ -108,21 +111,20 @@ std::vector <SmallCube *> RubixCube::getCubes() const
     return cubes_;
 }
 
-void RubixCube::randomRotate(){
-    srand (time(NULL));
-    int a = rand() % 4;
-    int c = rand() % 2;
-    int d = rand() % 2;
-    
-    rotate(a,c,d,0.5f);
+void RubixCube::randomRotate(float speed){
+    int a = rand() % 3;
+    int c = (rand() % 2)*2 - 1;
+    int d = (rand() % 2)*2 - 1;
+    rotate(a,c,d,speed);
 }
 
 
 
-void RubixCube::shuffle(int number){
+void RubixCube::shuffle(int number, float speed){
     is_shuffling_=true;
     shuffle_number_= 0;
     shuffle_length_=number;
     shuffle_start_=glfwGetTime();
+    animation_length_=speed;
 }
 

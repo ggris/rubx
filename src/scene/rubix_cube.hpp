@@ -21,8 +21,8 @@ class RubixCube : public Sc3dNode
         //direct = +1 ou -1
         //crown = +1 ou -1
 
-        void randomRotate();
-        void shuffle(int number);
+        void randomRotate(float speed);
+        void shuffle(int number, float speed);
     
         std::string test_string();
 
@@ -38,6 +38,7 @@ class RubixCube : public Sc3dNode
         int shuffle_number_;
         int shuffle_length_;
         float shuffle_start_;
+        float animation_length_;
 
 };
 
