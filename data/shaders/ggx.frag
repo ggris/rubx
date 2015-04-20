@@ -5,7 +5,7 @@ smooth in vec4 fragPosition;
 smooth in vec4 fragNormal;
 smooth in vec2 fragUV;
 
-uniform vec4 camera_position;
+uniform mat4 transformation_matrix;
 uniform sampler2D texture_Sampler;
 uniform int numLamps; //actual number of lights used
 struct Lamp{
@@ -62,7 +62,7 @@ vec4 applyLamp(Lamp lamp, vec4 surfaceColor, vec4 normal, vec4 position, vec4 to
     toLamp = normalize(toLamp);
     attenuation = 1.0/(1.0+0.01*pow(dist,2));
     //if (GGX(normal,toLamp,toCamera,0.7)<0.0) return vec4(1.0,1.0,0.0,1.0);
-    return attenuation*GGX(normal,toLamp,toCamera,0.5)*surfaceColor*lamp.color;
+    return attenuation*GGX(normal,toLamp,toCamera,0.3)*surfaceColor*lamp.color;
 
     //return vec4(1.0,1.0,0.0,1.0);
 }
@@ -71,12 +71,11 @@ void main()
 {
 	vec4 totalColor=vec4(0.0,0.0,0.0,0.0);
 	vec4 color = vec4(texture(texture_Sampler,fragUV).rgb,1.0);
-    //vec4 light1 = normalize (lightPos1-fragPosition);
-    //vec4 light2 = normalize (lightPos2-fragPosition);
-    vec4 camera = normalize(camera_position-fragPosition);
+    vec4 camera = normalize(-fragPosition);
+    vec4 normal = normalize(fragNormal);
 
     for(int i=0;i<numLamps;i++){ //loop over all lights
-        totalColor+= applyLamp(allLamps[i],color,fragNormal,fragPosition,camera);
+        totalColor+= applyLamp(allLamps[i],color,normal,fragPosition,camera);
     }
     fragColor = totalColor;
     //fragColor = allLamps[0].light;
