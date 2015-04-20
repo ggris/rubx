@@ -54,6 +54,7 @@ Context::Context() :
 	//Setup events
     glfwSetKeyCallback(window_, EventHandler::key_Callback);
 	glfwSetMouseButtonCallback(window_, EventHandler::mouseButton_Callback);
+	glfwSetCursorPosCallback(window_, EventHandler::mouseMovement_Callback);
 
     LOG_INFO << "glfw OpenGL context ready";
 
@@ -90,9 +91,10 @@ void Context::initScene()
 	Game * game = new Game();
     UI * ui = new UI();
 
-	ui->setGame(game);
-
 	Sc3d* sc3d = new Sc3d(window_);
+
+	game->setCube((RubixCube*)sc3d[0][0]);
+	ui->setGame(game);
 
 	sc_vector_.push_back(sc3d);
     sc_vector_.push_back(ui);
@@ -109,11 +111,6 @@ void Context::update()
     int width, height;
     glfwGetFramebufferSize(window_, &width, &height);
     glViewport(0, 0, width, height);
-
-	if (EventHandler::buttonPressed)
-	{
-		EventHandler::colorBasedObjectDetection();
-	}
 
 	sc_vector_.display();
 

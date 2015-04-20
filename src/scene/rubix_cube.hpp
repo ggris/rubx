@@ -16,11 +16,14 @@ class RubixCube : public Sc3dNode
     public :
         RubixCube(Sc3dNode * parent,Sc3d * scene);
         bool isWon();
-        void rotate (int axis, int crown, int direct);
+        void rotate (int axis, int crown, int direct, float speed);
         //axis = 0 pour x, 1 pour y, 2 pour z
         //direct = +1 ou -1
         //crown = +1 ou -1
 
+        void randomRotate(float speed);
+        void shuffle(int number, float speed);
+    
         std::string test_string();
 
         void display();
@@ -30,6 +33,12 @@ class RubixCube : public Sc3dNode
     private :
 
         std::vector <SmallCube *> cubes_;
+    
+        bool is_shuffling_;
+        int shuffle_number_;
+        int shuffle_length_;
+        float shuffle_start_;
+        float animation_length_;
 
 };
 
