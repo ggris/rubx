@@ -7,6 +7,7 @@
 #include "include_gl.hpp"
 #include "sc_3d_node.hpp"
 #include "texture.hpp"
+#include "vao.hpp"
 
 class ScMesh : public Sc3dNode
 {
@@ -28,7 +29,7 @@ class ScMesh : public Sc3dNode
     private:
         GLuint program_;
 		GLuint pickingProgram_;
-        GLuint vao_;
+        VAO * vao_;
         Texture * texture_;
 
 		unsigned int id_;
