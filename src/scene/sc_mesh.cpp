@@ -106,17 +106,21 @@ void ScMesh::display()
 
     // Get program uniforms
 
-    GLuint perspectiveMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
+    GLuint projectionMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
+    GLuint transformationMatrixUnif = glGetUniformLocation(program_,"transformation_matrix");
     GLuint textureSamplerUniform = glGetUniformLocation(program_,"texture_Sampler");
 
-    // Define projection matrix
+    // Get camera projection matrix
 
-    glm::mat4 projection = getTransformation();
+    glm::mat4 projection = getScene()->getCamera().getProjectionMat();
+
+    // Get transformation matrix
+
+    glm::mat4 transformation = glm::inverse(getScene()->getCamera().getTransformation())*getTransformation();
 
     // Define uniform values
-
-    //glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
-    glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
     texture_->bindToSampler(textureSamplerUniform);
 
     //set Lamps
@@ -163,16 +167,23 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 	// Get program uniforms
 
 	GLuint u_colour = glGetUniformLocation(pickingProgram_, "colour");
-	GLuint perspectiveMatrixUnif = glGetUniformLocation(pickingProgram_, "projection_matrix");
+	GLuint projectionMatrixUnif = glGetUniformLocation(pickingProgram_, "projection_matrix");
+	GLuint transformationMatrixUnif = glGetUniformLocation(pickingProgram_, "transformation_matrix");
 
-	// Define projection matrix
+	// Get camera projection matrix
 
-	glm::mat4 projection = getTransformation();
+    glm::mat4 projection = getScene()->getCamera().getProjectionMat();
+
+    // Get transformation matrix
+
+    glm::mat4 transformation = glm::inverse(getScene()->getCamera().getTransformation())*getTransformation();
+
 
 	// Define uniform values
 
 	glUniform4f(u_colour, colour.x/255.0f, colour.y/255.0f, colour.z/255.0f, 1.0f);
-	glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
 
 	glBindVertexArray(vao_);
 	glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);

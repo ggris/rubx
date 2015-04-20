@@ -14,12 +14,11 @@ class Camera : public Sc3dNode
         void setPerspective(float fov, float ratio, float z_near, float z_far);
         void set_ratio(float ratio);
 
-        const glm::mat4 & getTransformation() const;
+        //const glm::mat4 & getTransformation() const;
 
 		glm::mat4 getProjectionMat() const;
-		glm::mat4 getViewMat() const;
 
-        void display();
+        void display(){}
 
     private:
         float fov_;
@@ -32,12 +31,8 @@ class Camera : public Sc3dNode
         glm::vec3 position_;
 
         glm::mat4 mat_project_;     // Projection matrix
-        glm::mat4 mat_rotate_;
-        glm::mat4 mat_camera_;         // Projection matrix translated for the camera
 
         void update_mat_project();
-        void update_mat_rotate();
-        void update_mat_camera();
 
 };
 

@@ -18,8 +18,8 @@ Sc3d::Sc3d(GLFWwindow * window) :
     addLamp(glm::vec4(0.1,3.1,1.1,1.0));
     addLamp(glm::vec4(1.0,-1.0,0.,0.0));
 
-    push_back(new RubixCube(camera_,this));
-    push_back(MeshGenerator::tableSurface(camera_,this));
+    push_back(new RubixCube(nullptr,this));
+    push_back(MeshGenerator::tableSurface(nullptr,this));
 }
 
 void Sc3d::display()
