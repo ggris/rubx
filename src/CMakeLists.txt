@@ -15,8 +15,6 @@ set(SRC
     context.cpp
     event_handler.hpp
     event_handler.cpp
-	game.hpp
-	game.cpp
 
     )
 

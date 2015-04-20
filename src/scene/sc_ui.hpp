@@ -7,6 +7,7 @@
 #include "include_gl.hpp"
 #include "sc_2d_panel.hpp"
 #include "sc_text.hpp"
+#include "game.hpp"
 
 enum UI_state { UI_MENU, UI_SCORE, UI_GAME };
 class UI : public ScNode
@@ -17,6 +18,7 @@ class UI : public ScNode
 		
 		void receiveKeyPress(int key);
 
+		void setGame(Game * game);
     private:
 		UI_state ui_state = UI_MENU;
 		Sc2dPanel scorePanel;
@@ -31,6 +33,8 @@ class UI : public ScNode
 		void calculateFps();
 		int fps;
 		int frameCount;
+
+		Game * game_;
 };
 
 #endif

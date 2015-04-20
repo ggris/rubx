@@ -106,3 +106,7 @@ void UI::calculateFps()
 	frameCount = 0;
 }
 
+void UI::setGame(Game * game)
+{
+	game_ = game;
+}
