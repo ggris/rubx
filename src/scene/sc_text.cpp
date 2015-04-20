@@ -58,7 +58,7 @@ void ScText::updatePanel()
 		int charRow = charIndex / noRow;
 		int charCol = charIndex % noRow;
 
-		float cellReduction = 0.18f; //19%
+		float cellReduction = 0.05f; //5%
 
 		float atlasColL = ((float)charCol) / noCol;
 		float atlasRowT = 1.0f - ((float)charRow / noRow);
@@ -114,14 +114,17 @@ void ScText::updatePanel()
 
 void ScText::updateText(std::string text)
 {
-	lastTextSize = text_.size();
+	if (text != text_)
+	{
+		lastTextSize = text_.size();
 
-	if (text.size() > maxLength_)
-		text_ = text.substr(0, maxLength_);
-	else
-		text_ = text;
+		if (text.size() > maxLength_)
+			text_ = text.substr(0, maxLength_);
+		else
+			text_ = text;
 
-	updatePanel();
+		updatePanel();
+	}
 }
 
 std::string ScText::getText() const

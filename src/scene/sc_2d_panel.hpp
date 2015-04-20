@@ -16,6 +16,8 @@ class Sc2dPanel : ScNode
 		std::vector<float> getPoints() const;
 		std::vector<float> getTexCoords() const;
 
+		void updatePosition(glm::vec2 position);
+
         void display();
     private:
 		glm::vec2 position_;

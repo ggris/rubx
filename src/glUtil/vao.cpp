@@ -1,11 +1,10 @@
 #include <sstream>
 #include <string>
-
-#include "logger.hpp"
+#include <fstream>
 
 #include "vao.hpp"
 
-VAO:VAO(const std::vector<float> &points,
+VAO::VAO(const std::vector<float> &points,
             const std::vector<float> &normals,
             const std::vector<float> &uv,
             const std::vector<unsigned short> &index):
@@ -13,13 +12,13 @@ VAO:VAO(const std::vector<float> &points,
 {
 }
 
-    VAO::VAO(const std::string & filename)
-vao_genVAO(filename)
+    VAO::VAO(const std::string & filename) :
+vao_(genVAO(filename))
 {
 }
 
 
-void VAO::BindAndDraw()
+void VAO::bindAndDraw() const
 {
     glBindVertexArray(vao_);
     glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
@@ -54,7 +53,7 @@ GLuint VAO::genVAO(const std::vector<float> &points,
     GLuint uv_vbo;
     glGenBuffers(1,&uv_vbo);
     glBindBuffer(GL_ARRAY_BUFFER,uv_vbo);
-    glBufferData(GL_ARRAY_BUFFER,tex_coord.size() * sizeof (float),tex_coord.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, uv.size() * sizeof (float), uv.data(), GL_STATIC_DRAW);
     glVertexAttribPointer (2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
     GLuint index_buffer_object;
@@ -67,12 +66,14 @@ GLuint VAO::genVAO(const std::vector<float> &points,
 
 GLuint VAO::genVAO(const std::string & filename)
 {
-    std::vector<float> & points;
-    std::vector<float> & normals;
-    std::vector<float> & uv;
-    std::vector<unsigned short> & index;
+    std::vector<float> obj_normals;
+    std::vector<float> obj_uv;
+    std::vector<float> points;
+    std::vector<float> normals;
+    std::vector<float> uv;
+    std::vector<unsigned short> index;
 
-    ifstream infile(filename);
+    std::ifstream infile(filename.c_str());
     std::string line;
     while (std::getline(infile, line))
     {
@@ -93,25 +94,33 @@ GLuint VAO::genVAO(const std::string & filename)
         {
             float x, y, z;
             iss >> x >> y >> z;
-            normals.push_back(x);
-            normals.push_back(y);
-            normals.push_back(z);
-            normals.push_back(0.0f);
+            obj_normals.push_back(x);
+            obj_normals.push_back(y);
+            obj_normals.push_back(z);
+            obj_normals.push_back(0.0f);
         }
         else if (token == "vt")
         {
             float u, v;
             iss >> u >> v;
-            normals.push_back(u);
-            normals.push_back(v);
+            obj_uv.push_back(u);
+            obj_uv.push_back(v);
         }
         else if (token == "f")
         {
             int i, j, k;
-            iss >> i >> j >> k;
-            index.push_back(i);
-            index.push_back(j);
-            index.push_back(k);
+            char c;
+            for (int i_l = 0; i_l < 3; i_l++)
+            {
+                iss >> i >> c >> j >> c >> k;
+                index.push_back(i);
+                if (normals.size() < i)
+                    normals.resize(i);
+                normals[i] = obj_normals[j];
+                if (uv.size() < i)
+                    uv.resize(i);
+                uv[i] = obj_uv[k];
+            }
         }
     }
 
