@@ -48,10 +48,10 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	difficulty_ = difficulty;
 	time = 0.0;
 	initialTime = 0.0;
-	timerRandomMoves = 3;
+	timerRandomMoves = 5;
 	score = 0;
 	gameIsWon = false;
-	cube_->shuffle(30, 0.1f);
+	cube_->shuffle((difficulty + 1) * 10, (float)timerRandomMoves/(((float)difficulty+1.0f)*10.0f));
 }
 
 void Game::endGame()
@@ -93,7 +93,7 @@ void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId)
 
 void Game::receiveRightMouseDrag(glm::vec2 direction)
 {
-	//Todo rotate big cube
+	//Todo rotate big cube or camera
 }
 
 bool Game::getIsWon()
