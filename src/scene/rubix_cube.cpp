@@ -4,6 +4,7 @@
 #include "rubix_cube.hpp"
 #include <time.h>
 #include <stdlib.h>
+#include <glm/glm.hpp>
 
 using namespace std;
 
@@ -126,5 +127,70 @@ void RubixCube::shuffle(int number, float speed){
     shuffle_length_=number;
     shuffle_start_=glfwGetTime();
     animation_length_=speed;
+}
+
+void RubixCube::rotate(glm::vec2 direction, unsigned int id, float speed){
+    SmallCube * selectedCube;
+    for (unsigned int i =0; i<cubes_.size(); i++){
+        if (cubes_[i]->getMesh()->getId()==id)
+            selectedCube=cubes_[i];
+    }
+    
+    glm::vec2 x(getTransformation()*glm::vec4(1,0,0,1));
+    glm::vec2 y(getTransformation()*glm::vec4(0,1,0,1));
+    glm::vec2 z(getTransformation()*glm::vec4(0,0,1,1));
+    
+    float scalarProducts [6];
+    scalarProducts[0] = glm::dot(direction, x);
+    scalarProducts[1] = glm::dot(direction, y);
+    scalarProducts[2] = glm::dot(direction, z);
+    scalarProducts[3] = glm::dot(direction, -x);
+    scalarProducts[4] = glm::dot(direction, -y);
+    scalarProducts[5] = glm::dot(direction, -z);
+    
+    int imax;
+    float pmax;
+    for (int i=0; i<6; i++){
+        if (scalarProducts[i]>pmax){
+            pmax=scalarProducts[i];
+            imax=i;
+        }
+    }
+    
+    int axis;
+    int dir;
+    switch(imax){
+        case 0:
+            axis=0;
+            dir=1;
+            break;
+        case 1:
+            axis=1;
+            dir=1;
+            break;
+        case 2:
+            axis=2;
+            dir=1;
+            break;
+        case 3:
+            axis=0;
+            dir=-1;
+            break;
+        case 4:
+            axis=1;
+            dir=-1;
+            break;
+        case 5:
+            axis=2;
+            dir=-1;
+            break;
+        default :
+            axis=0;
+            dir=1;
+            break;
+            
+    }
+    int crown = selectedCube->transform_[3][axis];
+    rotate(axis, crown, dir, speed);
 }
 
