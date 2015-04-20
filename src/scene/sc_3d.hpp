@@ -22,8 +22,8 @@ class Sc3d : public ScVector
 		Camera getCamera();
 		std::vector <Lamp *> getLamps();
 		void addLamp(Lamp * lamp);
-		void addLamp(glm::vec4 light);
-		void addLamp(glm::vec4 light, glm::vec4 color);
+		void addLamp();
+		void addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color);
 		Texture * getTexture(std::string objectID);
 
     private:

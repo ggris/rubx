@@ -9,10 +9,7 @@ Camera::Camera() :
     fov_(45.0f),
     ratio_(1.0f),
     z_near_(0.1f),
-    z_far_(10.0f),
-    rot_z_(0.0f),
-    rot_loc_x_(0.0f),
-    position_(0.0f),            // Zero vector
+    z_far_(10.0f),          // Zero vector
     mat_project_(glm::perspective(fov_, ratio_, z_near_, z_far_))
 {
 }
@@ -22,10 +19,7 @@ Camera::Camera(float fov, float ratio, float z_near, float z_far) :
     fov_(fov),
     ratio_(ratio),
     z_near_(z_near),
-    z_far_(z_far),
-    rot_z_(0.0f),
-    rot_loc_x_(0.0f),
-    position_(0.0f),            // Zero vector
+    z_far_(z_far),          // Zero vector
     mat_project_(glm::perspective(fov_, ratio_, z_near_, z_far_))
 {
 }

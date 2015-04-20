@@ -143,16 +143,16 @@ void ScMesh::setLamps()
     //set lamp array
     for (unsigned int i=0;i<lamps.size();i++){
 
-        std::ostringstream sslight,sscolor;
-        sslight << "allLamps[" << i << "].light";
+        std::ostringstream sstransformation,sscolor;
+        sstransformation << "allLamps[" << i << "].transformation";
         sscolor << "allLamps[" << i << "].color";
-        std::string lightUnifName = sslight.str();
+        std::string transformationUnifName = sstransformation.str();
         std::string colorUnifName = sscolor.str();
 
-        GLuint lightUniform = glGetUniformLocation(program_,lightUnifName.c_str());
+        GLuint transformUniform = glGetUniformLocation(program_,transformationUnifName.c_str());
         GLuint colorUniform = glGetUniformLocation(program_,colorUnifName.c_str());
 
-        glUniform4f(lightUniform,lamps[i]->getLight().x,lamps[i]->getLight().y,lamps[i]->getLight().z,lamps[i]->getLight().w);
+        glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(lamps[i]->getTransformation()));
         glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
 
     }

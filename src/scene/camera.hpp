@@ -26,10 +26,6 @@ class Camera : public Sc3dNode
         float z_near_;
         float z_far_;
 
-        float rot_z_;
-        float rot_loc_x_;
-        glm::vec3 position_;
-
         glm::mat4 mat_project_;     // Projection matrix
 
         void update_mat_project();

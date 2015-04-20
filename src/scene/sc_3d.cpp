@@ -14,9 +14,9 @@ Sc3d::Sc3d(GLFWwindow * window) :
     textures_.insert({"default",texture});
     camera_= new Camera(80.0f, 1.0f, 0.1f, 10.0f);
     camera_->setScene(this);
-    addLamp(glm::vec4(1.1,1.1,1.1,0.0));
-    addLamp(glm::vec4(0.1,3.1,1.1,1.0));
-    addLamp(glm::vec4(1.0,-1.0,0.,0.0));
+    addLamp(glm::vec3(2.0,2.0,2.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
+    addLamp(glm::vec3(2.0,0.0,0.0),10.0,10.0,glm::vec4(1.0,0.5,0.0,1.0));
+    addLamp(glm::vec3(-2.0,0.0,0.0),10.0,10.0,glm::vec4(0.0,0.0,1.0,1.0));
 
     push_back(new RubixCube(nullptr,this));
     push_back(MeshGenerator::tableSurface(nullptr,this));
@@ -52,14 +52,14 @@ void Sc3d::addLamp(Lamp * lamp)
     }
 }
 
-void Sc3d::addLamp(glm::vec4 light)
+void Sc3d::addLamp()
 {
-    addLamp(new Lamp(light));
+    addLamp(new Lamp());
 }
 
-void Sc3d::addLamp(glm::vec4 light, glm::vec4 color)
+void Sc3d::addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color)
 {
-    addLamp(new Lamp(light,color));
+    addLamp(new Lamp( position,rot_y,rot_loc_x,color));
 }
 
 Texture * Sc3d::getTexture(std::string objectID){
