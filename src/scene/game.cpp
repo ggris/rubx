@@ -43,8 +43,10 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	difficulty_ = difficulty;
 	time = 0.0;
 	initialTime = 0.0;
-	timerRandomMoves = 20;
+	timerRandomMoves = 3;
 	score = 0;
+
+	cube_->shuffle(30, 0.1f);
 }
 
 void Game::endGame()
@@ -59,13 +61,8 @@ void Game::endGame()
 
 void Game::update()
 {
-	if (timerRandomMoves == 20)
-	{
-		//TODO Mettre temps + nb moves ((difficulty+1)*10 par exemple)
-		//cube_->randomMove();
-		timerRandomMoves--;
-	}
-	else if (timerRandomMoves > 0)
+
+	if (timerRandomMoves > 0)
 	{
 		timerRandomMoves--;
 
@@ -80,7 +77,7 @@ void Game::update()
 
 void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId)
 {
-	//cube_->rotate(direction, selectedId)
+	cube_->rotate(direction, selectedId, 0.5f);
 
 	gameIsWon = cube_->isWon();
 

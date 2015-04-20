@@ -41,6 +41,13 @@ class UI : public ScNode
 		int frameCount;
 
 		Game * game_;
+
+		bool showFps = false;
+
+		void mainMenuKeyPress(int key, int keyAction);
+		void scoreKeyPress(int key, int keyAction);
+		void gameKeyPress(int key, int keyAction);
+
 };
 
 #endif
