@@ -10,7 +10,8 @@
 
 Sc3d::Sc3d(GLFWwindow * window) :
     window_(window)
-{   Texture * texture = new Texture("data/img/corners.bmp");
+{
+    Texture * texture = new Texture("data/img/corners.bmp");
     textures_.insert({"default",texture});
     camera_= new Camera(80.0f, 1.0f, 0.1f, 10.0f);
     camera_->setScene(this);

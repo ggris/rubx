@@ -14,20 +14,17 @@
 
 #include "sc_mesh.hpp"
 
-ScMesh::ScMesh(Sc3dNode * parent,
-        Sc3d * scene,
-        const std::vector<float> &points,
-        const std::vector<float> &normals,
-        const std::vector<float> &tex_coord,
-        const std::vector<unsigned short> &index,
-		unsigned int id,
-		Texture * texture) :
+ScMesh::ScMesh(Sc3d * scene,
+                VAO * vao,
+				Texture * texture,
+				unsigned int id,
+                Sc3dNode * parent) :
     Sc3dNode(parent,scene),
-    vao_(new VAO(points, normals, tex_coord, index)),
+    vao_(vao),
 	texture_(texture),
 	id_(id)
 {
-    transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
+//    transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
 
     // Creating programs
 

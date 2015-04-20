@@ -12,14 +12,11 @@
 class ScMesh : public Sc3dNode
 {
     public:
-        ScMesh(Sc3dNode * parent,
-                Sc3d * scene,
-                const std::vector<float> &points,
-                const std::vector<float> &normals,
-                const std::vector<float> &tex_coord,
-                const std::vector<unsigned short> &index,
+        ScMesh(Sc3d * scene,
+                VAO * vao,
+				Texture * texture,
 				unsigned int id,
-				Texture * texture);
+                Sc3dNode * parent = nullptr);
 
         void display();
 		void displayWithPickingColour(glm::vec3 colour);

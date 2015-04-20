@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 
+#include "../util/logger.hpp"
 #include "vao.hpp"
 
 VAO::VAO(const std::vector<float> &points,
@@ -73,7 +74,11 @@ GLuint VAO::genVAO(const std::string & filename)
     std::vector<float> uv;
     std::vector<unsigned short> index;
 
+    LOG_DEBUG << "Reading VAO";
+
     std::ifstream infile(filename.c_str());
+
+    LOG_DEBUG << "yp : " << infile.is_open();
     std::string line;
     while (std::getline(infile, line))
     {
@@ -83,6 +88,7 @@ GLuint VAO::genVAO(const std::string & filename)
 
         if (token == "v")
         {
+            LOG_DEBUG << "v : " << infile.is_open();
             float x, y, z;
             iss >> x >> y >> z;
             points.push_back(x);
@@ -92,6 +98,7 @@ GLuint VAO::genVAO(const std::string & filename)
         }
         else if (token == "vn")
         {
+            LOG_DEBUG << "vn : " << infile.is_open();
             float x, y, z;
             iss >> x >> y >> z;
             obj_normals.push_back(x);
@@ -101,6 +108,7 @@ GLuint VAO::genVAO(const std::string & filename)
         }
         else if (token == "vt")
         {
+            LOG_DEBUG << "vt : " << infile.is_open();
             float u, v;
             iss >> u >> v;
             obj_uv.push_back(u);
@@ -108,21 +116,29 @@ GLuint VAO::genVAO(const std::string & filename)
         }
         else if (token == "f")
         {
+            LOG_DEBUG << "f : " << infile.is_open();
             int i, j, k;
             char c;
             for (int i_l = 0; i_l < 3; i_l++)
             {
                 iss >> i >> c >> j >> c >> k;
-                index.push_back(i);
-                if (normals.size() < i)
-                    normals.resize(i);
-                normals[i] = obj_normals[j];
-                if (uv.size() < i)
-                    uv.resize(i);
-                uv[i] = obj_uv[k];
+                index.push_back(--i);
+                if (normals.size() < (i+1)*3)
+                    normals.resize((i+1)*3);
+                k--;
+                j--;
+                normals[i*3] = obj_normals[k*3];
+                normals[i*3+1] = obj_normals[k*3+1];
+                normals[i*3+2] = obj_normals[k*3+2];
+                if (uv.size() < (i+1)*2)
+                    uv.resize((i+1)*2);
+                uv[i*2] = obj_uv[j*2];
+                uv[i*2+1] = obj_uv[j*2+1];
             }
         }
     }
+
+    LOG_DEBUG << "File read, ok !";
 
     return genVAO(points, normals, uv, index);
 }

@@ -1,5 +1,6 @@
 #include "mesh_generator.hpp"
 #include "sc_3d.hpp"
+#include "vao.hpp"
 
 unsigned int MeshGenerator::uniqueObjectId = 0;
 
@@ -59,7 +60,7 @@ ScMesh * MeshGenerator::testCube(Sc3dNode * parent, Sc3d * scene)
 
 	uniqueObjectId++;
 
-	return new ScMesh(parent, scene, points, normals, tex_coord, index, uniqueObjectId,scene->getTexture("testCube"));
+    return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("testCube"), uniqueObjectId, parent);
 
 }
 
@@ -217,7 +218,8 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent,Sc3d * scene)
 
 	uniqueObjectId++;
 
-	return new ScMesh(parent, scene,points, normals, tex_coord, index, uniqueObjectId, scene->getTexture("rubixSmallCube"));
+    //return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("rubixSmallCube"), uniqueObjectId, parent);
+    return new ScMesh(scene, new VAO("data/mesh/cube.obj"), scene->getTexture("default"), uniqueObjectId, parent);
 
 }
 
@@ -247,6 +249,6 @@ ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent,Sc3d * scene)
     };
     uniqueObjectId++;
 
-	return new ScMesh(parent,scene,points, normals, tex_coord, index, uniqueObjectId,scene->getTexture("tableSurface"));
+    return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("tableSurface"), uniqueObjectId, parent);
 }
 
