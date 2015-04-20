@@ -22,11 +22,17 @@ class Game
     public:
 		Game();
 		void newGame(std::string userName, game_difficulty difficulty);
-		void quitGame();
+		void endGame();
 
 		void setCube(RubixCube * cube);
 		std::string getTime();
 
+		void update();
+
+		void receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId);
+		void receiveRightMouseDrag(glm::vec2 direction);
+
+		bool getIsWon();
     private:
 		bool gameIsWon;
 		std::string userName_;
@@ -34,6 +40,9 @@ class Game
 
 		double initialTime;
 		double time;
+
+		unsigned int score = 0;
+		unsigned int timerRandomMoves;
 
 		game_difficulty difficulty_;
 
