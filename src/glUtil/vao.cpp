@@ -67,6 +67,8 @@ GLuint VAO::genVAO(const std::vector<float> &points,
 
 GLuint VAO::genVAO(const std::string & filename)
 {
+    std::vector<float> & obj_normals;
+    std::vector<float> & obj_uv;
     std::vector<float> & points;
     std::vector<float> & normals;
     std::vector<float> & uv;
@@ -108,10 +110,18 @@ GLuint VAO::genVAO(const std::string & filename)
         else if (token == "f")
         {
             int i, j, k;
-            iss >> i >> j >> k;
-            index.push_back(i);
-            index.push_back(j);
-            index.push_back(k);
+            char c;
+            for (int i_l = 0; i_l < 3; i_l++)
+            {
+                iss >> i >> c >> j >> c >> k;
+                index.push_back(i);
+                if (normals.size() < i)
+                    normals.resize(i);
+                normals[i] = obj_normals[j];
+                if (uv.size() < i)
+                    uv.resize(i);
+                uv[i] = obj_uv[k];
+            }
         }
     }
 
