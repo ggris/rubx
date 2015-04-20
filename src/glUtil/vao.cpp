@@ -72,6 +72,7 @@ GLuint VAO::genVAO(const std::string & filename)
     std::vector<float> & uv;
     std::vector<unsigned short> & index;
 
+    ifstream infile(filename);
     std::string line;
     while (std::getline(infile, line))
     {
@@ -88,9 +89,33 @@ GLuint VAO::genVAO(const std::string & filename)
             points.push_back(z);
             points.push_back(1.0f);
         }
-
-    process pair (a,b)
+        else if (token == "vn")
+        {
+            float x, y, z;
+            iss >> x >> y >> z;
+            normals.push_back(x);
+            normals.push_back(y);
+            normals.push_back(z);
+            normals.push_back(0.0f);
+        }
+        else if (token == "vt")
+        {
+            float u, v;
+            iss >> u >> v;
+            normals.push_back(u);
+            normals.push_back(v);
+        }
+        else if (token == "f")
+        {
+            int i, j, k;
+            iss >> i >> j >> k;
+            index.push_back(i);
+            index.push_back(j);
+            index.push_back(k);
+        }
     }
+
+    return genVAO(points, normals, uv, index);
 }
 
 
