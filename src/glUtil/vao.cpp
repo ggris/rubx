@@ -6,15 +6,16 @@
 #include "vao.hpp"
 
 VAO::VAO(const std::vector<float> &points,
-            const std::vector<float> &normals,
-            const std::vector<float> &uv,
-            const std::vector<unsigned short> &index):
-    vao_(genVAO(points, normals, uv, index))
+        const std::vector<float> &normals,
+        const std::vector<float> &uv,
+        const std::vector<unsigned short> &index):
+    vao_(genVAO(points, normals, uv, index)),
+    length_(index.size() * 3)
 {
 }
 
-    VAO::VAO(const std::string & filename) :
-vao_(genVAO(filename))
+VAO::VAO(const std::string & filename) :
+    vao_(genVAO(filename))
 {
 }
 
@@ -22,7 +23,7 @@ vao_(genVAO(filename))
 void VAO::bindAndDraw() const
 {
     glBindVertexArray(vao_);
-    glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_SHORT, 0);
+    glDrawElements(GL_TRIANGLES, length_, GL_UNSIGNED_SHORT, 0);
 }
 
 
@@ -140,6 +141,7 @@ GLuint VAO::genVAO(const std::string & filename)
 
     LOG_DEBUG << "File read, ok !";
 
+    length_ = index.size();
     return genVAO(points, normals, uv, index);
 }
 

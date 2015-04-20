@@ -90,6 +90,7 @@ void ScMesh::setLamps()
 {
 
     std::vector<Lamp*> lamps = getScene()->getLamps();
+    glm::mat4 camera_transf = glm::inverse(getScene()->getCamera().getTransformation());
     //set number of lamps
     GLuint nblamps = glGetUniformLocation(program_, "numLamps");
     glUniform1i(nblamps,lamps.size());
@@ -106,7 +107,7 @@ void ScMesh::setLamps()
         GLuint transformUniform = glGetUniformLocation(program_,transformationUnifName.c_str());
         GLuint colorUniform = glGetUniformLocation(program_,colorUnifName.c_str());
 
-        glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(lamps[i]->getTransformation()));
+        glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(camera_transf*lamps[i]->getTransformation()));
         glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
 
     }

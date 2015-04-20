@@ -20,6 +20,7 @@ class VAO
 
     private:
         const GLuint vao_;
+        unsigned int length_;
 
         GLuint genVAO(const std::vector<float> &points,
                 const std::vector<float> &normals,
