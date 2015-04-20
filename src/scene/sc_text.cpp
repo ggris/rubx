@@ -58,7 +58,7 @@ void ScText::updatePanel()
 		int charRow = charIndex / noRow;
 		int charCol = charIndex % noRow;
 
-		float cellReduction = 0.18f; //19%
+		float cellReduction = 0.05f; //5%
 
 		float atlasColL = ((float)charCol) / noCol;
 		float atlasRowT = 1.0f - ((float)charRow / noRow);

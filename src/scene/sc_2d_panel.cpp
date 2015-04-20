@@ -100,3 +100,8 @@ std::vector<float> Sc2dPanel::getTexCoords() const
 {
 	return tex_coords_;
 }
+
+void Sc2dPanel::updatePosition(glm::vec2 position)
+{
+	position_ = position;
+}
