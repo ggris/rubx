@@ -31,10 +31,12 @@ UI::UI()
 	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/scoreBackground.bmp", tex_3on4_coord);
 	menuPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/mainMenuBackground.bmp", tex_3on4_coord);
 	aboutPanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/aboutBackground.bmp", tex_3on4_coord);
+	bottomPanel = Sc2dPanel(glm::vec2(0.0f, -9.0f), glm::vec2(1.0f, 0.1f), "data/img/bottomPanel.bmp", tex_3on4_coord);
 
 	//Labels
 	nameTextBox = ScText(glm::vec2(-4.0f,  5.0f), glm::vec2(0.07f, 0.07f*(4.0f/3.0f)), "", 10);
-	timerLabel = ScText(glm::vec2(-2.3f, -8.5f), glm::vec2(0.08f, 0.08f*(4.0f/3.0f)), "", 10);
+	timerLabel = ScText(glm::vec2(-2.4f, -8.5f), glm::vec2(0.08f, 0.08f*(4.0f/3.0f)), "", 10);
+	victoryLabel = ScText(glm::vec2(-4.0f, -8.5f), glm::vec2(0.08f, 0.08f*(4.0f / 3.0f)), "", 10);
 	fpsLabel = ScText(glm::vec2(-24.0f, -18.0f), glm::vec2(0.04f, 0.04f*(4.0f/3.0f)), "", 10);
 
 	//Selector
@@ -97,14 +99,22 @@ void UI::display()
 			//timer
 			timerLabel.updateText(game_->getTime());
 		}
-		
-		timerLabel.display();
 
 		if (showFps)
 		{
 			frameCount++;
 			fpsLabel.display();
 		}
+
+		if (game_->getIsWon())
+		{
+			victoryLabel.updateText("SCORE: " + game_->getScore());
+			victoryLabel.display();
+		}
+		else
+			timerLabel.display();
+
+		bottomPanel.display();
 
 		break;
 	}
@@ -252,7 +262,6 @@ void UI::gameKeyPress(int key, int keyAction)
 {
 	if (key == GLFW_KEY_ESCAPE && keyAction == GLFW_PRESS)
 	{
-		game_->endGame();
 		if (game_->getIsWon())
 			ui_state = UI_SCORE;
 		else

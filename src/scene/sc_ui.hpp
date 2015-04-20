@@ -34,10 +34,13 @@ class UI : public ScNode
 		Sc2dPanel aboutPanel;
 		Sc2dPanel menuPanel;
 		Sc2dPanel selector;
+
+		Sc2dPanel bottomPanel;
 		
 		ScText nameTextBox;
 		ScText timerLabel;
 		ScText fpsLabel;
+		ScText victoryLabel;
 
 		int lastTime;
 

@@ -22,7 +22,6 @@ std::string Game::getTime()
 
 	unsigned int seconds = timeTemp - (60 * minutes);
 
-	std::string str;
 	std::ostringstream stream;
 	
 	if (seconds >= 10 && minutes >= 10)
@@ -32,9 +31,15 @@ std::string Game::getTime()
 	else
 		stream << "0" << minutes << ":" << "0" << seconds;
 
-	str = stream.str();
+	return stream.str();
+}
 
-	return str;
+std::string Game::getScore()
+{
+	std::ostringstream stream;
+
+	stream << score;
+	return stream.str();
 }
 
 void Game::newGame(std::string userName, game_difficulty difficulty)
@@ -45,7 +50,7 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	initialTime = 0.0;
 	timerRandomMoves = 3;
 	score = 0;
-
+	gameIsWon = false;
 	cube_->shuffle(30, 0.1f);
 }
 
@@ -69,7 +74,7 @@ void Game::update()
 		if (timerRandomMoves == 0) // init timer if last random move
 			initialTime = glfwGetTime();
 	}
-	else
+	else if (!gameIsWon)
 	{
 		time = glfwGetTime() - initialTime;
 	}
