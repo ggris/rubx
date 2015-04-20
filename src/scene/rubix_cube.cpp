@@ -8,8 +8,8 @@
 
 using namespace std;
 
-RubixCube::RubixCube(Sc3dNode * parent) :
-    Sc3dNode(parent)
+RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
+    Sc3dNode(parent,scene)
 {
     cubes_.push_back(new SmallCube(this, -1, -1, -1));
     cubes_.push_back(new SmallCube(this, -1, -1,  1));
@@ -22,7 +22,6 @@ RubixCube::RubixCube(Sc3dNode * parent) :
     
     transformation_ = glm::translate(glm::vec3(0.0f, 0.0f, -5.0f));
     srand (time(NULL));
-    shuffle(20, 0.2f); //for test : on shuffle dès création du cube
     
 }
 

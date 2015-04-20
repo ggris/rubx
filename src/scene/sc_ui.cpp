@@ -45,19 +45,21 @@ void UI::display()
 		{
 			lastTime = time;
 
-			//timer
-			std::ostringstream timerStream;
-			timerStream << lastTime;
-			std::string str = timerStream.str();
-			timerLabel.updateText(str);
+			
 
 			//fps count
 			calculateFps();
+			std::string str;
 			std::ostringstream fpsStream;
 			fpsStream << fps;
 			str = fpsStream.str();
 			str += " FPS";
 			fpsLabel.updateText(str);
+
+			game_->update();
+
+			//timer
+			timerLabel.updateText(game_->getTime());
 		}
 		frameCount++;
 		timerLabel.display();
@@ -66,37 +68,41 @@ void UI::display()
 	}
 }
 
-void UI::receiveKeyPress(int key)
+void UI::receiveKeyPress(int key, int keyAction)
 {
-	if (key == GLFW_KEY_S)
+	switch (ui_state)
 	{
-		switch (ui_state)
+	case UI_MENU:
+		if (key == GLFW_KEY_ENTER && keyAction == GLFW_PRESS)
 		{
-		case UI_MENU:
-			ui_state = UI_SCORE;
-			break;
-		case UI_SCORE:
-			ui_state = UI_MENU;
-			break;
-        case UI_GAME:
-            break;
+			game_->newGame("",GAME_EASY);
+			ui_state = UI_GAME;
 		}
-	}
-	else if (key == GLFW_KEY_P && ui_state == UI_MENU)
-		ui_state = UI_GAME;
-	else if (key == GLFW_KEY_Q && ui_state == UI_GAME)
-		ui_state = UI_MENU;
-	else if (ui_state == UI_MENU)
-	{
-		if (key > GLFW_KEY_SPACE && key < GLFW_KEY_Z)
+		else if (key == GLFW_KEY_DOWN)
+		{
+
+		}
+		else if (key == GLFW_KEY_UP)
+		{
+
+		}
+		//User name textbox
+		else if (key > GLFW_KEY_SPACE && key < GLFW_KEY_Z && keyAction == GLFW_PRESS)
 		{
 			char cKey = static_cast<char>(key);
 			nameTextBox.updateText(nameTextBox.getText() + cKey);
 		}
-		else if (key == GLFW_KEY_BACKSPACE)
+		else if (key == GLFW_KEY_BACKSPACE && keyAction == GLFW_PRESS || keyAction == GLFW_REPEAT)
 		{
-			nameTextBox.updateText(nameTextBox.getText().substr(0, nameTextBox.getText().size()-1));
+			nameTextBox.updateText(nameTextBox.getText().substr(0, nameTextBox.getText().size() - 1));
 		}
+		break;
+	case UI_SCORE:
+		
+		break;
+	case UI_GAME:
+
+		break;
 	}
 }
 
@@ -109,4 +115,26 @@ void UI::calculateFps()
 void UI::setGame(Game * game)
 {
 	game_ = game;
+}
+
+UI_state UI::getState()
+{
+	return ui_state;
+}
+
+void UI::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId)
+{
+	if (ui_state == UI_GAME)
+		game_->receiveLeftMouseDrag(direction, selectedId);
+}
+
+void UI::receiveRightMouseDrag(glm::vec2 direction)
+{
+	if (ui_state == UI_GAME)
+		game_->receiveRightMouseDrag(direction);
+}
+
+Game* UI::getGame()
+{
+	return game_;
 }

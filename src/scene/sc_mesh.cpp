@@ -15,18 +15,21 @@
 #include "sc_mesh.hpp"
 
 ScMesh::ScMesh(Sc3dNode * parent,
+        Sc3d * scene,
         const std::vector<float> &points,
         const std::vector<float> &normals,
         const std::vector<float> &tex_coord,
         const std::vector<unsigned short> &index,
 		unsigned int id,
-		std::string filename) :
-    Sc3dNode(parent)
+		Texture * texture) :
+    Sc3dNode(parent,scene)
 {
 
     transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
 
 	id_ = id;
+
+	texture_=texture;
 
     GLuint points_vbo;
     glGenBuffers (1, &points_vbo);
@@ -95,12 +98,6 @@ ScMesh::ScMesh(Sc3dNode * parent,
 
 	pickingProgram_ = pickingProgram.getProgram();
 
-    //Creating texture
-
-
-    Texture texture(filename);
-    texture_=texture.getTexture();
-
 }
 
 void ScMesh::display()
@@ -120,7 +117,7 @@ void ScMesh::display()
 
     //glUniform4f(offsetUniform, cos(t), sin(t), -2, 0);
     glUniformMatrix4fv(perspectiveMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
-    Texture::bindTextureToSampler(texture_,textureSamplerUniform);
+    texture_->bindToSampler(textureSamplerUniform);
 
     //set Lamps
     setLamps();
