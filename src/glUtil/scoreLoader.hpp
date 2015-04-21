@@ -4,24 +4,28 @@
 #include <string>
 #include <vector>
 
+class Score
+{
+public:
+	Score();
+	Score(std::string userName, unsigned int score);
+	unsigned int getScore() const;
+	std::string getUserName() const;
+private:
+	std::string userName_;
+	unsigned int score_;
+};
+
 class ScoreLoader
 {
 
 public:
 	ScoreLoader();
-	void saveScores(std::vector<std::string> scores);
+	void loadScoresFromFile();
+	void saveScore(std::string user, unsigned int score);
+	std::vector<Score> getScores();
 private:
-
-
-};
-
-class Score
-{
-public:
-	Score();
-private:
-	std::string userName;
-	unsigned int score;
+	std::vector<Score> scores_;
 };
 
 #endif

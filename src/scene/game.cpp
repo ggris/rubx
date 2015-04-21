@@ -34,12 +34,17 @@ std::string Game::getTime()
 	return stream.str();
 }
 
-std::string Game::getScore()
+std::string Game::getScoreString()
 {
 	std::ostringstream stream;
 
 	stream << score;
 	return stream.str();
+}
+
+unsigned int Game::getScore()
+{
+	return score;
 }
 
 void Game::newGame(std::string userName, game_difficulty difficulty)
@@ -71,11 +76,7 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 void Game::endGame()
 {
 	if (gameIsWon)
-	{
 		score = time;
-		//TODO
-		//save score
-	}
 }
 
 void Game::update()
@@ -113,4 +114,9 @@ void Game::receiveRightMouseDrag(glm::vec2 direction)
 bool Game::getIsWon()
 {
 	return gameIsWon;
+}
+
+std::string Game::getUser() const
+{
+	return userName_;
 }

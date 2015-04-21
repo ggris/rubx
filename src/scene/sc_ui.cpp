@@ -29,6 +29,16 @@ UI::UI()
 
 	//Score
 	scoreLoader_ = ScoreLoader();
+	scoreLabel1 = new ScText(glm::vec2(-6.0f, 8.0f), glm::vec2(0.05f, 0.05f*(4.0f / 3.0f)), "", 20);
+	scoreLabel2 = new ScText(glm::vec2(-6.0f, 5.0f), glm::vec2(0.05f, 0.05f*(4.0f / 3.0f)), "", 20);
+	scoreLabel3 = new ScText(glm::vec2(-6.0f, 2.0f), glm::vec2(0.05f, 0.05f*(4.0f / 3.0f)), "", 20);
+	scoreLabel4 = new ScText(glm::vec2(-6.0f, -1.0f), glm::vec2(0.05f, 0.05f*(4.0f / 3.0f)), "", 20);
+	scoreLabel5 = new ScText(glm::vec2(-6.0f, -4.0f), glm::vec2(0.05f, 0.05f*(4.0f / 3.0f)), "", 20);
+	scoreLabels.push_back(scoreLabel1);
+	scoreLabels.push_back(scoreLabel2);
+	scoreLabels.push_back(scoreLabel3);
+	scoreLabels.push_back(scoreLabel4);
+	scoreLabels.push_back(scoreLabel5);
 
 	//Backgrounds
 	scorePanel = Sc2dPanel(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), "data/img/scoreBackground.bmp", tex_3on4_coord);
@@ -73,6 +83,11 @@ void UI::display()
 		break;
 	case UI_SCORE:
 		selector.display();
+		scoreLabel1->display();
+		scoreLabel2->display();
+		scoreLabel3->display();
+		scoreLabel4->display();
+		scoreLabel5->display();
 		scorePanel.display();
 		break;
 	case UI_ABOUT:
@@ -111,7 +126,7 @@ void UI::display()
 
 		if (game_->getIsWon())
 		{
-			victoryLabel.updateText("SCORE: " + game_->getScore());
+			victoryLabel.updateText("SCORE: " + game_->getScoreString());
 			victoryLabel.display();
 		}
 		else
@@ -197,6 +212,7 @@ void UI::mainMenuKeyPress(int key, int keyAction)
 			ui_state = UI_GAME;
 			break;
 		case 3: //Score window
+			loadScore();
 			ui_state = UI_SCORE;
 			selector.updatePosition(scoreSelectorPos);
 			break;
@@ -267,6 +283,8 @@ void UI::gameKeyPress(int key, int keyAction)
 	{
 		if (game_->getIsWon())
 		{
+			scoreLoader_.saveScore(game_->getUser(), game_->getScore());
+			loadScore();
 			ui_state = UI_SCORE;
 			selector.updatePosition(scoreSelectorPos);
 		}
@@ -283,4 +301,19 @@ void UI::gameKeyPress(int key, int keyAction)
 bool UI::getQuit()
 {
 	return quit;
+}
+
+void UI::loadScore()
+{
+	scoreLoader_.loadScoresFromFile();
+	std::vector<Score> scores = scoreLoader_.getScores();
+
+	for (unsigned int i = 0; i < scores.size(); i++)
+	{
+		std::ostringstream stream;
+		stream << (i + 1) << ": ";
+		stream << scores[i].getUserName() << " ";
+		stream << scores[i].getScore();
+		scoreLabels[i]->updateText(stream.str());
+	}
 }

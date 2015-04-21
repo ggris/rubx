@@ -51,6 +51,13 @@ class UI : public ScNode
 		int fps;
 		int frameCount;
 
+		ScText* scoreLabel1;
+		ScText* scoreLabel2;
+		ScText* scoreLabel3;
+		ScText* scoreLabel4;
+		ScText* scoreLabel5;
+		std::vector<ScText*> scoreLabels;
+
 		Game * game_;
 
 		bool showFps = false;
@@ -60,6 +67,8 @@ class UI : public ScNode
 		void scoreKeyPress(int key, int keyAction);
 		void aboutKeyPress(int key, int keyAction);
 		void gameKeyPress(int key, int keyAction);
+
+		void loadScore();
 
 		glm::vec2 scoreSelectorPos;
 		glm::vec2 aboutSelectorPos;

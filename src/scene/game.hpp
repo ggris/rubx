@@ -27,7 +27,8 @@ class Game
 
 		void setCube(RubixCube * cube);
 		std::string getTime();
-		std::string getScore();
+		std::string getScoreString();
+		unsigned int getScore();
 
 		void update();
 
@@ -35,6 +36,8 @@ class Game
 		void receiveRightMouseDrag(glm::vec2 direction);
 
 		bool getIsWon();
+
+		std::string getUser() const;
     private:
 		bool gameIsWon;
 		std::string userName_;
