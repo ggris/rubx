@@ -52,6 +52,8 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	score = 0;
 	gameIsWon = false;
 
+	//TODO RESET CUBE
+
 	switch (difficulty)
 	{
 	case GAME_EASY:
