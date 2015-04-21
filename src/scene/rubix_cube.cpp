@@ -20,6 +20,11 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
 
 }
 
+void RubixCube::reset()
+{
+	//Pas trop certains de savoir comment replacer les petits cubes
+}
+
 
 bool RubixCube::isWon()
 {

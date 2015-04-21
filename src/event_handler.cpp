@@ -74,7 +74,7 @@ void EventHandler::mouseMovement_Callback(GLFWwindow* window, double x, double y
 	glm::vec2 newMousePos(x, y);
 
     if (rightButtonPressed)
-	    m_objectStack->get_rubix_cube()->nodRotate(newMousePos-lastMousePos);
+	    m_ui->receiveRightMouseDrag(newMousePos-lastMousePos);
 
 	lastMousePos = newMousePos;
 }
