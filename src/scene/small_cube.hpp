@@ -12,8 +12,6 @@
 class SmallCube : public Sc3dNode
 {
     public :
-        static float ANIMATION_LENGTH;
-        static glm::mat4 SCALE;
     public :
         SmallCube(Sc3dNode * parent, int x, int y, int z);
 
