@@ -21,6 +21,7 @@ class RubixCube : public Sc3dNode
         //direct = +1 ou -1
         //crown = +1 ou -1
 
+		void reset();
         void rotate(glm::vec2 direction, unsigned int id, int selectedFace, float speed);
 
         void randomRotate(float speed);

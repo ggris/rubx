@@ -52,7 +52,7 @@ void Game::newGame(std::string userName, game_difficulty difficulty)
 	score = 0;
 	gameIsWon = false;
 
-	//TODO RESET CUBE
+	cube_->reset();
 
 	switch (difficulty)
 	{
@@ -107,7 +107,7 @@ void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId, in
 
 void Game::receiveRightMouseDrag(glm::vec2 direction)
 {
-	//Todo rotate big cube or camera
+	cube_->nodRotate(direction);
 }
 
 bool Game::getIsWon()
