@@ -6,7 +6,6 @@
 #include "glm/gtx/transform.hpp"
 #define PI 3.14159265
 
-float SmallCube::ANIMATION_LENGTH=5.0f;
 
 SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
     Sc3dNode(parent),
@@ -19,7 +18,7 @@ SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
         0,  0,  1,  0,
         x,  y,  z,  1
     };
-    
+
     transformation_ = transform_;
     is_animate_=false;
 }
@@ -76,21 +75,30 @@ glm::imat4 computeIntRotation(int axis, int direct){
     return rotation;
 }
 
+glm::mat4 scaleTranslation (glm::mat4 & mat, float factor){
+    mat[3][0]*=factor;
+    mat[3][1]*=factor;
+    mat[3][2]*=factor;
+}
+
 void SmallCube::display()
 {
-    
+
     float t = (glfwGetTime()-animation_start_)/animation_length_;
-    
+
     if(is_animate_ && t>1){
         is_animate_=false;
     }
     if (is_animate_){
+
         transformation_ =  computeRotation(axis_rotation_,direct_rotation_,t) * last_transform_;
     }
     else {
-        transformation_ = transform_;
+
+        transformation_ =  transform_;
+        transformation_ = transformation_;
     }
-    
+    scaleTranslation(transformation_,2.0f);
     mesh_->display();
 }
 
@@ -98,12 +106,12 @@ ScMesh * SmallCube::getMesh() const
 {
     return mesh_;
 }
-    
+
 void SmallCube::rotate(int axis, int direct, float speed){
     last_transform_ = transform_;
-    
+
     transform_=computeIntRotation(axis,direct) * transform_;
-    
+
     is_animate_= true;
     animation_start_=glfwGetTime();
     animation_length_=speed;
