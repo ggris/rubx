@@ -75,7 +75,7 @@ glm::imat4 computeIntRotation(int axis, int direct){
     return rotation;
 }
 
-glm::mat4 scaleTranslation (glm::mat4 & mat, float factor){
+void scaleTranslation (glm::mat4 & mat, float factor){
     mat[3][0]*=factor;
     mat[3][1]*=factor;
     mat[3][2]*=factor;
