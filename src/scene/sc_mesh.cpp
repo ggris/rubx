@@ -67,11 +67,11 @@ void ScMesh::display()
 
     // Get camera projection matrix
 
-    glm::mat4 projection = getScene()->getCamera().getProjectionMat();
+    glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
 
     // Get transformation matrix
 
-    glm::mat4 transformation = glm::inverse(getScene()->getCamera().getTransformation())*getTransformation();
+    glm::mat4 transformation = glm::inverse(getScene()->getCamera()->getTransformation())*getTransformation();
 
     // Define uniform values
     glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
@@ -90,7 +90,7 @@ void ScMesh::setLamps()
 {
 
     std::vector<Lamp*> lamps = getScene()->getLamps();
-    glm::mat4 camera_transf = glm::inverse(getScene()->getCamera().getTransformation());
+    glm::mat4 camera_transf = glm::inverse(getScene()->getCamera()->getTransformation());
     //set number of lamps
     GLuint nblamps = glGetUniformLocation(program_, "numLamps");
     glUniform1i(nblamps,lamps.size());
@@ -127,11 +127,11 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 
 	// Get camera projection matrix
 
-    glm::mat4 projection = getScene()->getCamera().getProjectionMat();
+    glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
 
     // Get transformation matrix
 
-    glm::mat4 transformation = glm::inverse(getScene()->getCamera().getTransformation())*getTransformation();
+    glm::mat4 transformation = glm::inverse(getScene()->getCamera()->getTransformation())*getTransformation();
 
 
 	// Define uniform values

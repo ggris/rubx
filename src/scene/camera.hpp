@@ -14,8 +14,6 @@ class Camera : public Sc3dNode
         void setPerspective(float fov, float ratio, float z_near, float z_far);
         void set_ratio(float ratio);
 
-        //const glm::mat4 & getTransformation() const;
-
 		glm::mat4 getProjectionMat() const;
 
         void display(){}

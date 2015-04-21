@@ -1,3 +1,8 @@
+
+#include <cmath>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "logger.hpp"
 #include "sc_3d_node.hpp"
 #include "sc_3d.hpp"
@@ -31,5 +36,20 @@ glm::mat4 Sc3dNode::getTransformation() const
     return parent_->getTransformation() * transformation_;
 }
 
+void Sc3dNode::nodRotate( glm::vec2 pos)
+{
+    nodRotateZ(pos.x);
+    nodRotateX(-pos.y);
+}
 
+
+void Sc3dNode::nodRotateZ(float rz)
+{
+    transformation_ = transformation_ * glm::rotate( rz * (float)fabs( rz ) * 0.001f, glm::vec3( 0.0f, 1.0f, 0.0f ) );
+}
+
+void Sc3dNode::nodRotateX(float rx)
+{
+    transformation_ = transformation_ * glm::rotate( rx * (float)fabs( rx ) * 0.001f, glm::vec3( 1.0f, 0.0f, 0.0f ) );
+}
 

@@ -54,13 +54,12 @@ void EventHandler::mouseButton_Callback(GLFWwindow* window, int button, int acti
 		if (selectedId_ != 0x00ffffff && !m_ui->getGame()->getIsWon())
 			m_ui->receiveLeftMouseDrag(glm::normalize(releasePos-pressPos), selectedId_);
 	}
-	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) //Right button down
-	{
-		rightButtonPressed = false;
-	}
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT)
 	{
-		rightButtonPressed = true;
+        if (action == GLFW_PRESS)
+    		rightButtonPressed = true;
+        else
+            rightButtonPressed = false;
 	}
 }
 
@@ -73,7 +72,8 @@ void EventHandler::mouseMovement_Callback(GLFWwindow* window, double x, double y
 
 	glm::vec2 newMousePos(x, y);
 
-	m_ui->receiveRightMouseDrag(glm::normalize(newMousePos-lastMousePos));
+    if (rightButtonPressed)
+	    m_objectStack->get_rubix_cube()->nodRotate(newMousePos-lastMousePos);
 
 	lastMousePos = newMousePos;
 }

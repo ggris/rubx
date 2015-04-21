@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "glm/ext.hpp"
 
+#include "sc_3d.hpp"
 #include "rubix_cube.hpp"
 
 enum game_difficulty
@@ -38,6 +39,7 @@ class Game
 		bool gameIsWon;
 		std::string userName_;
 		RubixCube * cube_;
+        Sc3d * sc3d_;
 
 		double initialTime;
 		double time;

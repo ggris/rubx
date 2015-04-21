@@ -9,7 +9,7 @@
 #include "scene_graph.hpp"
 #include "texture.hpp"
 
-
+class RubixCube;
 class Camera;
 class Lamp;
 
@@ -19,18 +19,20 @@ class Sc3d : public ScVector
         Sc3d(GLFWwindow * window);
         void display();
 
-		Camera getCamera();
+		Camera * getCamera();
 		std::vector <Lamp *> getLamps();
 		void addLamp(Lamp * lamp);
 		void addLamp();
 		void addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color);
 		Texture * getTexture(std::string objectID);
+        RubixCube * get_rubix_cube() {return rubix_cube_;}
 
     private:
         GLFWwindow * window_;
         Camera * camera_;
         std::vector<Lamp *> lamps_;
         std::unordered_map<std::string,Texture *> textures_;
+        RubixCube * rubix_cube_;
 };
 
 #endif //SC3D_HPP
