@@ -13,7 +13,7 @@ Sc3d::Sc3d(GLFWwindow * window) :
 {
     Texture * texture = new Texture("data/img/smoothcube.bmp");
     textures_.insert({"default",texture});
-    camera_= new Camera(30.0f, 1.0f, 0.1f, 30.0f);
+    camera_= new Camera(1.0f, 1.0f, 0.1f, 30.0f);
     camera_->setScene(this);
     addLamp(glm::vec3(0.0,-10.0,10.0),10.0,10.0,glm::vec4(10.0,10.0,10.0,1.0));
     addLamp(glm::vec3(-20.0,-1.0,5.0),10.0,10.0,glm::vec4(6.0,4.0,0.0,1.0));

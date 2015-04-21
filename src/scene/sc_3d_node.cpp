@@ -41,8 +41,8 @@ glm::mat4 Sc3dNode::getTransformation() const
 
 void Sc3dNode::nodRotate( glm::vec2 pos)
 {
-    nodRotateZ(-pos.x);
-    nodRotateX(pos.y);
+    nodRotateZ(pos.x);
+    nodRotateX(-pos.y);
 }
 
 
