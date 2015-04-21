@@ -266,7 +266,10 @@ void UI::gameKeyPress(int key, int keyAction)
 	if (key == GLFW_KEY_ESCAPE && keyAction == GLFW_PRESS)
 	{
 		if (game_->getIsWon())
+		{
 			ui_state = UI_SCORE;
+			selector.updatePosition(scoreSelectorPos);
+		}
 		else
 			ui_state = UI_MENU;
 	}
