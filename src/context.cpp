@@ -84,6 +84,7 @@ void Context::initGL()
 {
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
+    glClearColor(0.8f, 0.9f, 1.0f, 0.0f);
 }
 
 void Context::initScene()
