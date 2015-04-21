@@ -18,19 +18,14 @@ In the project root directory type :
 $ make
 ```
 
-This will create a build folder and call cmake.
-Then you can go in the build directory an build the program.
+This will create a build folder, call cmake, make and if the build is ok run the program.
+
+If you only wish to quickly launch the program without rebuilding, type :
 
 ```sh
-$ cd build
-$ make
+$ make run
 ```
 
-To run the program, you must be in the bin/ directory.
-```sh
-$ cd bin
-$ ./rubx
-```
 
 ##### Windows
 
