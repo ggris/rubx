@@ -30,10 +30,10 @@ ScMesh::ScMesh(Sc3d * scene,
 
     Program program;
 
-    program.emplace_back("pos.vert", GL_VERTEX_SHADER);
-    //program.emplace_back("smooth.frag", GL_FRAGMENT_SHADER);
-    //program.emplace_back("texture.frag", GL_FRAGMENT_SHADER);
-    program.emplace_back("ggx.frag", GL_FRAGMENT_SHADER);
+    program.emplace_back("lighting.vs", GL_VERTEX_SHADER);
+    program.emplace_back("lighting.cs", GL_TESS_CONTROL_SHADER);
+    program.emplace_back("lighting.es", GL_TESS_EVALUATION_SHADER);
+    program.emplace_back("lighting.fs", GL_FRAGMENT_SHADER);
 
     program.link();
 
@@ -81,7 +81,7 @@ void ScMesh::display()
     //set Lamps
     setLamps();
 
-    vao_->bindAndDraw();
+    vao_->bindAndDraw(GL_PATCHES);
 
     glUseProgram(0);
 }
@@ -140,7 +140,7 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 	glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
 
-    vao_->bindAndDraw();
+    vao_->bindAndDraw(GL_TRIANGLES);
 
 	glUseProgram(0);
 }

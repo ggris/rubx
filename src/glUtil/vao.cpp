@@ -22,10 +22,10 @@ VAO::VAO(const std::string & filename) :
 }
 
 
-void VAO::bindAndDraw() const
+void VAO::bindAndDraw(GLenum mode) const
 {
     glBindVertexArray(vao_);
-    glDrawElements(GL_TRIANGLES, length_, GL_UNSIGNED_SHORT, 0);
+    glDrawElements(mode, length_, GL_UNSIGNED_SHORT, 0);
 }
 
 

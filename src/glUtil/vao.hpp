@@ -16,7 +16,7 @@ class VAO
 
         VAO(const std::string & filename);
 
-        void bindAndDraw() const;
+        void bindAndDraw(GLenum mode) const;
 
     private:
         const GLuint vao_;
