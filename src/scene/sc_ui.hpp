@@ -23,7 +23,7 @@ class UI : public ScNode
 		UI_state getState();
 		Game* getGame();
 
-		void receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId);
+		void receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId, int selectedFace);
 		void receiveRightMouseDrag(glm::vec2 direction);
 
 		bool getQuit();

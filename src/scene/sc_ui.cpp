@@ -158,10 +158,10 @@ UI_state UI::getState()
 	return ui_state;
 }
 
-void UI::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId)
+void UI::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId, int selectedFace)
 {
 	if (ui_state == UI_GAME)
-		game_->receiveLeftMouseDrag(direction, selectedId);
+		game_->receiveLeftMouseDrag(direction, selectedId, selectedFace);
 }
 
 void UI::receiveRightMouseDrag(glm::vec2 direction)

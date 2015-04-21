@@ -42,6 +42,7 @@ class EventHandler
 		static bool leftButtonPressed;
 
 		static int selectedId_;
+		static int selectedFace_;
 		static glm::vec2 pressPos;
 		static glm::vec2 releasePos;
 		static glm::vec2 lastMousePos;

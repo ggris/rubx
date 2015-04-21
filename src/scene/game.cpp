@@ -94,7 +94,7 @@ void Game::update()
 	}
 }
 
-void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId)
+void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId, int selectedFace)
 {
 	cube_->rotate(direction, selectedId, 0.5f);
 

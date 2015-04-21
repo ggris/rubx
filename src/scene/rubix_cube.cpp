@@ -15,15 +15,6 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
         for(int j=-1;j<=1;j+=1)
             for(int k=-1;k<=1;k+=1)
                 cubes_.push_back(new SmallCube(this, i, j, k));
-    /*
-    cubes_.push_back(new SmallCube(this, -1, -1,  1));
-    cubes_.push_back(new SmallCube(this, -1,  1, -1));
-    cubes_.push_back(new SmallCube(this, -1,  1,  1));
-    cubes_.push_back(new SmallCube(this,  1, -1, -1));
-    cubes_.push_back(new SmallCube(this,  1, -1,  1));
-    cubes_.push_back(new SmallCube(this,  1,  1, -1));
-    cubes_.push_back(new SmallCube(this,  1,  1,  1));
-    */
     transformation_ = glm::translate(glm::vec3(0.0f, 0.0f, -8.0f));
     srand (time(NULL));
 

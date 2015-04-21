@@ -10,6 +10,7 @@ GLFWwindow* EventHandler::m_window;
 Sc3d* EventHandler::m_objectStack;
 
 int EventHandler::selectedId_;
+int EventHandler::selectedFace_;
 glm::vec2 EventHandler::pressPos = { 0, 0 };
 glm::vec2 EventHandler::releasePos = { 0, 0 };
 glm::vec2 EventHandler::lastMousePos = { 0, 0 };
@@ -52,7 +53,7 @@ void EventHandler::mouseButton_Callback(GLFWwindow* window, int button, int acti
 		releasePos = glm::vec2(mouse_xpos, mouse_ypos);
 
 		if (selectedId_ != 0x00ffffff && !m_ui->getGame()->getIsWon())
-			m_ui->receiveLeftMouseDrag(glm::normalize(releasePos-pressPos), selectedId_);
+			m_ui->receiveLeftMouseDrag(glm::normalize(releasePos-pressPos), selectedId_, selectedFace_);
 	}
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT)
 	{
@@ -124,7 +125,7 @@ void EventHandler::colorBasedObjectDetection(double mouseX, double mouseY)
 	}
 
 	selectedId_ = pickedID;
-
+	selectedFace_= pixelData[3];
 	glClearColor(0.8f, 0.9f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
