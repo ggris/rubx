@@ -28,6 +28,7 @@ class Sc3dNode : public ScNode
     protected:
         Sc3dNode * parent_;
         Sc3d * scene_;
+        glm::mat4 pre_transformation_;
         glm::mat4 transformation_;
 };
 
