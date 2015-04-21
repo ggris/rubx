@@ -21,6 +21,7 @@ class SmallCube : public Sc3dNode
         glm::imat4 transform_;
 
         ScMesh * getMesh() const;
+        glm::vec4 getNormal(int selectedFace);
 
     private:
 

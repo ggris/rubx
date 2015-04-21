@@ -20,12 +20,12 @@ class RubixCube : public Sc3dNode
         //axis = 0 pour x, 1 pour y, 2 pour z
         //direct = +1 ou -1
         //crown = +1 ou -1
-    
-        void rotate(glm::vec2 direction, unsigned int id, float speed);
-    
+
+        void rotate(glm::vec2 direction, unsigned int id, int selectedFace, float speed);
+
         void randomRotate(float speed);
         void shuffle(int number, float speed);
-    
+
         std::string test_string();
 
         void display();
@@ -35,18 +35,18 @@ class RubixCube : public Sc3dNode
     private :
 
         std::vector <SmallCube *> cubes_;
-    
+
         //shuffle
         bool is_shuffling_;
         int shuffle_number_;
         int shuffle_length_;
         float shuffle_start_;
-    
+
 
         //animation
         float animation_length_;
-    
-        
+
+
 };
 
 #endif

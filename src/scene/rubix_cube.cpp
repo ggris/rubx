@@ -92,13 +92,15 @@ void RubixCube::shuffle(int number, float speed){
     animation_length_=speed;
 }
 
-void RubixCube::rotate(glm::vec2 direction, unsigned int id, float speed){
+
+
+void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, float speed){
     SmallCube * selectedCube;
     for (unsigned int i =0; i<cubes_.size(); i++){
         if (cubes_[i]->getMesh()->getId()==id)
             selectedCube=cubes_[i];
     }
-
+    glm::vec4 normal = selectedCube->getNormal(selectedFace);
     glm::vec2 x(getTransformation()*glm::vec4(1,0,0,1));
     glm::vec2 y(getTransformation()*glm::vec4(0,1,0,1));
     glm::vec2 z(getTransformation()*glm::vec4(0,0,1,1));

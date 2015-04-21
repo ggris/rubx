@@ -118,3 +118,29 @@ void SmallCube::rotate(int axis, int direct, float speed){
     axis_rotation_=axis;
     direct_rotation_=direct;
 }
+glm::vec4 SmallCube::getNormal (int selectedFace){
+    glm::vec4 normal;
+    switch (selectedFace){
+        case 0:
+            normal = glm::vec4(1.0, 0.0, 0.0, 0.0);
+            break;
+        case 1:
+            normal = glm::vec4(0.0, 1.0, 0.0, 0.0);
+            break;
+        case 2:
+            normal = glm::vec4(0.0, 0.0, 1.0, 0.0);
+            break;
+        case 3:
+            normal = glm::vec4(-1.0, 0.0, 0.0, 0.0);
+            break;
+        case 4:
+            normal = glm::vec4(0.0, -1.0, 0.0, 0.0);
+            break;
+        case 5:
+            normal = glm::vec4(0.0, 0.0, -1.0, 0.0);
+            break;
+        default:
+            break;
+    return ((glm::mat4)transform_)*normal;
+    }
+}

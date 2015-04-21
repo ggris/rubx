@@ -136,7 +136,7 @@ void ScMesh::displayWithPickingColour(glm::vec3 colour)
 
 	// Define uniform values
 
-	glUniform4f(u_colour, colour.x/255.0f, colour.y/255.0f, colour.z/255.0f, 1.0f);
+	glUniform4ui(u_colour, colour.x, colour.y, colour.z, 0);
 	glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
 

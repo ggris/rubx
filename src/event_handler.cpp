@@ -2,7 +2,7 @@
 
 #include "camera.hpp"
 #include "rubix_cube.hpp"
-
+#include "logger.hpp"
 bool EventHandler::leftButtonPressed = false;
 bool EventHandler::rightButtonPressed = false;
 UI* EventHandler::m_ui;
@@ -94,7 +94,7 @@ void EventHandler::colorBasedObjectDetection(double mouseX, double mouseY)
 	for (unsigned int i = 0; i < smallCubes.size(); i++)
 	{
 		unsigned int id = smallCubes[i]->getMesh()->getId();
-		glm::vec3 colour(0.0f, 0.0f, 0.0f);
+		glm::uvec3 colour(0);
 
 		colour.x = (id & 0x000000FF) >> 0;
 		colour.y = (id & 0x0000FF00) >> 8;
@@ -110,8 +110,9 @@ void EventHandler::colorBasedObjectDetection(double mouseX, double mouseY)
 
 	unsigned char pixelData[4];
 	glReadPixels(mouseX, mouseY, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixelData);
-
+	LOG_DEBUG << "face : " <<(int) pixelData[3];
 	int pickedID =
+
 		pixelData[0] +
 		pixelData[1] * 256 +
 		pixelData[2] * 256 * 256;
