@@ -5,9 +5,10 @@
 #include <string>
 
 #include "include_gl.hpp"
-#include "sc_3d_node.hpp"
+#include "program.hpp"
 #include "texture.hpp"
 #include "vao.hpp"
+#include "sc_3d_node.hpp"
 
 class ScMesh : public Sc3dNode
 {
@@ -24,8 +25,8 @@ class ScMesh : public Sc3dNode
 		unsigned int getId() const;
 
     private:
-        GLuint program_;
-		GLuint pickingProgram_;
+        Program * program_;
+		Program * pickingProgram_;
         VAO * vao_;
         Texture * texture_;
 

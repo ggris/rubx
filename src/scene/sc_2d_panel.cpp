@@ -53,7 +53,7 @@ Sc2dPanel::Sc2dPanel(glm::vec2 position, glm::vec2 scale, std::string textureFil
 
 	program.clearShaders();
 
-	program_ = program.getProgram();
+	program_ = program.get_program();
 
 	//Creating texture
 	Texture texture(textureFile);

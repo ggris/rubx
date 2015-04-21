@@ -20,6 +20,8 @@ ScMesh::ScMesh(Sc3d * scene,
 				unsigned int id,
                 Sc3dNode * parent) :
     Sc3dNode(parent,scene),
+    program_(new Program(GL_PATCHES)),
+    pickingProgram_(new Program(GL_TRIANGLES)),
     vao_(vao),
 	texture_(texture),
 	id_(id)
@@ -28,42 +30,35 @@ ScMesh::ScMesh(Sc3d * scene,
 
     // Creating programs
 
-    Program program;
+    program_->emplace_back("lighting.vs", GL_VERTEX_SHADER);
+    program_->emplace_back("lighting.cs", GL_TESS_CONTROL_SHADER);
+    program_->emplace_back("lighting.es", GL_TESS_EVALUATION_SHADER);
+    program_->emplace_back("lighting.fs", GL_FRAGMENT_SHADER);
 
-    program.emplace_back("lighting.vs", GL_VERTEX_SHADER);
-    program.emplace_back("lighting.cs", GL_TESS_CONTROL_SHADER);
-    program.emplace_back("lighting.es", GL_TESS_EVALUATION_SHADER);
-    program.emplace_back("lighting.fs", GL_FRAGMENT_SHADER);
+    program_->link();
 
-    program.link();
-
-    program.clearShaders();
-
-    program_ = program.getProgram();
+    program_->clearShaders();
 
 	//picking program
-	Program pickingProgram;
+	
+    pickingProgram_->emplace_back("picking.vert", GL_VERTEX_SHADER);
+	pickingProgram_->emplace_back("picking.frag", GL_FRAGMENT_SHADER);
 
-	pickingProgram.emplace_back("picking.vert", GL_VERTEX_SHADER);
-	pickingProgram.emplace_back("picking.frag", GL_FRAGMENT_SHADER);
+	pickingProgram_->link();
 
-	pickingProgram.link();
-
-	pickingProgram.clearShaders();
-
-	pickingProgram_ = pickingProgram.getProgram();
+	pickingProgram_->clearShaders();
 
 }
 
 void ScMesh::display()
 {
-    glUseProgram(program_);
+    program_->use();
 
     // Get program uniforms
 
-    GLuint projectionMatrixUnif = glGetUniformLocation(program_, "projection_matrix");
-    GLuint transformationMatrixUnif = glGetUniformLocation(program_,"transformation_matrix");
-    GLuint textureSamplerUniform = glGetUniformLocation(program_,"texture_Sampler");
+    GLuint projectionMatrixUnif = program_->getUniformLocation( "projection_matrix" );
+    GLuint transformationMatrixUnif = program_->getUniformLocation( "transformation_matrix" );
+    GLuint textureSamplerUniform = program_->getUniformLocation( "texture_Sampler" );
 
     // Get camera projection matrix
 
@@ -81,7 +76,7 @@ void ScMesh::display()
     //set Lamps
     setLamps();
 
-    vao_->bindAndDraw(GL_PATCHES);
+    vao_->bindAndDraw(program_->get_mode());
 
     glUseProgram(0);
 }
@@ -92,7 +87,7 @@ void ScMesh::setLamps()
     std::vector<Lamp*> lamps = getScene()->getLamps();
     glm::mat4 camera_transf = glm::inverse(getScene()->getCamera()->getTransformation());
     //set number of lamps
-    GLuint nblamps = glGetUniformLocation(program_, "numLamps");
+    GLuint nblamps = program_->getUniformLocation( "numLamps" );
     glUniform1i(nblamps,lamps.size());
 
     //set lamp array
@@ -104,8 +99,8 @@ void ScMesh::setLamps()
         std::string transformationUnifName = sstransformation.str();
         std::string colorUnifName = sscolor.str();
 
-        GLuint transformUniform = glGetUniformLocation(program_,transformationUnifName.c_str());
-        GLuint colorUniform = glGetUniformLocation(program_,colorUnifName.c_str());
+        GLuint transformUniform = program_->getUniformLocation( transformationUnifName );
+        GLuint colorUniform = program_->getUniformLocation( colorUnifName );
 
         glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(camera_transf*lamps[i]->getTransformation()));
         glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
@@ -117,13 +112,13 @@ void ScMesh::setLamps()
 
 void ScMesh::displayWithPickingColour(glm::vec3 colour)
 {
-	glUseProgram(pickingProgram_);
+    pickingProgram_->use();
 
 	// Get program uniforms
 
-	GLuint u_colour = glGetUniformLocation(pickingProgram_, "colour");
-	GLuint projectionMatrixUnif = glGetUniformLocation(pickingProgram_, "projection_matrix");
-	GLuint transformationMatrixUnif = glGetUniformLocation(pickingProgram_, "transformation_matrix");
+	GLuint u_colour = pickingProgram_->getUniformLocation( "colour" );
+	GLuint projectionMatrixUnif = pickingProgram_->getUniformLocation( "projection_matrix" );
+	GLuint transformationMatrixUnif = pickingProgram_->getUniformLocation( "transformation_matrix" );
 
 	// Get camera projection matrix
 

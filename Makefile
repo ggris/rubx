@@ -1,7 +1,11 @@
-rubix: build compile run
+rubix: build configure compile run
+
+fast: compile run
+
+configure:
+	cd build && cmake ../
 
 compile:
-	cd build && cmake ../
 	cd build && make rubx
 
 run:

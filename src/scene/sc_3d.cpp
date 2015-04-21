@@ -11,20 +11,33 @@
 Sc3d::Sc3d(GLFWwindow * window) :
     window_(window)
 {
-    Texture * texture = new Texture("data/img/smoothcube.bmp");
-    textures_.insert({"default",texture});
+    initTextures();
+    initPrograms();
+    initVAOs();
     camera_= new Camera(1.0f, 1.0f, 0.1f, 30.0f);
     camera_->setScene(this);
     addLamp(glm::vec3(0.0,10.0,10.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
     addLamp(glm::vec3(20.0,1.0,5.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
     addLamp(glm::vec3(-20.0,1.0,5.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
-    //push_back(MeshGenerator::testCube(lamps_[0],this));
-    //addLamp(glm::vec3(0.0,1.0,0.0),10.0,10.0,glm::vec4(0.0,10.0,0.0,1.0));
-    //addLamp(glm::vec3(0.0,0.0,1.0),10.0,10.0,glm::vec4(0.0,0.0,10.0,1.0));
 
     rubix_cube_ =  new RubixCube(nullptr,this);
     push_back(rubix_cube_);
     push_back(MeshGenerator::tableSurface(nullptr,this));
+}
+
+void Sc3d::initTextures()
+{
+    textures_.insert( {"default", new Texture("data/img/default.bmp")} );
+    textures_.insert( {"small_cube", new Texture("data/img/small_cube.bmp")} );
+}
+
+void Sc3d::initPrograms()
+{
+    programs_.insert( {"lighting", new Program(GL_PATCHES, "lighting")} );
+}
+
+void Sc3d::initVAOs()
+{
 }
 
 void Sc3d::display()

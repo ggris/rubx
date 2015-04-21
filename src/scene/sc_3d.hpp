@@ -6,6 +6,11 @@
 
 #include "glm/glm.hpp"
 #include "include_gl.hpp"
+#include "texture.hpp"
+#include "texture.hpp"
+#include "program.hpp"
+#include "vao.hpp"
+
 #include "scene_graph.hpp"
 #include "texture.hpp"
 
@@ -31,8 +36,14 @@ class Sc3d : public ScVector
         GLFWwindow * window_;
         Camera * camera_;
         std::vector<Lamp *> lamps_;
-        std::unordered_map<std::string,Texture *> textures_;
+        std::unordered_map<std::string, Texture *> textures_;
+        std::unordered_map<std::string, Program *> programs_;
+        std::unordered_map<std::string, VAO *> vaos_;
         RubixCube * rubix_cube_;
+
+        void initTextures();
+        void initPrograms();
+        void initVAOs();
 };
 
 #endif //SC3D_HPP
