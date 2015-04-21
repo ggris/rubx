@@ -15,9 +15,9 @@ Sc3d::Sc3d(GLFWwindow * window) :
     textures_.insert({"default",texture});
     camera_= new Camera(80.0f, 1.0f, 0.1f, 10.0f);
     camera_->setScene(this);
-    addLamp(glm::vec3(0.0,-5.0,-5.0),10.0,10.0,glm::vec4(5.0,5.0,5.0,1.0));
-    addLamp(glm::vec3(-5.0,-1.0,-5.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
-    addLamp(glm::vec3(0.0,-5.0,5.0),10.0,10.0,glm::vec4(5.0,5.0,5.0,1.0));
+    addLamp(glm::vec3(0.0,-10.0,10.0),10.0,10.0,glm::vec4(10.0,10.0,10.0,1.0));
+    addLamp(glm::vec3(-20.0,-1.0,5.0),10.0,10.0,glm::vec4(6.0,4.0,0.0,1.0));
+    addLamp(glm::vec3(20.0,-1.0,5.0),10.0,10.0,glm::vec4(1.0,1.0,8.0,1.0));
     //push_back(MeshGenerator::testCube(lamps_[0],this));
     //addLamp(glm::vec3(0.0,1.0,0.0),10.0,10.0,glm::vec4(0.0,10.0,0.0,1.0));
     //addLamp(glm::vec3(0.0,0.0,1.0),10.0,10.0,glm::vec4(0.0,0.0,10.0,1.0));

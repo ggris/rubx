@@ -38,7 +38,7 @@ float G_GGX( vec4 wi,  vec4 wo, vec4  wh,  vec4  n,float alpha){
 }
 
 float Fresnel( vec4  wi,  vec4  wh,float alpha){
-    float F0 = .4;
+    float F0 = .03;
     float max=dot(wi,wh)>0.0?dot(wi,wh):0.0;
     return F0+(1.0-F0)*pow((1.0-max),5.0);
 }
@@ -51,18 +51,18 @@ float GGX(vec4 n, vec4 l, vec4 v ,float alpha){
 
     float res=D_GGX(h,n,alpha)*Fresnel(l,h,alpha)*G_GGX(l,v,h,n,alpha);
     res/=4.0*dot(n,l)*dot(n,v);
-    if (res*dot(n,l)>0)return 10.0*res*dot(n,l);
+    if (res*dot(n,l)>0)return 5.0*res*dot(n,l);
     return 0.0;
 }
 
-vec4 applyLamp(Lamp lamp, vec4 surfaceColor, vec4 normal, vec4 position, vec4 toCamera){
+vec4 applyLamp(Lamp lamp, vec4 diffuseColor, vec4 normal, vec4 position, vec4 toCamera){
     vec4 toLamp = lamp.transformation[3]-position;
     float attenuation=1.0;
     float dist= length(toLamp);
     toLamp = normalize(toLamp);
-    attenuation = 1.0/(1.0+0.01*pow(dist,2));
+    attenuation = 1.0/(1.0+0.001*pow(dist,2));
     //if (GGX(normal,toLamp,toCamera,0.7)<0.0) return vec4(1.0,1.0,0.0,1.0);
-    return attenuation*GGX(normal,toLamp,toCamera,0.8)*surfaceColor*lamp.color;
+    return attenuation*(GGX(normal,toLamp,toCamera,0.1)*lamp.color+0.5*dot(normal,toLamp)*diffuseColor);
 
     //return vec4(1.0,1.0,0.0,1.0);
 }
@@ -70,12 +70,12 @@ vec4 applyLamp(Lamp lamp, vec4 surfaceColor, vec4 normal, vec4 position, vec4 to
 void main()
 {
 	vec4 totalColor=vec4(0.0,0.0,0.0,0.0);
-	vec4 color = vec4(texture(texture_Sampler,fragUV).rgb,1.0);
+	vec4 diffuseColor = vec4(texture(texture_Sampler,fragUV).rgb,1.0);
     vec4 camera = normalize(-fragPosition);
     vec4 normal = normalize(fragNormal);
 
     for(int i=0;i<numLamps;i++){ //loop over all lights
-        totalColor+= applyLamp(allLamps[i],color,normal,fragPosition,camera);
+        totalColor+= applyLamp(allLamps[i],diffuseColor,normal,fragPosition,camera);
     }
     fragColor = totalColor;
     //fragColor = allLamps[0].light;
