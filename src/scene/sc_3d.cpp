@@ -65,11 +65,11 @@ void Sc3d::initVAOs()
 
 void Sc3d::initLamps()
 {
-    addLamp(glm::vec3(0.0,10.0,20.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
+    addLamp(glm::vec3(0.0,20.0,20.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
     addLamp(glm::vec3(20.0,1.0,10.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
     addLamp(glm::vec3(-20.0,1.0,10.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
     addLamp(glm::vec3(-2.0,1.0,40.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
-    addLamp(glm::vec3(-5.0,-20.0,-10.0),10.0,10.0,glm::vec4(0.3,0.3,0.3,1.0));
+    //addLamp(glm::vec3(-5.0,-20.0,-10.0),10.0,10.0,glm::vec4(0.3,0.3,0.3,1.0));
 }
 
 void Sc3d::display()
