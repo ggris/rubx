@@ -19,6 +19,9 @@ class Sc3dNode : public ScNode
         void clear_parent() {parent_ = nullptr;}
         Sc3d * getScene(){return scene_;}
 
+        void multTransformation( const glm::mat4 & transformation );
+        void clearTransformation();
+
         void nodRotate( glm::vec2 pos );
         void nodRotateZ(float rz);
         void nodRotateX(float rx);

@@ -64,6 +64,11 @@ void EventHandler::mouseButton_Callback(GLFWwindow* window, int button, int acti
 	}
 }
 
+void EventHandler::scroll_Callback(GLFWwindow* window, double x, double y)
+{
+    m_objectStack->getCamera()->updateZoom(- 0.2f * y);
+}
+
 void EventHandler::mouseMovement_Callback(GLFWwindow* window, double x, double y)
 {
 	int width, height;

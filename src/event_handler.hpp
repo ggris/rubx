@@ -23,6 +23,7 @@ class EventHandler
 		static void key_Callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void mouseButton_Callback(GLFWwindow* window, int button, int action, int mods);
 		static void mouseMovement_Callback(GLFWwindow* window, double x, double y);
+		static void scroll_Callback(GLFWwindow* window, double x, double y);
 
 		static void colorBasedObjectDetection(double mouseX, double mouseY);
 

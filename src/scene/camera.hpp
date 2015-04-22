@@ -13,6 +13,7 @@ class Camera : public Sc3dNode
 
         void setPerspective(float fov, float ratio, float z_near, float z_far);
         void set_ratio(float ratio);
+        void updateZoom(float f);
 
 		glm::mat4 getProjectionMat() const;
 
@@ -25,6 +26,8 @@ class Camera : public Sc3dNode
         float z_far_;
 
         glm::mat4 mat_project_;     // Projection matrix
+
+        float zoom_;
 
         void update_mat_project();
 

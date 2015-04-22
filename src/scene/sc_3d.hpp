@@ -26,9 +26,6 @@ class Sc3d : public ScVector
 
 		Camera * getCamera();
 		std::vector <Lamp *> getLamps();
-		void addLamp(Lamp * lamp);
-		void addLamp();
-		void addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color);
 		Texture * getTexture( std::string name ) const;
         Program * getProgram( std::string name ) const;
         VAO * getVAO( std::string name) const;
@@ -49,6 +46,9 @@ class Sc3d : public ScVector
         void addTexture(std::string name);
         void addProgram(std::string name, GLenum mode = GL_TRIANGLES);
         void addVAO(std::string name);
+		void addLamp(Lamp * lamp);
+		void addLamp();
+		void addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color);
         void initTextures();
         void initPrograms();
         void initVAOs();

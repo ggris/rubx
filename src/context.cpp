@@ -55,6 +55,7 @@ Context::Context() :
     glfwSetKeyCallback(window_, EventHandler::key_Callback);
 	glfwSetMouseButtonCallback(window_, EventHandler::mouseButton_Callback);
 	glfwSetCursorPosCallback(window_, EventHandler::mouseMovement_Callback);
+	glfwSetScrollCallback(window_, EventHandler::scroll_Callback);
 
     LOG_INFO << "glfw OpenGL context ready";
 

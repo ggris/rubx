@@ -38,11 +38,11 @@ class Game
 		bool getIsWon();
 
 		std::string getUser() const;
+        Sc3d * sc3d_;
     private:
 		bool gameIsWon;
 		std::string userName_;
 		RubixCube * cube_;
-        Sc3d * sc3d_;
 
 		double initialTime;
 		double time;

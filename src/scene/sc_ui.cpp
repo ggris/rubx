@@ -4,8 +4,9 @@
 #include <sstream>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "logger.hpp"
+#include "camera.hpp"
 #include "sc_ui.hpp"
-
 
 UI::UI() 
 {

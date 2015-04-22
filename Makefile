@@ -14,5 +14,8 @@ run:
 build:
 	mkdir build
 
+gdb:
+	cd build/bin && gdb ./rubx
+
 clean:
 	rm -r build

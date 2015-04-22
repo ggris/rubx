@@ -39,6 +39,17 @@ glm::mat4 Sc3dNode::getTransformation() const
     return parent_->getTransformation() * transformation_ * pre_transformation_;
 }
 
+void Sc3dNode::multTransformation( const glm::mat4 & transformation )
+{
+    transformation_ *= transformation;
+}
+
+void Sc3dNode::clearTransformation()
+{
+    transformation_ = glm::mat4( 1.0f );
+}
+
+
 void Sc3dNode::nodRotate( glm::vec2 pos)
 {
     float r = 3.0f;
