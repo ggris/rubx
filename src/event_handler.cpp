@@ -98,13 +98,6 @@ void EventHandler::colorBasedObjectDetection(double mouseX, double mouseY)
 
 	for (unsigned int i = 0; i < smallCubes.size(); i++)
 	{
-		unsigned int id = smallCubes[i]->getMesh()->getId();
-		glm::uvec3 colour(0);
-
-		colour.x = (id & 0x000000FF) >> 0;
-		colour.y = (id & 0x0000FF00) >> 8;
-		colour.z = (id & 0x00FF0000) >> 16;
-
 		smallCubes[i]->getMesh()->display(ScNode::PICKING);
 	}
 
