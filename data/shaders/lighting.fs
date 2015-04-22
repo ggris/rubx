@@ -64,7 +64,7 @@ void main()
 {
 	vec4 totalColor=vec4(0.0,0.0,0.0,0.0);
 	vec4 diffuseColor = vec4(texture(texture_Sampler, uv_fs_in).rgb,1.0);
-    vec4 camera = normalize(vec4(-position_fs_in, 1.0));
+    vec4 camera = normalize(vec4(-position_fs_in, 0.0));
     vec4 normal = normalize(vec4(normal_fs_in, 0.0));
     vec4 n = vec4(texture(normalmap_Sampler, uv_fs_in).rgb,0.0);
 
