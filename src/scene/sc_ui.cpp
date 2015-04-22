@@ -284,6 +284,7 @@ void UI::gameKeyPress(int key, int keyAction)
 	{
 		if (game_->getIsWon())
 		{
+			loadScore();
 			scoreLoader_.saveScore(game_->getUser(), game_->getScore());
 			loadScore();
 			ui_state = UI_SCORE;

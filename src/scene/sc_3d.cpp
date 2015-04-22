@@ -42,6 +42,8 @@ void Sc3d::initTextures()
 {
     addTexture( "default" );
     addTexture( "small_cube" );
+    addTexture ("smoothcube2");
+    addTexture("normalmap");
 }
 
 void Sc3d::initPrograms()

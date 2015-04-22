@@ -8,7 +8,7 @@
 
 SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
     Sc3dNode(parent),
-    mesh_( new ScMesh( scene_, "cube" , "lighting", "small_cube", this ) )
+    mesh_( new ScMesh( scene_, "cube" , "lighting", "smoothcube2", "normalmap", "default", this ) )
 {
     transform_=
     {
