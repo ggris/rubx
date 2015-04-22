@@ -22,7 +22,12 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
 
 void RubixCube::reset()
 {
-	//Pas trop certains de savoir comment replacer les petits cubes
+	for(int i=-1;i<=1;i+=1){
+        for(int j=-1;j<=1;j+=1){
+            for(int k=-1;k<=1;k+=1){
+                cubes_[i]->resetTransform(i,j,k);
+        }
+	}
 }
 
 
@@ -106,6 +111,7 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
             selectedCube=cubes_[i];
     }
     glm::vec4 normal = selectedCube->getNormal(selectedFace);
+
     glm::vec2 x(getTransformation()*glm::vec4(1,0,0,1));
     glm::vec2 y(getTransformation()*glm::vec4(0,1,0,1));
     glm::vec2 z(getTransformation()*glm::vec4(0,0,1,1));
@@ -158,7 +164,6 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
             axis=0;
             dir=1;
             break;
-
     }
     int crown = selectedCube->transform_[3][axis];
     rotate(axis, crown, dir, speed);
