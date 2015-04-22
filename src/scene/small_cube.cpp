@@ -18,7 +18,7 @@ SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
         0,  0,  1,  0,
         x,  y,  z,  1
     };
-
+    initial_transform_=transform_;
     transformation_ = transform_;
     is_animate_=false;
 }
@@ -146,5 +146,5 @@ glm::vec4 SmallCube::getNormal (int selectedFace){
     return ((glm::mat4)transform_)*normal;
 }
 void SmallCube::resetTransform(){
-
+    transform_=initial_transform_;
 }
