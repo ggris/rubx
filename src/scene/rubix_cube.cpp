@@ -22,6 +22,7 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
 
 void RubixCube::reset()
 {
+for (int i=0; i<cubes_.size();i++)
     cubes_[i]->resetTransform();
 }
 
