@@ -313,7 +313,7 @@ void UI::loadScore()
 		std::ostringstream stream;
 		stream << (i + 1) << ": ";
 		stream << scores[i].getUserName() << " ";
-		stream << scores[i].getScore();
+		stream << scores[i].getScore() << "PTS";
 		scoreLabels[i]->updateText(stream.str());
 	}
 }
