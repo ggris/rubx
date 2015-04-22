@@ -34,37 +34,7 @@ ScMesh::ScMesh(Sc3d * scene,
 
 void ScMesh::display()
 {
-    Sc3dNode::display();
-    program_->use();
-
-    // Get program uniforms
-
-    GLuint projectionMatrixUnif = program_->getUniformLocation( "projection_matrix" );
-    GLuint transformationMatrixUnif = program_->getUniformLocation( "transformation_matrix" );
-    GLuint textureSamplerUniform = program_->getUniformLocation( "texture_Sampler" );
-    GLuint normalMapSamplerUniform = program_->getUniformLocation( "normalmap_Sampler" );
-    GLuint bumpMapSamplerUniform = program_->getUniformLocation( "bumpmap_Sampler" );
-    // Get camera projection matrix
-
-    glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
-
-    // Get transformation matrix
-
-    glm::mat4 transformation = glm::inverse(getScene()->getCamera()->getTransformation())*getTransformation();
-
-    // Define uniform values
-    glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
-
-    texture_->bindToSampler(textureSamplerUniform);
-    normal_map_->bindToSampler(normalMapSamplerUniform, 1);
-    normal_map_->bindToSampler(bumpMapSamplerUniform, 2);
-    //set Lamps
-    setLamps();
-
-    vao_->bindAndDraw(program_->get_mode());
-
-    glUseProgram(0);
+    display(RENDER_IMAGE);
 }
 
 void ScMesh::setLamps()
@@ -99,32 +69,7 @@ void ScMesh::setLamps()
 
 void ScMesh::displayWithPickingColour(glm::vec3 colour)
 {
-    pickingProgram_->use();
-
-    // Get program uniforms
-
-    GLuint u_colour = pickingProgram_->getUniformLocation( "colour" );
-    GLuint projectionMatrixUnif = pickingProgram_->getUniformLocation( "projection_matrix" );
-    GLuint transformationMatrixUnif = pickingProgram_->getUniformLocation( "transformation_matrix" );
-
-    // Get camera projection matrix
-
-    glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
-
-    // Get transformation matrix
-
-    glm::mat4 transformation = glm::inverse(getScene()->getCamera()->getTransformation())*getTransformation();
-
-
-    // Define uniform values
-
-    glUniform4ui(u_colour, colour.x, colour.y, colour.z, 0);
-    glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
-
-    vao_->bindAndDraw(GL_TRIANGLES);
-
-    glUseProgram(0);
+    display(PICKING);
 }
 
 unsigned int ScMesh::getId() const
@@ -138,27 +83,31 @@ void ScMesh::display(DisplayMode display_mode)
     {
     case RENDER_IMAGE: //rendering image from the camera
     {
-        // Get appropriate program
+        Sc3dNode::display();
         program_->use();
+
         // Get program uniforms
 
-        GLuint projectionMatrixUnif = program_->getUniformLocation( "projection_matrix");
-        GLuint transformationMatrixUnif = program_->getUniformLocation("transformation_matrix");
+        GLuint projectionMatrixUnif = program_->getUniformLocation( "projection_matrix" );
+        GLuint transformationMatrixUnif = program_->getUniformLocation( "transformation_matrix" );
         GLuint textureSamplerUniform = program_->getUniformLocation( "texture_Sampler" );
-
+        GLuint normalMapSamplerUniform = program_->getUniformLocation( "normalmap_Sampler" );
+        GLuint bumpMapSamplerUniform = program_->getUniformLocation( "bumpmap_Sampler" );
         // Get camera projection matrix
 
-        glm::mat4 projection = scene_->getCamera()->getProjectionMat();
+        glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
 
         // Get transformation matrix
 
-        glm::mat4 transformation = glm::inverse(scene_->getCamera()->getTransformation())*getTransformation();
+        glm::mat4 transformation = glm::inverse(getScene()->getCamera()->getTransformation())*getTransformation();
 
         // Define uniform values
         glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
-        texture_->bindToSampler(textureSamplerUniform);
 
+        texture_->bindToSampler(textureSamplerUniform);
+        normal_map_->bindToSampler(normalMapSamplerUniform, 1);
+        normal_map_->bindToSampler(bumpMapSamplerUniform, 2);
         //set Lamps
         setLamps();
 

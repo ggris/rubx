@@ -105,7 +105,7 @@ void EventHandler::colorBasedObjectDetection(double mouseX, double mouseY)
 		colour.y = (id & 0x0000FF00) >> 8;
 		colour.z = (id & 0x00FF0000) >> 16;
 
-		smallCubes[i]->getMesh()->displayWithPickingColour(colour);
+		smallCubes[i]->getMesh()->display(ScNode::PICKING);
 	}
 
 	glFlush();
