@@ -10,6 +10,8 @@ set(SRC
 
     texture.hpp
     texture.cpp
+    shadowmap.hpp
+    shadowmap.cpp
     vao.hpp
     vao.cpp
 

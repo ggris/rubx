@@ -8,6 +8,8 @@
 #include "camera.hpp"
 #include "sc_3d.hpp"
 
+#include "shadowmap.hpp"
+
 Sc3d::Sc3d(GLFWwindow * window) :
     window_(window)
 {
@@ -90,6 +92,8 @@ void Sc3d::addLamp(Lamp * lamp)
 {
     if(lamps_.size()<=20){ // Dirty hack to accomodate GLSL fixed-length arrays
         lamps_.push_back(lamp);
+        //adding corresponding shadowmap
+        textures_.insert({"shadow_map"+(lamps_.size()-1), new ShadowMap()});
     }
     else {
         std::cout<<"Sc3d : too many lamps, lamp not added"<<std::endl;

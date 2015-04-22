@@ -6,6 +6,7 @@
 class ScNode
 {
     public:
+        enum DisplayMode {RENDER_IMAGE, SHADOWMAP, PICKING};
         virtual void display() = 0;
 };
 

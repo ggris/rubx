@@ -21,6 +21,7 @@ class ScMesh : public Sc3dNode
                 Sc3dNode * parent = nullptr);
 
         void display();
+        void display(DisplayMode display_mode);
 		void displayWithPickingColour(glm::vec3 colour);
 
 		unsigned int getId() const;
@@ -28,7 +29,9 @@ class ScMesh : public Sc3dNode
     private:
         VAO * vao_;
         Program * program_;
+        Program * shadowmap_program_;
         Texture * texture_;
+
 
         Program * pickingProgram_;
 		unsigned int id_;

@@ -4,6 +4,12 @@
 
 using namespace std;
 
+Texture::Texture():
+    filename_(""),
+    texture_(createTexture())
+{
+}
+
 Texture::Texture(const string &filename):
     filename_(filename),
     texture_(createTexture())
