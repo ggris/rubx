@@ -15,23 +15,26 @@
 #include "sc_mesh.hpp"
 
 ScMesh::ScMesh(Sc3d * scene,
-               const std::string & vao_name,
-               const std::string & program_name,
-               const std::string & texture_name,
-               unsigned int id,
-               Sc3dNode * parent) :
+                const std::string & vao_name,
+				const std::string & program_name,
+				const std::string & texture_name,
+                const std::string & normal_map_name,
+                const std::string & bump_map_name,
+                Sc3dNode * parent) :
     Sc3dNode( parent, scene ),
     vao_( scene->getVAO( vao_name ) ),
     program_( scene->getProgram( program_name ) ),
     texture_( scene->getTexture( texture_name ) ),
+    normal_map_( scene->getTexture( normal_map_name ) ),
     pickingProgram_( scene->getProgram( "picking" ) ),
-    id_(id)
+	id_(scene->getNextId())
 {
 
 }
 
 void ScMesh::display()
 {
+    Sc3dNode::display();
     program_->use();
 
     // Get program uniforms
@@ -39,7 +42,8 @@ void ScMesh::display()
     GLuint projectionMatrixUnif = program_->getUniformLocation( "projection_matrix" );
     GLuint transformationMatrixUnif = program_->getUniformLocation( "transformation_matrix" );
     GLuint textureSamplerUniform = program_->getUniformLocation( "texture_Sampler" );
-
+    GLuint normalMapSamplerUniform = program_->getUniformLocation( "normalmap_Sampler" );
+    GLuint bumpMapSamplerUniform = program_->getUniformLocation( "bumpmap_Sampler" );
     // Get camera projection matrix
 
     glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
@@ -51,8 +55,10 @@ void ScMesh::display()
     // Define uniform values
     glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
-    texture_->bindToSampler(textureSamplerUniform);
 
+    texture_->bindToSampler(textureSamplerUniform);
+    normal_map_->bindToSampler(normalMapSamplerUniform, 1);
+    normal_map_->bindToSampler(bumpMapSamplerUniform, 2);
     //set Lamps
     setLamps();
 

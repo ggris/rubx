@@ -4,8 +4,9 @@
 #include <sstream>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "logger.hpp"
+#include "camera.hpp"
 #include "sc_ui.hpp"
-
 
 UI::UI() 
 {
@@ -283,6 +284,7 @@ void UI::gameKeyPress(int key, int keyAction)
 	{
 		if (game_->getIsWon())
 		{
+			loadScore();
 			scoreLoader_.saveScore(game_->getUser(), game_->getScore());
 			loadScore();
 			ui_state = UI_SCORE;

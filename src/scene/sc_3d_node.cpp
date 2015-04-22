@@ -39,20 +39,43 @@ glm::mat4 Sc3dNode::getTransformation() const
     return parent_->getTransformation() * transformation_ * pre_transformation_;
 }
 
-void Sc3dNode::nodRotate( glm::vec2 pos)
+void Sc3dNode::multTransformation( const glm::mat4 & transformation )
 {
-    nodRotateZ(pos.x);
-    nodRotateX(-pos.y);
+    transformation_ *= transformation;
+}
+
+void Sc3dNode::clearTransformation()
+{
+    transformation_ = glm::mat4( 1.0f );
 }
 
 
+void Sc3dNode::nodRotate( glm::vec2 pos)
+{
+    float r = 3.0f;
+    speed_ += r * pos ;
+    speed_ /= r + 1.0f;
+}
+
+void Sc3dNode::display()
+{
+    speed_ *= 0.8f;
+    nodRotateZ(speed_.x);
+    nodRotateX(-speed_.y);
+}
+
+float mapMouseToRot(float r)
+{
+    return r * (float) sqrt(fabs( r )) * 0.002f;
+}
+
 void Sc3dNode::nodRotateZ(float rz)
 {
-    pre_transformation_ = glm::rotate( rz * (float)fabs( rz ) * 0.001f, glm::vec3( 0.0f, 1.0f, 0.0f ) ) * pre_transformation_;
+    pre_transformation_ = glm::rotate( mapMouseToRot(rz), glm::vec3( 0.0f, 1.0f, 0.0f ) ) * pre_transformation_;
 }
 
 void Sc3dNode::nodRotateX(float rx)
 {
-    pre_transformation_ = glm::rotate( rx * (float)fabs( rx ) * 0.001f, glm::vec3( 1.0f, 0.0f, 0.0f ) ) * pre_transformation_;
+    pre_transformation_ = glm::rotate( mapMouseToRot(rx), glm::vec3( 1.0f, 0.0f, 0.0f ) ) * pre_transformation_;
 }
 

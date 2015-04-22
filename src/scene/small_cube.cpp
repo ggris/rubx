@@ -1,7 +1,6 @@
 #include "small_cube.hpp"
 #include "logger.hpp"
 #include "glm/ext.hpp"
-#include "mesh_generator.hpp"
 #include <math.h>
 #include "glm/gtx/transform.hpp"
 #define PI 3.14159265
@@ -9,7 +8,7 @@
 
 SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
     Sc3dNode(parent),
-    mesh_(MeshGenerator::rubixSmallCube(this,this->scene_))
+    mesh_( new ScMesh( scene_, "cube" , "lighting", "smoothcube2", "normalmap", "default", this ) )
 {
     transform_=
     {
@@ -83,6 +82,7 @@ void scaleTranslation (glm::mat4 & mat, float factor){
 
 void SmallCube::display()
 {
+    Sc3dNode::display();
 
     float t = (glfwGetTime()-animation_start_)/animation_length_;
 
@@ -119,31 +119,31 @@ void SmallCube::rotate(int axis, int direct, float speed){
     direct_rotation_=direct;
 }
 
-glm::vec4 SmallCube::getNormal (int selectedFace){
+glm::ivec4 SmallCube::getNormal (int selectedFace){
     glm::vec4 normal;
     switch (selectedFace){
         case 0:
-            normal = glm::vec4(1.0, 0.0, 0.0, 0.0);
+            normal = glm::ivec4(1, 0, 0, 0);
             break;
         case 1:
-            normal = glm::vec4(0.0, 1.0, 0.0, 0.0);
+            normal = glm::ivec4(0, 1, 0, 0);
             break;
         case 2:
-            normal = glm::vec4(0.0, 0.0, 1.0, 0.0);
+            normal = glm::ivec4(0, 0, 1, 0);
             break;
         case 3:
-            normal = glm::vec4(-1.0, 0.0, 0.0, 0.0);
+            normal = glm::ivec4(-1, 0, 0, 0);
             break;
         case 4:
-            normal = glm::vec4(0.0, -1.0, 0.0, 0.0);
+            normal = glm::ivec4(0, -1, 0, 0);
             break;
         case 5:
-            normal = glm::vec4(0.0, 0.0, -1.0, 0.0);
+            normal = glm::ivec4(0, 0, -1, 0);
             break;
         default:
             break;
     }
-    return ((glm::mat4)transform_)*normal;
+    return (transform_)*normal;
 }
 void SmallCube::resetTransform(){
     transform_=initial_transform_;

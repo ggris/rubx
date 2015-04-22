@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "mesh_generator.hpp"
 #include "rubix_cube.hpp"
 
 #include "lamp.hpp"
@@ -11,14 +10,15 @@
 #include "shadowmap.hpp"
 
 Sc3d::Sc3d(GLFWwindow * window) :
-    window_(window)
+    window_(window),
+    next_id_(0)
 {
     initTextures();
     initPrograms();
     initVAOs();
     initLamps();
 
-    camera_= new Camera(1.0f, 1.0f, 0.1f, 30.0f);
+    camera_= new Camera(1.0f, 1.0f, 0.1f, 200.0f);
     camera_->setScene(this);
 
     rubix_cube_ =  new RubixCube(nullptr,this);
@@ -44,6 +44,8 @@ void Sc3d::initTextures()
 {
     addTexture( "default" );
     addTexture( "small_cube" );
+    addTexture ("smoothcube2");
+    addTexture("normalmap");
 }
 
 void Sc3d::initPrograms()
@@ -63,9 +65,11 @@ void Sc3d::initVAOs()
 
 void Sc3d::initLamps()
 {
-    addLamp(glm::vec3(0.0,10.0,10.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
-    addLamp(glm::vec3(20.0,1.0,5.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
-    addLamp(glm::vec3(-20.0,1.0,5.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
+    addLamp(glm::vec3(0.0,10.0,20.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
+    addLamp(glm::vec3(20.0,1.0,10.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
+    addLamp(glm::vec3(-20.0,1.0,10.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
+    addLamp(glm::vec3(-2.0,1.0,40.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
+    addLamp(glm::vec3(-5.0,-20.0,-10.0),10.0,10.0,glm::vec4(0.3,0.3,0.3,1.0));
 }
 
 void Sc3d::display()

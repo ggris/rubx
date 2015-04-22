@@ -19,12 +19,9 @@ set(SRC
 
     camera.hpp
     camera.cpp
-    
+
     lamp.hpp
     lamp.cpp
-
-    mesh_generator.hpp
-    mesh_generator.cpp
 
     rubix_cube.hpp
     rubix_cube.cpp

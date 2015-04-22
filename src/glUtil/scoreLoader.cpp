@@ -42,7 +42,7 @@ void ScoreLoader::saveScore(std::string user, unsigned int score)
 				unsigned int jInit = scores_.size() < 5 ? scores_.size()-1 : 4;
 				for (unsigned int j = jInit; j > i; j--)
 				{
-					if (j - 1 > 0) //Swap scores
+					if (j - 1 >= 0) //Swap scores
 						scores_[j] = scores_[j - 1];
 				}
 				scores_[i] = Score(user, score);

@@ -15,7 +15,6 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
         for(int j=-1;j<=1;j+=1)
             for(int k=-1;k<=1;k+=1)
                 cubes_.push_back(new SmallCube(this, i, j, k));
-    transformation_ = glm::translate(glm::vec3(0.0f, 0.0f, -12.0f));
     srand (time(NULL));
 
 }
@@ -37,7 +36,9 @@ bool RubixCube::isWon()
     return ans;
 }
 
-void RubixCube::display(){
+void RubixCube::display()
+{
+    Sc3dNode::display();
 
     if (is_shuffling_){
         if((glfwGetTime() - shuffle_start_)/animation_length_ > 2 *  shuffle_number_){
@@ -98,7 +99,28 @@ void RubixCube::shuffle(int number, float speed){
     animation_length_=speed;
 }
 
-
+int getAxisId(glm::vec3 axis){
+    if (axis==glm::vec3(1.0,0.0,0.0))
+        return 0;
+    if (axis==glm::vec3(0.0,1.0,0.0))
+        return 1;
+    if (axis==glm::vec3(0.0,0.0,1.0))
+        return 2;
+    if (axis==glm::vec3(-1.0,0.0,0.0))
+        return 0;
+    if (axis==glm::vec3(0.0,-1.0,0.0))
+        return 1;
+    return 2;
+}
+int getDirId(glm::vec3 axis){
+    if (axis==glm::vec3(1.0,0.0,0.0))
+        return 1;
+    if (axis==glm::vec3(0.0,1.0,0.0))
+        return 1;
+    if (axis==glm::vec3(0.0,0.0,1.0))
+        return 1;
+    return -1;
+}
 
 void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, float speed){
     SmallCube * selectedCube;
@@ -106,12 +128,15 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
         if (cubes_[i]->getMesh()->getId()==id)
             selectedCube=cubes_[i];
     }
-    glm::vec4 normal = selectedCube->getNormal(selectedFace);
-
+    glm::ivec4 normal = selectedCube->getNormal(selectedFace);
+    
+    //projections espace camera
     glm::vec2 x(getTransformation()*glm::vec4(1,0,0,1));
     glm::vec2 y(getTransformation()*glm::vec4(0,1,0,1));
     glm::vec2 z(getTransformation()*glm::vec4(0,0,1,1));
-
+    glm::vec2 n(getTransformation()*normal);
+    
+    //what direction are we going ? store it in the vec3 move
     float scalarProducts [6];
     scalarProducts[0] = glm::dot(direction, x);
     scalarProducts[1] = glm::dot(direction, y);
@@ -119,7 +144,6 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
     scalarProducts[3] = glm::dot(direction, -x);
     scalarProducts[4] = glm::dot(direction, -y);
     scalarProducts[5] = glm::dot(direction, -z);
-
     int imax = 0;
     float pmax = 0.0f;
     for (int i=0; i<6; i++){
@@ -128,40 +152,38 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
             imax=i;
         }
     }
-
-    int axis;
-    int dir;
+    glm::vec3 move;
     switch(imax){
         case 0:
-            axis=0;
-            dir=1;
+            move=glm::vec3(1,0,0);
             break;
         case 1:
-            axis=1;
-            dir=1;
+            move=glm::vec3(0,1,0);
             break;
         case 2:
-            axis=2;
-            dir=1;
+            move=glm::vec3(0,0,1);
             break;
         case 3:
-            axis=0;
-            dir=-1;
+            move=glm::vec3(-1,0,0);
             break;
         case 4:
-            axis=1;
-            dir=-1;
+            move=glm::vec3(0,-1,0);
             break;
         case 5:
-            axis=2;
-            dir=-1;
+            move=glm::vec3(0,0,-1);
             break;
         default :
-            axis=0;
-            dir=1;
+            move=glm::vec3(0,0,0);
             break;
     }
-    int crown = selectedCube->transform_[3][axis];
-    rotate(axis, crown, dir, speed);
+    //the axis of the rotation (as a vec3)
+    glm::vec3 axis =glm::cross((glm::vec3)normal,move);
+    
+    int ax =getAxisId(axis);
+    int dir = getDirId(axis);
+    int crown = selectedCube->transform_[3][ax];
+    
+    //LOG_DEBUG << ax << "  " << dir << "  " << crown;
+    rotate(ax,crown,dir,speed);
 }
 

@@ -1,6 +1,6 @@
 rubix: build cmk mk run
 
-fast: compile run
+fast: mk run
 
 cmk:
 	cd build && cmake ../
@@ -13,6 +13,9 @@ run:
 
 build:
 	mkdir build
+
+gdb:
+	cd build/bin && gdb ./rubx
 
 clean:
 	rm -r build
