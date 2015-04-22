@@ -23,7 +23,7 @@ class SmallCube : public Sc3dNode
         ScMesh * getMesh() const;
         glm::vec4 getNormal(int selectedFace);
 
-        void resetTransform(int i, int j, int k);
+        void resetTransform();
     private:
 
         ScMesh * mesh_;
