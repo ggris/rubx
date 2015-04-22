@@ -66,7 +66,7 @@ void main()
     vec4 normal = normalize(vec4(normal_fs_in, 0.0));
     vec4 n = vec4(texture(normalmap_Sampler, uv_fs_in).rgb,0.0);
     
-    normal = normalize(normal + 0.1 *n);
+    normal = normalize(normal + 0.2 *n);
     for(int i=0;i<numLamps;i++){ //loop over all lights
         totalColor+= applyLamp(allLamps[i], diffuseColor, normal, vec4(position_fs_in, 1.0), camera);
     }
