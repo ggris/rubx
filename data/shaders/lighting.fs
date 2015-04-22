@@ -6,7 +6,7 @@ smooth in vec3 normal_fs_in;
 smooth in vec2 uv_fs_in;
 
 uniform sampler2D texture_Sampler;
-
+uniform sampler2D normalmap_Sampler;
 uniform int numLamps; //actual number of lights used
 struct Lamp{
     mat4 transformation;
@@ -64,7 +64,9 @@ void main()
 	vec4 diffuseColor = vec4(texture(texture_Sampler, uv_fs_in).rgb,1.0);
     vec4 camera = normalize(vec4(-position_fs_in, 1.0));
     vec4 normal = normalize(vec4(normal_fs_in, 0.0));
-
+    vec4 n = vec4(texture(normalmap_Sampler, uv_fs_in).rgb,0.0);
+    
+    normal = normalize(normal + 0.1 *n);
     for(int i=0;i<numLamps;i++){ //loop over all lights
         totalColor+= applyLamp(allLamps[i], diffuseColor, normal, vec4(position_fs_in, 1.0), camera);
     }
