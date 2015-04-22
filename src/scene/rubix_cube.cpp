@@ -37,7 +37,9 @@ bool RubixCube::isWon()
     return ans;
 }
 
-void RubixCube::display(){
+void RubixCube::display()
+{
+    Sc3dNode::display();
 
     if (is_shuffling_){
         if((glfwGetTime() - shuffle_start_)/animation_length_ > 2 *  shuffle_number_){

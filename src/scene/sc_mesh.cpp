@@ -30,6 +30,7 @@ ScMesh::ScMesh(Sc3d * scene,
 
 void ScMesh::display()
 {
+    Sc3dNode::display();
     program_->use();
 
     // Get program uniforms

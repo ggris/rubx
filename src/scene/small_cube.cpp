@@ -82,6 +82,7 @@ void scaleTranslation (glm::mat4 & mat, float factor){
 
 void SmallCube::display()
 {
+    Sc3dNode::display();
 
     float t = (glfwGetTime()-animation_start_)/animation_length_;
 

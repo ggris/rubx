@@ -24,12 +24,14 @@ class Sc3dNode : public ScNode
         void nodRotateX(float rx);
         glm::mat4 getTransformation() const;
 
+        void display();
 
     protected:
         Sc3dNode * parent_;
         Sc3d * scene_;
         glm::mat4 pre_transformation_;
         glm::mat4 transformation_;
+        glm::vec2 speed_;
 };
 
 
