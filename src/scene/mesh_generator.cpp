@@ -219,7 +219,7 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent,Sc3d * scene)
 	uniqueObjectId++;
 
     //return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("rubixSmallCube"), uniqueObjectId, parent);
-    return new ScMesh(scene, new VAO("data/mesh/cube.obj"), scene->getTexture("default"), uniqueObjectId, parent);
+    return new ScMesh(scene, new VAO("data/mesh/cube.obj"), scene->getTexture("small_cube"), uniqueObjectId, parent);
 
 }
 
