@@ -1,6 +1,6 @@
 rubix: build cmk mk run
 
-fast: compile run
+fast: mk run
 
 cmk:
 	cd build && cmake ../

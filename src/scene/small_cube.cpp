@@ -1,7 +1,6 @@
 #include "small_cube.hpp"
 #include "logger.hpp"
 #include "glm/ext.hpp"
-#include "mesh_generator.hpp"
 #include <math.h>
 #include "glm/gtx/transform.hpp"
 #define PI 3.14159265
@@ -9,7 +8,7 @@
 
 SmallCube::SmallCube (Sc3dNode * parent, int x, int y, int z) :
     Sc3dNode(parent),
-    mesh_(MeshGenerator::rubixSmallCube(this,this->scene_))
+    mesh_( new ScMesh( scene_, "cube" , "lighting", "small_cube", this ) )
 {
     transform_=
     {

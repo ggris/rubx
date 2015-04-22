@@ -17,7 +17,6 @@ class ScMesh : public Sc3dNode
                 const std::string & vao_name,
 				const std::string & program_name,
                 const std::string & texture_name,
-				unsigned int id,
                 Sc3dNode * parent = nullptr);
 
         void display();

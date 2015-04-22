@@ -32,6 +32,8 @@ class Sc3d : public ScVector
 		Texture * getTexture( std::string name ) const;
         Program * getProgram( std::string name ) const;
         VAO * getVAO( std::string name) const;
+        unsigned int getNextId() { return next_id_++; }
+
         RubixCube * get_rubix_cube() {return rubix_cube_;}
 
     private:
@@ -42,6 +44,7 @@ class Sc3d : public ScVector
         std::unordered_map<std::string, Program *> programs_;
         std::unordered_map<std::string, VAO *> vaos_;
         RubixCube * rubix_cube_;
+        unsigned int next_id_;
 
         void addTexture(std::string name);
         void addProgram(std::string name, GLenum mode = GL_TRIANGLES);

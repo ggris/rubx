@@ -18,14 +18,13 @@ ScMesh::ScMesh(Sc3d * scene,
                 const std::string & vao_name,
 				const std::string & program_name,
 				const std::string & texture_name,
-                unsigned int id,
                 Sc3dNode * parent) :
     Sc3dNode( parent, scene ),
     vao_( scene->getVAO( vao_name ) ),
     program_( scene->getProgram( program_name ) ),
     texture_( scene->getTexture( texture_name ) ),
     pickingProgram_( scene->getProgram( "picking" ) ),
-	id_(id)
+	id_(scene->getNextId())
 {
 }
 

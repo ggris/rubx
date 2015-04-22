@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "mesh_generator.hpp"
 #include "rubix_cube.hpp"
 
 #include "lamp.hpp"
@@ -9,7 +8,8 @@
 #include "sc_3d.hpp"
 
 Sc3d::Sc3d(GLFWwindow * window) :
-    window_(window)
+    window_(window),
+    next_id_(0)
 {
     initTextures();
     initPrograms();
