@@ -25,7 +25,7 @@ class SmallCube : public Sc3dNode
 
         void resetTransform();
     private:
-
+        glm::imat4 initial_transform_;
         ScMesh * mesh_;
 
         //animation
