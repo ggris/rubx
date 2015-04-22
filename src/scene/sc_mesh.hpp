@@ -18,6 +18,7 @@ class ScMesh : public Sc3dNode
 				const std::string & program_name,
                 const std::string & texture_name,
                 const std::string & normal_map_name,
+                const std::string & bump_map_name,
                 Sc3dNode * parent = nullptr);
 
         void display();
@@ -30,6 +31,7 @@ class ScMesh : public Sc3dNode
         Program * program_;
         Texture * texture_;
         Texture * normal_map_;
+        Texture * bump_map_;
         Program * pickingProgram_;
 		unsigned int id_;
 

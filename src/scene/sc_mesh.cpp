@@ -19,6 +19,7 @@ ScMesh::ScMesh(Sc3d * scene,
 				const std::string & program_name,
 				const std::string & texture_name,
                 const std::string & normal_map_name,
+                const std::string & bump_map_name,
                 Sc3dNode * parent) :
     Sc3dNode( parent, scene ),
     vao_( scene->getVAO( vao_name ) ),
@@ -41,6 +42,7 @@ void ScMesh::display()
     GLuint transformationMatrixUnif = program_->getUniformLocation( "transformation_matrix" );
     GLuint textureSamplerUniform = program_->getUniformLocation( "texture_Sampler" );
     GLuint normalMapSamplerUniform = program_->getUniformLocation( "normalmap_Sampler" );
+    GLuint bumpMapSamplerUniform = program_->getUniformLocation( "bumpmap_Sampler" );
     // Get camera projection matrix
 
     glm::mat4 projection = getScene()->getCamera()->getProjectionMat();
@@ -55,7 +57,7 @@ void ScMesh::display()
     
     texture_->bindToSampler(textureSamplerUniform);
     normal_map_->bindToSampler(normalMapSamplerUniform, 1);
-    
+    normal_map_->bindToSampler(bumpMapSamplerUniform, 2);
     //set Lamps
     setLamps();
 

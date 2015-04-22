@@ -3,6 +3,7 @@
 layout(triangles, equal_spacing, ccw) in;
 
 uniform mat4 projection_matrix;
+uniform sampler2D bumpmap_Sampler;
 
 in vec3 position_es_in[];
 in vec3 normal_es_in[];
@@ -30,7 +31,9 @@ void main()
     normal_fs_in = normalize(normal_fs_in);
     uv_fs_in = interpolate2D(uv_es_in[0], uv_es_in[1], uv_es_in[2]);
 
-    float displacement = sin( position_fs_in.x * 10.0f  ) * 0.0;
+    vec3 bump =texture(bumpmap_Sampler, uv_fs_in).rgb;
+    float displacement = (bump[0]+bump[1]+bump[2]) * 0.0;
+
     position_fs_in += normal_fs_in * displacement;
 
     gl_Position = projection_matrix * vec4(position_fs_in, 1.0);
