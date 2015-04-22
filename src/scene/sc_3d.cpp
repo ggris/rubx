@@ -14,30 +14,56 @@ Sc3d::Sc3d(GLFWwindow * window) :
     initTextures();
     initPrograms();
     initVAOs();
+    initLamps();
+
     camera_= new Camera(1.0f, 1.0f, 0.1f, 30.0f);
     camera_->setScene(this);
-    addLamp(glm::vec3(0.0,10.0,10.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
-    addLamp(glm::vec3(20.0,1.0,5.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
-    addLamp(glm::vec3(-20.0,1.0,5.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
 
     rubix_cube_ =  new RubixCube(nullptr,this);
     push_back(rubix_cube_);
-    push_back(MeshGenerator::tableSurface(nullptr,this));
+}
+
+void Sc3d::addTexture(std::string name)
+{
+    textures_.insert( {name, new Texture( "data/img/" + name + ".bmp" )} );
+}
+
+void Sc3d::addProgram(std::string name, GLenum mode)
+{
+    programs_.insert( {name, new Program( mode, name ) } );
+}
+
+void Sc3d::addVAO(std::string name)
+{
+    vaos_.insert( {name, new VAO( "data/mesh/" + name + ".obj" )} );
 }
 
 void Sc3d::initTextures()
 {
-    textures_.insert( {"default", new Texture("data/img/default.bmp")} );
-    textures_.insert( {"small_cube", new Texture("data/img/small_cube.bmp")} );
+    addTexture( "default" );
+    addTexture( "small_cube" );
 }
 
 void Sc3d::initPrograms()
 {
-    programs_.insert( {"lighting", new Program(GL_PATCHES, "lighting")} );
+    addProgram( "lighting", GL_PATCHES );
+    addProgram( "picking" );
+
+    programs_.insert( {"default", programs_.at( "lighting" )} );
 }
 
 void Sc3d::initVAOs()
 {
+    addVAO( "cube" );
+
+    vaos_.insert( {"default", vaos_.at( "cube" )} );
+}
+
+void Sc3d::initLamps()
+{
+    addLamp(glm::vec3(0.0,10.0,10.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
+    addLamp(glm::vec3(20.0,1.0,5.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
+    addLamp(glm::vec3(-20.0,1.0,5.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
 }
 
 void Sc3d::display()
@@ -80,11 +106,32 @@ void Sc3d::addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 colo
     addLamp(new Lamp( position,rot_y,rot_loc_x,color));
 }
 
-Texture * Sc3d::getTexture(std::string objectID){
+Texture * Sc3d::getTexture( std::string name ) const
+{
     try{
-        return textures_.at(objectID);
+        return textures_.at( name );
     }
     catch(std::out_of_range e){ //if ID unknow, return default texture
-        return textures_.at("default");
+        return textures_.at( "default" );
+    }
+}
+
+Program * Sc3d::getProgram( std::string name ) const
+{
+    try{
+        return programs_.at( name );
+    }
+    catch(std::out_of_range e){ //if ID unknow, return default program
+        return programs_.at( "default" );
+    }
+}
+
+VAO * Sc3d::getVAO( std::string name ) const
+{
+    try{
+        return vaos_.at( name );
+    }
+    catch(std::out_of_range e){ //if ID unknow, return default texture
+        return vaos_.at( "default" );
     }
 }

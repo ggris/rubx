@@ -15,39 +15,18 @@
 #include "sc_mesh.hpp"
 
 ScMesh::ScMesh(Sc3d * scene,
-                VAO * vao,
-				Texture * texture,
-				unsigned int id,
+                const std::string & vao_name,
+				const std::string & program_name,
+				const std::string & texture_name,
+                unsigned int id,
                 Sc3dNode * parent) :
-    Sc3dNode(parent,scene),
-    program_(new Program(GL_PATCHES)),
-    pickingProgram_(new Program(GL_TRIANGLES)),
-    vao_(vao),
-	texture_(texture),
+    Sc3dNode( parent, scene ),
+    vao_( scene->getVAO( vao_name ) ),
+    program_( scene->getProgram( program_name ) ),
+    texture_( scene->getTexture( texture_name ) ),
+    pickingProgram_( scene->getProgram( "picking" ) ),
 	id_(id)
 {
-//    transformation_ = translate (transformation_, glm::vec3(-0.5f, -0.5f, -0.5f));
-
-    // Creating programs
-
-    program_->emplace_back("lighting.vs", GL_VERTEX_SHADER);
-    program_->emplace_back("lighting.cs", GL_TESS_CONTROL_SHADER);
-    program_->emplace_back("lighting.es", GL_TESS_EVALUATION_SHADER);
-    program_->emplace_back("lighting.fs", GL_FRAGMENT_SHADER);
-
-    program_->link();
-
-    program_->clearShaders();
-
-	//picking program
-	
-    pickingProgram_->emplace_back("picking.vert", GL_VERTEX_SHADER);
-	pickingProgram_->emplace_back("picking.frag", GL_FRAGMENT_SHADER);
-
-	pickingProgram_->link();
-
-	pickingProgram_->clearShaders();
-
 }
 
 void ScMesh::display()

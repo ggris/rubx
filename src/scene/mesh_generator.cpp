@@ -4,6 +4,7 @@
 
 unsigned int MeshGenerator::uniqueObjectId = 0;
 
+/*
 ScMesh * MeshGenerator::testCube(Sc3dNode * parent, Sc3d * scene)
 {
     std::vector<float> points = {
@@ -63,7 +64,7 @@ ScMesh * MeshGenerator::testCube(Sc3dNode * parent, Sc3d * scene)
     return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("testCube"), uniqueObjectId, parent);
 
 }
-
+*/
 ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent,Sc3d * scene)
 {
     std::vector<float> points = {
@@ -219,10 +220,11 @@ ScMesh * MeshGenerator::rubixSmallCube(Sc3dNode * parent,Sc3d * scene)
 	uniqueObjectId++;
 
     //return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("rubixSmallCube"), uniqueObjectId, parent);
-    return new ScMesh(scene, new VAO("data/mesh/cube.obj"), scene->getTexture("small_cube"), uniqueObjectId, parent);
+    return new ScMesh(scene, "cube" , "lighting", "small_cube", uniqueObjectId, parent);
 
 }
 
+/*
 ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent,Sc3d * scene)
 {
     std::vector<float> points = {
@@ -251,4 +253,4 @@ ScMesh * MeshGenerator::tableSurface(Sc3dNode* parent,Sc3d * scene)
 
     return new ScMesh(scene, new VAO(points, normals, tex_coord, index), scene->getTexture("tableSurface"), uniqueObjectId, parent);
 }
-
+*/
