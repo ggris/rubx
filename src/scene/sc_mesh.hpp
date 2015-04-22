@@ -14,8 +14,9 @@ class ScMesh : public Sc3dNode
 {
     public:
         ScMesh(Sc3d * scene,
-                VAO * vao,
-				Texture * texture,
+                const std::string & vao_name,
+				const std::string & program_name,
+                const std::string & texture_name,
 				unsigned int id,
                 Sc3dNode * parent = nullptr);
 
@@ -25,11 +26,11 @@ class ScMesh : public Sc3dNode
 		unsigned int getId() const;
 
     private:
-        Program * program_;
-		Program * pickingProgram_;
         VAO * vao_;
+        Program * program_;
         Texture * texture_;
 
+        Program * pickingProgram_;
 		unsigned int id_;
 
 		void setLamps();
