@@ -53,6 +53,7 @@ class Sc3d : public ScVector
 		void addLamp(Lamp * lamp);
 		void addLamp();
 		void addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color);
+		void addLamp(glm::vec3 position,glm::vec3 object_position,glm::vec4 color);
         void initTextures();
         void initPrograms();
         void initVAOs();

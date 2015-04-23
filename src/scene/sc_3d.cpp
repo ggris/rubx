@@ -72,11 +72,12 @@ void Sc3d::initVAOs()
 
 void Sc3d::initLamps()
 {   //getting rubicks cube position for lamp orientation
+    glm::vec3 rubix_position (0.0,0.0,-10);
+    addLamp(glm::vec3(0.0,20.0,20.0),rubix_position,glm::vec4(1.0,1.0,1.0,1.0));
 
-    addLamp(glm::vec3(0.0,20.0,20.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
-    addLamp(glm::vec3(20.0,1.0,10.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
-    addLamp(glm::vec3(-20.0,1.0,10.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
-    addLamp(glm::vec3(-2.0,1.0,40.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
+    //addLamp(glm::vec3(20.0,1.0,10.0),rubix_position,glm::vec4(1.0,0.7,0.5,1.0));
+    //addLamp(glm::vec3(-20.0,1.0,10.0),rubix_position,glm::vec4(0.5,0.5,1.0,1.0));
+    //addLamp(glm::vec3(-2.0,1.0,40.0),rubix_position,glm::vec4(1.0,1.0,1.0,1.0));
     //addLamp(glm::vec3(-5.0,-20.0,-10.0),10.0,10.0,glm::vec4(0.3,0.3,0.3,1.0));
 }
 
@@ -128,6 +129,11 @@ void Sc3d::addLamp()
 void Sc3d::addLamp(glm::vec3 position,float rot_y,float rot_loc_x,glm::vec4 color)
 {
     addLamp(new Lamp( position,rot_y,rot_loc_x,color));
+}
+
+void Sc3d::addLamp(glm::vec3 position,glm::vec3 object_position,glm::vec4 color)
+{
+    addLamp(new Lamp( position,object_position,color));
 }
 
 Texture * Sc3d::getTexture( std::string name ) const

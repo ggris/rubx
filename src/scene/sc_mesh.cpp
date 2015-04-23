@@ -71,7 +71,7 @@ void ScMesh::setLamps()
                         0.5, 0.5, 0.5, 1.0
                 );
         glm::mat4 lamp_transformation = lamps[i]->getTransformation();
-        glm::mat4 lamp_view_mat = bias_matrix*lamps[i]->getProjectionMat()*glm::inverse(lamp_transformation)*camera_transf;
+        glm::mat4 lamp_view_mat = bias_matrix*lamps[i]->getProjectionMat()*lamps[i]->getViewMatrix()*camera_transf;
 
 
         //getting uniforms

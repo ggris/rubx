@@ -56,7 +56,7 @@ vec4 applyLamp(int i, vec4 diffuseColor, vec4 normal, vec4 position, vec4 toCame
     vec4 shadow_coord = lamp.view_matrix*vec4(position_fs_in,1.0);
     float visibility=1.0;
     if ( texture( shadowmaps[i], shadow_coord.xy ).z  <  shadow_coord.z){
-        visibility=0.5;
+        visibility=1.0;
     }
     float attenuation=visibility;
     float dist= length(toLamp);
