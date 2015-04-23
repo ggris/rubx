@@ -95,6 +95,18 @@ void Game::update()
 	}
 }
 
+void Game::setPickingDisplay()
+{
+	colorPickingMode = !colorPickingMode;
+
+	std::vector<SmallCube*> smallCubes = cube_->getCubes();
+
+	for (unsigned int i = 0; i < smallCubes.size(); i++)
+	{
+		smallCubes[i]->getMesh()->setPickingDisplay(colorPickingMode);
+	}
+}
+
 void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId, int selectedFace)
 {
 	if (timerRandomMoves == 0)

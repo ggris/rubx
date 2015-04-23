@@ -36,8 +36,18 @@ ScMesh::ScMesh(Sc3d * scene,
 
 void ScMesh::display()
 {
-    display(SHADOWMAP);
-    display(RENDER_IMAGE);
+	if (!color_picking_mode_)
+	{
+		display(SHADOWMAP);
+		display(RENDER_IMAGE);
+	}
+	else
+		display(PICKING);
+}
+
+void ScMesh::setPickingDisplay(bool color_picking_mode)
+{
+	color_picking_mode_ = color_picking_mode;
 }
 
 void ScMesh::setLamps()
