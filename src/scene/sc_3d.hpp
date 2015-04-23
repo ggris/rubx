@@ -13,6 +13,7 @@
 
 #include "scene_graph.hpp"
 #include "texture.hpp"
+#include "shadowmap.hpp"
 
 class RubixCube;
 class Camera;
@@ -29,6 +30,7 @@ class Sc3d : public ScVector
 		Texture * getTexture( std::string name ) const;
         Program * getProgram( std::string name ) const;
         VAO * getVAO( std::string name) const;
+        ShadowMap * getShadowmap(int i);
         unsigned int getNextId() { return next_id_++; }
 
         RubixCube * get_rubix_cube() {return rubix_cube_;}
@@ -37,6 +39,7 @@ class Sc3d : public ScVector
         GLFWwindow * window_;
         Camera * camera_;
         std::vector<Lamp *> lamps_;
+        std::vector<ShadowMap *> shadowmaps_;
         std::unordered_map<std::string, Texture *> textures_;
         std::unordered_map<std::string, Program *> programs_;
         std::unordered_map<std::string, VAO *> vaos_;
@@ -44,6 +47,7 @@ class Sc3d : public ScVector
         unsigned int next_id_;
 
         void addTexture(std::string name);
+        void addShadowmap();
         void addProgram(std::string name, GLenum mode = GL_TRIANGLES);
         void addVAO(std::string name);
 		void addLamp(Lamp * lamp);

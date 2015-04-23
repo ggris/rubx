@@ -11,6 +11,7 @@
 #include "lamp.hpp"
 #include "camera.hpp"
 #include "sc_3d.hpp"
+#include "shadowmap.hpp"
 
 #include "sc_mesh.hpp"
 
@@ -167,27 +168,9 @@ void ScMesh::display(DisplayMode display_mode)
         //render shadowmaps for all lamps
         for(unsigned int i=0; i<lamps.size(); i++)
         {
-            //creating framebuffer to store texture
-            GLuint framebuffer_name = 0;
-            glGenFramebuffers(1, &framebuffer_name);
-            glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_name);
+            ShadowMap * shadowmap = scene_->getShadowmap(i);
 
-            //get shadowmap texture corresponding to lamp
-            GLuint depth_texture = scene_->getTexture("shadow_map"+i)->getTexture();
-
-            glBindTexture(GL_TEXTURE_2D, depth_texture);
-            glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-            glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depth_texture, 0);
-
-            glDrawBuffer(GL_NONE); // No color buffer is drawn to.
-
-            // Always check that our framebuffer is ok
-            if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+            if (!shadowmap->bind()){
                 LOG_ERROR<<"Computing shadowmap lamp number "<<i<<" : framebuffer error";
             }
 
