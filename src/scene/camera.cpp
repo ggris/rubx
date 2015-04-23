@@ -8,7 +8,7 @@
 
 Camera::Camera() :
     Sc3dNode(),
-    fov_(30.0f),
+    fov_(1.0f),
     ratio_(1.0f),
     z_near_(0.1f),
     z_far_(30.0f),
