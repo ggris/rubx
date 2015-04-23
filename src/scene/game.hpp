@@ -39,7 +39,12 @@ class Game
 
 		std::string getUser() const;
         Sc3d * sc3d_;
+
+		void setPickingDisplay();
+
     private:
+		bool colorPickingMode = false;
+
 		bool gameIsWon;
 		std::string userName_;
 		RubixCube * cube_;

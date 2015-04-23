@@ -26,6 +26,8 @@ class ScMesh : public Sc3dNode
 
 		unsigned int getId() const;
 
+		void setPickingDisplay(bool color_picking_mode);
+
     private:
         VAO * vao_;
         Program * program_;
@@ -36,6 +38,8 @@ class ScMesh : public Sc3dNode
         Texture * bump_map_;
         Program * pickingProgram_;
 		unsigned int id_;
+
+		bool color_picking_mode_ = false;
 
 		void setLamps();
 };

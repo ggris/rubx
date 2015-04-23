@@ -298,6 +298,10 @@ void UI::gameKeyPress(int key, int keyAction)
 		fps = 0;
 		showFps = !showFps;
 	}
+	else if (key == GLFW_KEY_C && keyAction == GLFW_PRESS)
+	{
+		game_->setPickingDisplay();
+	}
 }
 
 bool UI::getQuit()
