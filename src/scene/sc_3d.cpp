@@ -58,6 +58,7 @@ void Sc3d::initPrograms()
     addProgram( "lighting", GL_PATCHES );
     addProgram( "picking" );
     addProgram("shadowmap");
+    addProgram( "blur" );
 
     programs_.insert( {"default", programs_.at( "lighting" )} );
 }

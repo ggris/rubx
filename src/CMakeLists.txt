@@ -1,4 +1,4 @@
-#add_subdirectory(util)
+add_subdirectory(util)
 add_subdirectory(glUtil)
 add_subdirectory(scene)
 
@@ -28,7 +28,7 @@ target_link_libraries(rubx
     glfw
     ${GLFW_LIBRARIES}
     ${GLEW}
-    #    rubx_util
+    rubx_util
     rubx_glUtil
     rubx_scene
     )

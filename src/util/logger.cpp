@@ -1,24 +1,23 @@
 #include "logger.hpp"
 #include <sstream>
-
-Log& operator<<(Log &log, const std::string &val)
+/*
+Logger& operator<<(Logger &logger, const std::string &val)
 {
-    log.content_ << val ;
-    return log;
-}
-
-Log& operator<<(Log &log, const int &val)
-{
-    log.content_ << val ;
-    return log;
-}
-
-Logger& operator<<(Logger &logger, const Log &log)
-{
-    std::cout << log.content_ << std::endl;
+    logger.ss_ << val;
     return logger;
 }
 
+Logger& operator<<(Logger &logger, const int &val)
+{
+    logger.ss_ << val;
+    return logger;
+}
+*/
+
+void operator+=(Logger logger, const std::ostream &log)
+{
+    std::cerr << std::endl;
+}
 
 /*
 
