@@ -86,11 +86,13 @@ void SmallCube::display()
 
     float t = (glfwGetTime()-animation_start_)/animation_length_;
 
-    if(is_animate_ && t>1){
+    if ( is_animate_ && t>1 )
+    {
         is_animate_=false;
     }
-    if (is_animate_){
 
+    if ( is_animate_ )
+    {
         transformation_ =  computeRotation(axis_rotation_,direct_rotation_,t) * last_transform_;
     }
     else {
@@ -98,6 +100,7 @@ void SmallCube::display()
         transformation_ =  transform_;
         transformation_ = transformation_;
     }
+
     scaleTranslation(transformation_,2.0f);
     mesh_->display();
 }

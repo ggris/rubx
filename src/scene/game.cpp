@@ -99,7 +99,7 @@ void Game::receiveLeftMouseDrag(glm::vec2 direction, unsigned int selectedId, in
 {
 	if (timerRandomMoves == 0)
 	{
-		cube_->rotate(direction, selectedId, selectedFace, 0.5f);
+		cube_->rotate(direction, selectedId, selectedFace, 0.2f);
 
 		gameIsWon = cube_->isWon();
 
