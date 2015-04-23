@@ -21,8 +21,8 @@ RubixCube::RubixCube(Sc3dNode * parent,Sc3d * scene) :
 
 void RubixCube::reset()
 {
-for (int i=0; i<cubes_.size();i++)
-    cubes_[i]->resetTransform();
+    for (int i=0; i<cubes_.size();i++)
+        cubes_[i]->resetTransform();
 }
 
 
@@ -129,13 +129,13 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
             selectedCube=cubes_[i];
     }
     glm::ivec4 normal = selectedCube->getNormal(selectedFace);
-    
+
     //projections espace camera
     glm::vec2 x(getTransformation()*glm::vec4(1,0,0,1));
     glm::vec2 y(getTransformation()*glm::vec4(0,1,0,1));
     glm::vec2 z(getTransformation()*glm::vec4(0,0,1,1));
     glm::vec2 n(getTransformation()*normal);
-    
+
     //what direction are we going ? store it in the vec3 move
     float scalarProducts [6];
     scalarProducts[0] = glm::dot(direction, x);
@@ -178,11 +178,11 @@ void RubixCube::rotate(glm::vec2 direction, unsigned int id, int selectedFace, f
     }
     //the axis of the rotation (as a vec3)
     glm::vec3 axis =glm::cross((glm::vec3)normal,move);
-    
+
     int ax =getAxisId(axis);
     int dir = getDirId(axis);
     int crown = selectedCube->transform_[3][ax];
-    
+
     //LOG_DEBUG << ax << "  " << dir << "  " << crown;
     rotate(ax,crown,dir,speed);
 }

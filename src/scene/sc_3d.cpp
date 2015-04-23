@@ -23,6 +23,7 @@ Sc3d::Sc3d(GLFWwindow * window) :
 
     rubix_cube_ =  new RubixCube(nullptr,this);
     push_back(rubix_cube_);
+//    push_back( new ScMesh( this, "floor", "lighting") );
 }
 
 void Sc3d::addTexture(std::string name)
@@ -63,6 +64,7 @@ void Sc3d::initPrograms()
 void Sc3d::initVAOs()
 {
     addVAO( "cube" );
+    addVAO( "floor" );
 
     vaos_.insert( {"default", vaos_.at( "cube" )} );
 }

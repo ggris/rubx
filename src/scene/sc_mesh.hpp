@@ -14,11 +14,11 @@ class ScMesh : public Sc3dNode
 {
     public:
         ScMesh(Sc3d * scene,
-                const std::string & vao_name,
-				const std::string & program_name,
-                const std::string & texture_name,
-                const std::string & normal_map_name,
-                const std::string & bump_map_name,
+                const std::string & vao_name = "default",
+				const std::string & program_name = "default",
+                const std::string & texture_name = "default",
+                const std::string & normal_map_name = "default",
+                const std::string & bump_map_name = "default",
                 Sc3dNode * parent = nullptr);
 
         void display();

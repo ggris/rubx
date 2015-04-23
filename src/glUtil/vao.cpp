@@ -70,7 +70,7 @@ GLuint VAO::genVAO(const std::vector<float> &points,
 
 GLuint VAO::genVAO(const std::string & filename)
 {
-    LOG_TRACE << "reading : " << filename;
+    LOG_TRACE << "VAO : " << filename;
     std::vector<float> obj_points;
     std::vector<float> obj_normals;
     std::vector<float> obj_uv;
@@ -83,6 +83,9 @@ GLuint VAO::genVAO(const std::string & filename)
     std::vector<unsigned short> index;
 
     std::ifstream infile(filename.c_str());
+
+    assert(infile.is_open());
+
     std::string line;
     while (std::getline(infile, line))
     {
@@ -162,8 +165,6 @@ GLuint VAO::genVAO(const std::string & filename)
             }
         }
     }
-
-    LOG_TRACE << filename << " ==> done";
 
     length_ = index.size();
     return genVAO(points, normals, uv, index);

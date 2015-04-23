@@ -1,6 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <cassert>
 
 #include "util/logger.hpp"
 
@@ -22,7 +23,7 @@ void Shader::sourceShader() const
 {
     std::ifstream source_ifs(m_filename, std::ifstream::in);
 
-    LOG_DEBUG << "File " <<  m_filename << " is open : " << source_ifs.is_open();
+    assert (source_ifs.is_open());
 
     std::stringstream source_ss;
     source_ss << source_ifs.rdbuf();
@@ -52,7 +53,7 @@ void Shader::compileStatus() const {
 
 void Shader::createShader() const
 {
-    LOG_TRACE << "Creating shader : " << m_filename;
+    LOG_TRACE << "Shader : " << m_filename;
 
     sourceShader();
     glCompileShader(m_shader);
