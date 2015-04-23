@@ -11,9 +11,10 @@ class Texture
         Texture();
         Texture(const std::string &filename);
         GLuint getTexture() const {return texture_;}
-        void bindToSampler(GLuint textureSampler, GLuint textureUnitIndex=0);
+        void bindToSampler(GLuint textureSampler);
         static void bindTextureToSampler(GLuint texture,GLuint textureSampler,GLuint textureUnitIndex=0);
         static void bindTexturesToSamplers(GLsizei numTextures, GLuint * textures, GLuint * textureSamplers,GLuint first=0);
+        static void resetTextureUnitIndex(){TEXTURE_UNIT_INDEX=0;}
 
     protected:
         const std::string filename_;
@@ -21,6 +22,7 @@ class Texture
 		GLuint createTexture();
 
 	private:
+        static GLuint TEXTURE_UNIT_INDEX;
 		void loadTexture();
 
 };

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+GLuint Texture::TEXTURE_UNIT_INDEX=0;
+
 Texture::Texture():
     filename_(""),
     texture_(createTexture())
@@ -70,20 +72,21 @@ void Texture::loadTexture()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glGenerateMipmap(GL_TEXTURE_2D);
 }
-///Binding the texture and textureSampler to texture unit textureUnitIndex (default value : 0)
-void Texture::bindToSampler(GLuint textureSampler,GLuint textureUnitIndex)
+///Binding the texture and textureSampler
+void Texture::bindToSampler(GLuint textureSampler)
 {
-    glActiveTexture(GL_TEXTURE0+textureUnitIndex);
+    glActiveTexture(GL_TEXTURE0+TEXTURE_UNIT_INDEX);
     glBindTexture(GL_TEXTURE_2D,texture_);
-    glUniform1i(textureSampler,textureUnitIndex);
+    glUniform1i(textureSampler,TEXTURE_UNIT_INDEX);
+    TEXTURE_UNIT_INDEX ++;
 }
 
 ///static version of bindToSampler
 void Texture::bindTextureToSampler(GLuint texture, GLuint textureSampler, GLuint textureUnitIndex)
 {
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0 +textureUnitIndex);
     glBindTexture(GL_TEXTURE_2D,texture);
-    glUniform1i(textureSampler,0);
+    glUniform1i(textureSampler,textureUnitIndex);
 }
 
 ///Binding several textures at once, starting from texture unit first (default value : 0)

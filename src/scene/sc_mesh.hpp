@@ -23,7 +23,6 @@ class ScMesh : public Sc3dNode
 
         void display();
         void display(DisplayMode display_mode);
-		void displayWithPickingColour(glm::vec3 colour);
 
 		unsigned int getId() const;
 

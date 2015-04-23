@@ -28,6 +28,7 @@ ScMesh::ScMesh(Sc3d * scene,
     texture_( scene->getTexture( texture_name ) ),
     normal_map_( scene->getTexture( normal_map_name ) ),
     pickingProgram_( scene->getProgram( "picking" ) ),
+    shadowmap_program_(scene->getProgram("shadowmap")),
 	id_(scene->getNextId())
 {
 
@@ -35,6 +36,7 @@ ScMesh::ScMesh(Sc3d * scene,
 
 void ScMesh::display()
 {
+    display(SHADOWMAP);
     display(RENDER_IMAGE);
 }
 
@@ -42,7 +44,7 @@ void ScMesh::setLamps()
 {
 
     std::vector<Lamp*> lamps = scene_->getLamps();
-    glm::mat4 camera_transf = glm::inverse(scene_->getCamera()->getTransformation());
+    glm::mat4 camera_transf = scene_->getCamera()->getTransformation();
     //set number of lamps
     GLuint nblamps = program_->getUniformLocation( "numLamps" );
     glUniform1i(nblamps,lamps.size());
@@ -50,27 +52,45 @@ void ScMesh::setLamps()
     //set lamp array
     for (unsigned int i=0; i<lamps.size(); i++)
     {
-
-        std::ostringstream sstransformation,sscolor;
+        //computing uniform names
+        std::ostringstream sstransformation,sscolor,ssviewmatrix,ssshadowmap;
         sstransformation << "allLamps[" << i << "].transformation";
         sscolor << "allLamps[" << i << "].color";
+        ssviewmatrix<<"allLamps[" << i << "].view_matrix";
+        ssshadowmap<<"shadowmaps["<<i<<"]";
         std::string transformationUnifName = sstransformation.str();
         std::string colorUnifName = sscolor.str();
+        std::string viewmatName = ssviewmatrix.str();
+        std::string shadowmapName = ssshadowmap.str();
 
+        //matrices
+        glm::mat4 bias_matrix(
+                        0.5, 0.0, 0.0, 0.0,
+                        0.0, 0.5, 0.0, 0.0,
+                        0.0, 0.0, 0.5, 0.0,
+                        0.5, 0.5, 0.5, 1.0
+                );
+        glm::mat4 lamp_transformation = lamps[i]->getTransformation();
+        glm::mat4 lamp_view_mat = bias_matrix*lamps[i]->getProjectionMat()*glm::inverse(lamp_transformation)*camera_transf;
+
+
+        //getting uniforms
         GLuint transformUniform = program_->getUniformLocation( transformationUnifName );
         GLuint colorUniform = program_->getUniformLocation( colorUnifName );
+        GLuint viewmatuniform = program_->getUniformLocation(viewmatName);
+        GLuint shadowmapUniform = program_->getUniformLocation(shadowmapName);
 
-        glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(camera_transf*lamps[i]->getTransformation()));
+        //bind shadowmap
+        scene_->getShadowmap(i)->bindToSampler(shadowmapUniform);
+
+        //setting uniforms
+        glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(glm::inverse(camera_transf)*lamp_transformation));
+        glUniformMatrix4fv(viewmatuniform , 1, GL_FALSE, glm::value_ptr(lamp_view_mat));
         glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
 
     }
 
 
-}
-
-void ScMesh::displayWithPickingColour(glm::vec3 colour)
-{
-    display(PICKING);
 }
 
 unsigned int ScMesh::getId() const
@@ -107,13 +127,14 @@ void ScMesh::display(DisplayMode display_mode)
         glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
 
         texture_->bindToSampler(textureSamplerUniform);
-        normal_map_->bindToSampler(normalMapSamplerUniform, 1);
-        normal_map_->bindToSampler(bumpMapSamplerUniform, 2);
+        normal_map_->bindToSampler(normalMapSamplerUniform);
+        normal_map_->bindToSampler(bumpMapSamplerUniform);
         //set Lamps
         setLamps();
 
         vao_->bindAndDraw(program_->get_mode());
 
+        Texture::resetTextureUnitIndex();
         glUseProgram(0);
         break;
     }
@@ -165,6 +186,7 @@ void ScMesh::display(DisplayMode display_mode)
         shadowmap_program_->use();
         //getting lamps
         std::vector<Lamp*> lamps = scene_->getLamps();
+
         //render shadowmaps for all lamps
         for(unsigned int i=0; i<lamps.size(); i++)
         {
@@ -173,27 +195,29 @@ void ScMesh::display(DisplayMode display_mode)
             if (!shadowmap->bind()){
                 LOG_ERROR<<"Computing shadowmap lamp number "<<i<<" : framebuffer error";
             }
+            else{
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                //get program uniforms
+                GLuint projectionMatrixUnif = shadowmap_program_->getUniformLocation( "projection_matrix" );
+                GLuint transformationMatrixUnif = shadowmap_program_->getUniformLocation( "transformation_matrix" );
 
-            //get program uniforms
-            GLuint projectionMatrixUnif = shadowmap_program_->getUniformLocation( "projection_matrix" );
-            GLuint transformationMatrixUnif = shadowmap_program_->getUniformLocation( "transformation_matrix" );
+                // Get lamp projection matrix
 
-            // Get lamp projection matrix
+                glm::mat4 projection = lamps[i]->getProjectionMat();
 
-            glm::mat4 projection = lamps[i]->getProjectionMat();
+                // Get transformation matrix
 
-            // Get transformation matrix
+                glm::mat4 transformation = glm::inverse(lamps[i]->getTransformation())*getTransformation();
 
-            glm::mat4 transformation = glm::inverse(lamps[i]->getTransformation())*getTransformation();
+                // Define uniform values
+                glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
+                glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
 
-            // Define uniform values
-            glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
-            glUniformMatrix4fv(transformationMatrixUnif, 1, GL_FALSE, glm::value_ptr(transformation));
-
-            //drawing scene
-            vao_->bindAndDraw(shadowmap_program_->get_mode());
+                //drawing scene
+                vao_->bindAndDraw(shadowmap_program_->get_mode());
+            }
         }
-
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         glUseProgram(0);
         break;

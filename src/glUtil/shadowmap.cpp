@@ -33,6 +33,8 @@ bool ShadowMap::bind()
     {
         return false;
     }
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_);
 
     return true;
 }

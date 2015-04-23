@@ -23,7 +23,7 @@ Sc3d::Sc3d(GLFWwindow * window) :
 
     rubix_cube_ =  new RubixCube(nullptr,this);
     push_back(rubix_cube_);
-//    push_back( new ScMesh( this, "floor", "lighting") );
+    push_back( new ScMesh( this, "floor", "lighting") );
 }
 
 void Sc3d::addTexture(std::string name)
@@ -57,6 +57,7 @@ void Sc3d::initPrograms()
 {
     addProgram( "lighting", GL_PATCHES );
     addProgram( "picking" );
+    addProgram("shadowmap");
 
     programs_.insert( {"default", programs_.at( "lighting" )} );
 }
@@ -70,7 +71,8 @@ void Sc3d::initVAOs()
 }
 
 void Sc3d::initLamps()
-{
+{   //getting rubicks cube position for lamp orientation
+
     addLamp(glm::vec3(0.0,20.0,20.0),10.0,10.0,glm::vec4(1.0,1.0,1.0,1.0));
     addLamp(glm::vec3(20.0,1.0,10.0),10.0,10.0,glm::vec4(1.0,0.7,0.5,1.0));
     addLamp(glm::vec3(-20.0,1.0,10.0),10.0,10.0,glm::vec4(0.5,0.5,1.0,1.0));
@@ -84,9 +86,6 @@ void Sc3d::display()
 
     glfwGetFramebufferSize(window_, &width, &height);
     camera_->set_ratio(width / (float) height);
-
-    //computing shadowmaps
-    ScVector::display(SHADOWMAP);
 
     //rendenring scene
     ScVector::display();
@@ -109,6 +108,10 @@ std::vector <Lamp *> Sc3d::getLamps()
 void Sc3d::addLamp(Lamp * lamp)
 {
     if(lamps_.size()<=20){ // Dirty hack to accomodate GLSL fixed-length arrays
+        int width, height;
+
+        glfwGetFramebufferSize(window_, &width, &height);
+        lamp->set_ratio(width / (float) height);
         lamps_.push_back(lamp);
         addShadowmap();
     }

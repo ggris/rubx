@@ -10,9 +10,11 @@ uniform sampler2D normalmap_Sampler;
 uniform int numLamps; //actual number of lights used
 struct Lamp{
     mat4 transformation;
+    mat4 view_matrix;
     vec4 color;
 };
 uniform Lamp allLamps[MAX_NB_LAMPS];
+uniform sampler2D shadowmaps[MAX_NB_LAMPS];
 
 out vec4 fragColor;
 
@@ -48,12 +50,18 @@ float GGX(vec4 n, vec4 l, vec4 v ,float alpha){
     return 0.0;
 }
 
-vec4 applyLamp(Lamp lamp, vec4 diffuseColor, vec4 normal, vec4 position, vec4 toCamera){
+vec4 applyLamp(int i, vec4 diffuseColor, vec4 normal, vec4 position, vec4 toCamera){
+    Lamp lamp = allLamps[i];
     vec4 toLamp = lamp.transformation[3]-position;
-    float attenuation=1.0;
+    vec4 shadow_coord = lamp.view_matrix*vec4(position_fs_in,1.0);
+    float visibility=1.0;
+    if ( texture( shadowmaps[i], shadow_coord.xy ).z  <  shadow_coord.z){
+        visibility=0.5;
+    }
+    float attenuation=visibility;
     float dist= length(toLamp);
     toLamp = normalize(toLamp);
-    attenuation = 1.0/(1.0+0.001*pow(dist,2));
+    attenuation /=(1.0+0.001*pow(dist,2));
 
     float alpha = 0.15;
 
@@ -70,7 +78,7 @@ void main()
 
     normal = normalize(normal + 0.2 *n);
     for(int i=0;i<numLamps;i++){ //loop over all lights
-        totalColor+= applyLamp(allLamps[i], diffuseColor, normal, vec4(position_fs_in, 1.0), camera);
+        totalColor+= applyLamp(i, diffuseColor, normal, vec4(position_fs_in, 1.0), camera);
     }
     fragColor = totalColor;
 }
