@@ -38,7 +38,7 @@ void ScMesh::display()
 {
 	if (!color_picking_mode_)
 	{
-		display(SHADOWMAP);
+		//display(SHADOWMAP);
 		display(RENDER_IMAGE);
 	}
 	else
@@ -67,35 +67,35 @@ void ScMesh::setLamps()
         sstransformation << "allLamps[" << i << "].transformation";
         sscolor << "allLamps[" << i << "].color";
         ssviewmatrix<<"allLamps[" << i << "].view_matrix";
-        ssshadowmap<<"shadowmaps["<<i<<"]";
+        //ssshadowmap<<"shadowmaps["<<i<<"]";
         std::string transformationUnifName = sstransformation.str();
         std::string colorUnifName = sscolor.str();
         std::string viewmatName = ssviewmatrix.str();
-        std::string shadowmapName = ssshadowmap.str();
+        //std::string shadowmapName = ssshadowmap.str();
 
         //matrices
-        glm::mat4 bias_matrix(
-                        0.5, 0.0, 0.0, 0.0,
-                        0.0, 0.5, 0.0, 0.0,
-                        0.0, 0.0, 0.5, 0.0,
-                        0.5, 0.5, 0.5, 1.0
-                );
+//        glm::mat4 bias_matrix(
+//                        0.5, 0.0, 0.0, 0.0,
+//                        0.0, 0.5, 0.0, 0.0,
+//                        0.0, 0.0, 0.5, 0.0,
+//                        0.5, 0.5, 0.5, 1.0
+//                );
         glm::mat4 lamp_transformation = lamps[i]->getTransformation();
-        glm::mat4 lamp_view_mat = bias_matrix*lamps[i]->getProjectionMat()*lamps[i]->getViewMatrix()*camera_transf;
+//        glm::mat4 lamp_view_mat = bias_matrix*lamps[i]->getProjectionMat()*lamps[i]->getViewMatrix()*camera_transf;
 
 
         //getting uniforms
         GLuint transformUniform = program_->getUniformLocation( transformationUnifName );
         GLuint colorUniform = program_->getUniformLocation( colorUnifName );
-        GLuint viewmatuniform = program_->getUniformLocation(viewmatName);
-        GLuint shadowmapUniform = program_->getUniformLocation(shadowmapName);
+//        GLuint viewmatuniform = program_->getUniformLocation(viewmatName);
+//        GLuint shadowmapUniform = program_->getUniformLocation(shadowmapName);
 
         //bind shadowmap
-        scene_->getShadowmap(i)->bindToSampler(shadowmapUniform);
+//        scene_->getShadowmap(i)->bindToSampler(shadowmapUniform);
 
         //setting uniforms
         glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(glm::inverse(camera_transf)*lamp_transformation));
-        glUniformMatrix4fv(viewmatuniform , 1, GL_FALSE, glm::value_ptr(lamp_view_mat));
+//        glUniformMatrix4fv(viewmatuniform , 1, GL_FALSE, glm::value_ptr(lamp_view_mat));
         glUniform4f(colorUniform,lamps[i]->getColor().x,lamps[i]->getColor().y,lamps[i]->getColor().z,lamps[i]->getColor().w);
 
     }
@@ -217,7 +217,7 @@ void ScMesh::display(DisplayMode display_mode)
 
                 // Get transformation matrix
 
-                glm::mat4 transformation = glm::inverse(lamps[i]->getTransformation())*getTransformation();
+                glm::mat4 transformation = lamps[i]->getViewMatrix()*getTransformation();
 
                 // Define uniform values
                 glUniformMatrix4fv(projectionMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection));
